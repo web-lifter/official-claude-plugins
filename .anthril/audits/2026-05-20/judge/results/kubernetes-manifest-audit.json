@@ -1,0 +1,19 @@
+{
+  "skill": "kubernetes-manifest-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a clear synonym for audit and the rest of the phrasing matches the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its kebab-case name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding on Windows is unrelated to Kubernetes manifests."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills generally, nothing to do with auditing Kubernetes."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses 'categorised'; no banned US spellings (color/optimize/behavior/organize/center/defense/analyze) appear."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Risk Register cites e.g. 'charts/api/templates/deployment.yaml:42' with CRITICAL/HIGH/MEDIUM severity tags."},
+      {"text": "Report includes the canonical sections: 'Executive Summary', 'Workload Graph'", "met": true, "evidence": "Both '## Executive Summary' and '## Workload Graph' headings are present in the artefact."}
+    ],
+    "notes": "Artefact satisfies all three criteria — neutral/Australian spelling throughout the narrative, severity-tagged findings with precise file:line evidence in the Risk Register, and both canonical section headings ('Executive Summary' and 'Workload Graph') are present."
+  }
+}

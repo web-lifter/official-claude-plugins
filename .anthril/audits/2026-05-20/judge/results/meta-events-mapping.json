@@ -1,0 +1,19 @@
+{
+  "skill": "meta-events-mapping",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase swaps Produce for Generate but retains the cross-platform event dictionary intent."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its kebab-case name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to tracking event mapping across GA4/Meta."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "General question about what skills are has no overlap with event dictionary production."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Scanned artefact — none of color/optimize/behavior/organize/center/defense/analyze appear; AUD currency and GST used."},
+      {"text": "Output is structured and parseable per the declared schema", "met": true, "evidence": "Markdown with H1/H2/H3 hierarchy, canonical events table, per-event param schemas, inconsistencies table, and next steps — fully parseable."},
+      {"text": "Report includes the canonical sections: \"Canonical events\", \"Param schemas per event\"", "met": true, "evidence": "Both H2 headings present in the artefact (## Canonical events and ## Param schemas per event)."}
+    ],
+    "notes": "The artefact satisfies all three criteria. Narrative uses Australian/neutral spellings with AU context (AUD, GST, Koala & Co.). Structure is parseable markdown with a canonical events mapping table covering GA4/Meta Pixel/CAPI/dataLayer, per-event param schemas with types and derivations, an inconsistencies register with severity ratings, and actionable next steps. Both required canonical section headings are present verbatim."
+  }
+}

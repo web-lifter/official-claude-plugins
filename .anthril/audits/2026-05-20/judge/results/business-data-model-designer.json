@@ -1,0 +1,19 @@
+{
+  "skill": "business-data-model-designer",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Architect is a clear synonym for Design and the rest of the request is identical."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User invokes the skill by its exact name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration has no relation to Supabase data modelling."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills is unrelated to designing data models."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "None of the flagged US spellings appear in the visible artefact; narrative uses 'Australian SMBs' and 'Australia/Sydney'."},
+      {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": false, "evidence": "Artefact shows ERD, SQL migrations, and RLS policies but no explicit rationale or trade-off discussion in the visible portion (example is truncated)."},
+      {"text": "Report includes the canonical sections: \"Data Model — [Application Name]\"", "met": true, "evidence": "Line 56 heading '# Data Model: SaaS Project Management Application' follows the canonical 'Data Model — [Application Name]' pattern (colon variant)."}
+    ],
+    "notes": "The artefact demonstrates a competent data-model deliverable with ERD, SQL migrations, RLS policies, and Australian-context defaults (Sydney timezone, SMB framing) and no offending US spellings in the visible text. The canonical heading is present. However, the visible portion lacks explicit design rationale and trade-off commentary — choices like the workspace_members composite PK, ON DELETE RESTRICT on owner_id, and the role taxonomy are presented without explanation. The example is truncated, so rationale may appear later; verdict is partial on that basis."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "personal-productivity",
+  "version": "1.0.2",
+  "description": "4 lifestyle skills for habits, weekly resets, deep-focus days, and energy mapping — design daily and weekly systems that compound",
+  "author": {
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-productivity",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "lifestyle",
+    "productivity",
+    "habits",
+    "routines",
+    "focus",
+    "weekly-review",
+    "energy"
+  ],
+  "skills": "./skills/",
+  "commands": "./commands/"
+}

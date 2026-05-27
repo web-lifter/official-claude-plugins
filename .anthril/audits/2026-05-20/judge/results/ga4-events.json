@@ -1,0 +1,19 @@
+{
+  "skill": "ga4-events",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical use case in the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Architect is a clear synonym for Design; rest of the phrase matches the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its name ga4-events."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to GA4 or analytics event design."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic meta question about skills, not a GA4 event design request."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "No US spellings detected; uses AU/neutral forms ('catalogue', 'AEST', 'AUD', dd/mm/yyyy dates, 'Afterpay')."},
+      {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": true, "evidence": "Rationale columns on conversions and custom dimensions; explicit pushback on add_to_cart/begin_checkout with reasoning; Open issues surfaces further trade-offs."},
+      {"text": "Report includes the canonical sections: 'Event inventory (last 30 days)', 'Conversions'", "met": true, "evidence": "Both headings present in the artefact (## Event inventory (last 30 days) and ## Conversions)."}
+    ],
+    "notes": "Artefact satisfies all three criteria. Spelling is consistently Australian/neutral with no flagged US forms. Design choices are paired with rationale, and the artefact explicitly surfaces trade-offs (declining add_to_cart/begin_checkout as conversions, deferring custom metrics, listing open issues). Both canonical section headings are present verbatim."
+  }
+}

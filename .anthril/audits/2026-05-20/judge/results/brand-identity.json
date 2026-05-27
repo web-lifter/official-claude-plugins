@@ -1,0 +1,19 @@
+{
+  "skill": "brand-identity",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Exact match to the description's canonical phrasing."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap preserves clear intent to generate core brand identity."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill brand-identity."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to brand identity generation."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic meta question about skills is out of scope for brand-identity."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Artefact uses 'Behavioural', 'centre', 'anonymised' — Australian forms; no banned US spellings observed."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies a markdown brand identity document, not JSON/SQL/YAML; markdown is well-formed with valid headings, tables, and blockquotes."},
+      {"text": "Report includes the canonical sections: \"1. Brand Snapshot\", \"2. Mission\"", "met": true, "evidence": "Headings '## 1. Brand Snapshot' and '## 2. Mission' both present in the artefact."}
+    ],
+    "notes": "Activation correctly fires on the canonical phrase, paraphrase, and explicit name mention while rejecting the unrelated SSH query and the meta near-miss. The artefact demonstrates the full brand identity document grounded in archetypes — mission, vision, values, voice, tone sliders, and voice-in-context — uses Australian English throughout (behavioural, centre, anonymised), and includes both canonical numbered headings required by criterion three."
+  }
+}

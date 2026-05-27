@@ -1,0 +1,19 @@
+{
+  "skill": "write-path-mapping",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical phrasing verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping Map for Diagram preserves the write-path-mapping intent."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation of the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to write-path mapping."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta question about skills is out of scope for this mapper."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses 'centralised'; no listed US spellings appear in the artefact text."},
+      {"text": "Mapping is exhaustive — every input has an output and vice versa", "met": true, "evidence": "Each WP-NNN entry lists entry point and persistence target(s); 15 write paths reconcile against 22 persistence targets with completeness 97/100 and the one gap (Stripe dynamic dispatch) explicitly flagged."},
+      {"text": "Report includes the canonical sections: \"1. Executive Summary\", \"2. Stack & Persistence\"", "met": true, "evidence": "Headings '## 1. Executive Summary' (line 76) and '## 2. Stack & Persistence' (line 99) are present in the artefact."}
+    ],
+    "notes": "Artefact satisfies all three criteria — Australian/neutral spellings throughout, exhaustive input-to-output mapping with explicit completeness tracking, and both required canonical sections present with the correct headings. Activation cases align cleanly with expected verdicts: the description scopes write-path mapping and mutation auditing precisely enough to fire on canonical/paraphrase/name-mention inputs and stay quiet on unrelated or meta queries."
+  }
+}

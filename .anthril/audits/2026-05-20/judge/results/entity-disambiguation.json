@@ -1,0 +1,18 @@
+{
+  "skill": "entity-disambiguation",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Same canonical phrasing aligns directly with the skill's stated purpose."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to entity resolution across data sources."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills has no connection to entity disambiguation."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses 'Normalised' and 'normalisation'; none of the listed American spellings appear."},
+      {"text": "Report includes the canonical sections: \"Entity Disambiguation Report — [Project/\"", "met": false, "evidence": "Title is '# Entity Disambiguation: Customer Merge' — does not follow the required 'Entity Disambiguation Report — [Project/...' heading pattern."}
+    ],
+    "notes": "Artefact passes the Australian-English check (uses 'normalised'/'normalisation', Pty Ltd, +61, ABN; no banned American spellings). It fails the canonical-sections criterion because the top-level heading is 'Entity Disambiguation: Customer Merge' rather than the prescribed 'Entity Disambiguation Report — [Project/...]' form. Overall verdict is partial."
+  }
+}

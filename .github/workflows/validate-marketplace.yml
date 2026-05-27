@@ -1,0 +1,45 @@
+# =============================================================================
+# Validate marketplace + plugin manifests
+# =============================================================================
+# Runs on every push and PR against main. Catches:
+#   - Invalid JSON in marketplace.json / plugin.json
+#   - Version drift between marketplace.json plugin entries and each
+#     plugin's own plugin.json (which Claude Code silently lets win,
+#     causing published updates to appear to do nothing on user machines)
+# =============================================================================
+
+name: Validate marketplace
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate manifests and version sync
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check marketplace.json is valid JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/marketplace.json','utf8'))"
+
+      - name: Check every plugin.json is valid JSON
+        run: |
+          set -euo pipefail
+          for f in {lifestyle,smb,marketing,engineering,data-science,economics,utilities}/*/.claude-plugin/plugin.json; do
+            echo "parsing $f"
+            node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))"
+          done
+
+      - name: Enforce marketplace ↔ plugin.json version sync
+        run: node scripts/check-versions.mjs

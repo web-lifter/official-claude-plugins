@@ -1,0 +1,22 @@
+{
+  "name": "home-life-logistics",
+  "version": "1.0.2",
+  "description": "4 lifestyle skills for trip planning, household maintenance, life-admin, and thoughtful gifting — AU-context checklists that turn logistics into routine",
+  "author": {
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-lifestyle-plugins/home-life-logistics",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "lifestyle",
+    "travel",
+    "household",
+    "life-admin",
+    "planning",
+    "gifts"
+  ],
+  "skills": "./skills/"
+}

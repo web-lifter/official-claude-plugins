@@ -1,0 +1,20 @@
+{
+  "skill": "devsecops-supply-chain-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim — canonical supply chain audit across all listed ecosystems."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a natural synonym of audit and the ecosystem list is identical, so the skill should fire."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User invokes the skill by exact name, which is an unambiguous activation signal."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding on Windows is unrelated to supply chain auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about what skills are has no overlap with supply chain audit scope."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative is free of the listed US spellings; uses neutral/AU-compatible forms throughout."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Findings reference files (charts/api/values.yaml, modules/vpc, .github/CODEOWNERS, package-lock.json) with explicit CRITICAL/HIGH/MEDIUM severity labels in the Risk Register and per-ecosystem lists."},
+      {"text": "Report includes the canonical sections: 'Executive Summary', 'Category Scores'", "met": true, "evidence": "Both '## Executive Summary' and '## Category Scores' headings are present."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Title names target 'acme-api'; concrete paths used throughout (package-lock.json, charts/api/values.yaml, modules/vpc, modules/rds, .github/CODEOWNERS) with no placeholders."}
+    ],
+    "notes": "Artefact is a well-structured supply chain audit for acme-api covering the canonical sections, severity-graded findings against concrete files, SLSA gap analysis, vulnerability summary, risk register with remediation, and action batches. Spelling is consistent with Australian/neutral English, severity categorisation is explicit, both required canonical sections appear, and the target is named with real paths rather than placeholders. All four criteria are satisfied."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "skill": "anomaly-detection-rule-builder",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is verbatim the skill's canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase swapping Build for Create still matches the description's scope exactly."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, which is an unambiguous activation signal."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to anomaly detection or business metrics."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta-question about what skills are does not invoke this specific skill."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Scanned the full narrative — no banned US spellings; uses AEST, AUD, .com.au, neutral terms throughout."},
+      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Four concrete rules with executable SQL against named Supabase tables, dynamic and absolute thresholds, severities, notification channels, and a triage playbook."},
+      {"text": "Report includes the canonical sections: \"Anomaly Detection System — [Business Nam\"", "met": false, "evidence": "Artefact title is '# Anomaly Detection Rules: E-Commerce Revenue Monitoring' — uses 'Rules:' rather than the canonical 'Anomaly Detection System — [Business Name]' phrasing."}
+    ],
+    "notes": "The example artefact is a substantive, working anomaly-detection specification with concrete SQL, dynamic and absolute thresholds, severity tiers, notification routing, and an investigation playbook — clearly not a placeholder. Australian and neutral spellings are consistent throughout. However, the title does not match the required canonical heading 'Anomaly Detection System — [Business Name]' (the artefact says 'Anomaly Detection Rules: …'), so the canonical-sections criterion fails and the overall verdict is partial."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "skill": "utm-builder",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap from Generate to Produce preserves the core intent of producing UTM-tagged URLs."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation of the skill by name should trigger activation."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to UTM tagging or campaign URL construction."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta question about what skills are has no overlap with UTM URL generation."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses neutral terms; no instances of color/optimize/behavior/organize/center/defense/analyze detected."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "URLs are well-formed query strings and a CSV filename is referenced for bulk export, matching the description's bulk CSV implication."},
+      {"text": "Report includes the canonical sections: \"URLs\", \"CSV export\"", "met": true, "evidence": "Artefact contains '## URLs' (line 65) and '## CSV export' (line 80) headings."}
+    ],
+    "notes": "The artefact cleanly satisfies all three criteria: it uses Australian/neutral spelling throughout, presents machine-readable UTM-tagged URLs in a structured table plus a referenced CSV export filename, and includes both required canonical section headings. Additional Validation and Next steps sections strengthen the output without breaking criteria. Activation classification is unambiguous across all five cases."
+  }
+}

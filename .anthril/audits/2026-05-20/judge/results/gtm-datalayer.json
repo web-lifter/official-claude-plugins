@@ -1,0 +1,19 @@
+{
+  "skill": "gtm-datalayer",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Exact match to the canonical use case in the description."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase swapping Design for Architect still clearly maps to designing a dataLayer schema."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Direct invocation by skill name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to GTM dataLayer schemas."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills, not a request to design a dataLayer."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses neutral/Australian forms; 'catalogue' rather than 'catalog'; none of the banned American spellings appear."},
+      {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": true, "evidence": "Summary explains design choices: GA4 Enhanced Ecommerce spec verbatim for downstream compatibility with GA4/Meta/Google Ads, AUD numeric money fields, and event_id derivation for deterministic dedup with Meta CAPI."},
+      {"text": "Report includes the canonical sections: 'Event catalogue', 'Schema per event'", "met": true, "evidence": "Both H2 headings present: '## Event catalogue' (line 71) and '## Schema per event' (line 86)."}
+    ],
+    "notes": "Artefact satisfies all three criteria. Narrative uses Australian/neutral spellings (catalogue), surfaces design rationale (GA4 spec compatibility, deterministic event_id for CAPI dedup, AUD numeric typing), and contains both required canonical sections plus supporting schema tables, Liquid/JS push snippets, a helper function, a GTM variables table, and a rollout checklist."
+  }
+}

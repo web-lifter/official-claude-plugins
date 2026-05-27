@@ -1,0 +1,19 @@
+{
+  "name": "brand-manager",
+  "version": "1.0.3",
+  "description": "9 skills for end-to-end brand creation — identity, guidelines, audience, competitors, logo briefs, colour, design tokens, legal disclaimers, and website copy",
+  "author": {
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/marketing/brand-management",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "smb",
+    "brand",
+    "manager"
+  ],
+  "skills": "./skills/"
+}

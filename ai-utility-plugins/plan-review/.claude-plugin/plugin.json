@@ -1,0 +1,21 @@
+{
+  "name": "plan-review",
+  "version": "2.2.1",
+  "description": "Plan-vs-implementation auditing — run a full-stack plan-completion-audit and then close the loop with audit-resolver. Includes /plan-review:audit-resolve command.",
+  "author": {
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/ai-utility-plugins/plan-review",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "plan-audit",
+    "plan-completion",
+    "audit-resolver",
+    "review"
+  ],
+  "skills": "./skills/",
+  "commands": "./commands/"
+}
