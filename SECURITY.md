@@ -33,18 +33,20 @@ If you discover a security issue in any plugin or in the marketplace tooling, pl
 For dependency vulnerabilities surfaced by VirusTotal scans (non-zero detections in the table below), review the linked VT report first — false positives are common for gzipped shell-heavy archives. Confirmed true positives are treated as P0 and the affected plugin is delisted from `marketplace.json` pending remediation.
 
 <!-- vt-summary:start -->
-## Latest scan — 2026-05-25
+## Latest scan — 2026-06-01
 
 | Plugin | Detections | Last scan | Report |
 |---|---:|---|---|
-| brand-manager | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/78d27c40b7efe5af6a393d3021150717811c102ebd19ab4d8dd89520489916b8) |
-| database-design | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/4a8badf8e8bde2aca007667ed8aa58af5b5d56202eb9f4d5f32e5f9789fe5424) |
-| devops | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/26e3c2267a7654f199cf9cc8403ffc17b362c5e39b2dbfcc587fc4ef2bd1c966) |
-| health-wellness | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/44bd71cdb565600b0b6dcf1f6ec3d7975e7be043dc205f9071576d1d3e58c9ca) |
-| package-manager | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/7566af3ce32f5a71a0bbe8eb0f58817cff8c0c8d7ece1626e45d5a4680bc39f4) |
-| personal-productivity | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/f828f6dea935bdab0942defdc45a535b87bca89723bc15b60913d346775d9ab8) |
-| plan-review | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/a5da82e8caf97d1681d2149f162c13d10332d2045c09c433ee79833f25a03afc) |
-| programming-utilities | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/a6919ee24b038cc8a12a8a89321514a6afbec1c6c16a43e54f89aaa20968d927) |
-| skill-ops-claude | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/6cb7d0bbc163b951d07b0fdc32d2e3a1f8c235ffdfda564e9cacf7d9973cb08f) |
-| software-development | 0 / 75 | 2026-05-25 | [report](https://www.virustotal.com/gui/file/9d8f6c9917a9b5fc970fa1cfc5b5d4af4a76d762362554fdaa66f9a00ad108db) |
+| brand-manager | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/fb1e224350233a09de77f8e9b3fe79e8e67c6854359105c92e4f8ec35d92620e) |
+| devops | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/b6aa32b27fabad4800739db1d97878ffee607b3fb0f999c56d525dba799ab718) |
+| health-wellness | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/9aa54ee057de315e314499c75c8109ba87407c2612844b303e32e17b4c845aa9) |
+| home-life-logistics | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/237e2167e2da04d81429b149425af7e513b93563f8f1844351c8a77462f508fa) |
+| package-manager | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/e2027a342e88d31313f56ac03f9b2a74a954aa5288f5c58c9bdb95857842f276) |
+| personal-finance | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/86fb249d81489fa5a3c160a0644e816b4b76069716b8dae17a39efc211313a97) |
+| personal-productivity | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/b9bf9ad2606f430f80a4dca71ef3b85ed6044e264f44e416d87401b1e0e1ab75) |
+| plan-review | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/757f8919f0d980ca4a3f8f8125af8e01510ae68b6c6c4e970510927c1dad8474) |
+| programming-utilities | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/5b3e979713ba112c3f10967910b2394eb9c06ba2c90d8a09f7b146cbb0870ea2) |
+| seo-toolkit | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/41747a1e64c0bc993536b2694345ccc5ad773d0a729b981bde29ccda81577fe2) |
+| skill-ops-claude | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/7ef187337f157855a70417cd4e4c1f194c4dbe1472c669f86d420037567b226c) |
+| software-development | 0 / 75 | 2026-06-01 | [report](https://www.virustotal.com/gui/file/0f295d8e888ec81d3d1a028320cbc36574eb20cf9343fe1281fbb5a604d0c837) |
 <!-- vt-summary:end -->
