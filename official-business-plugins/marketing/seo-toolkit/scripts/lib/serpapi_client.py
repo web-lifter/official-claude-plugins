@@ -20,14 +20,14 @@ import os
 from typing import Any
 
 from .http_cache import cached_get
-from .seo_vault import get_secret
+from .seo_vault import get_secret, resolve_passphrase
 
 _SERPAPI_ENDPOINT = "https://serpapi.com/search"
 
 
 def _get_api_key() -> str:
     """Read the SerpAPI key from the vault or fall back to env var."""
-    passphrase = os.environ.get("SEO_VAULT_PASSPHRASE", "")
+    passphrase = resolve_passphrase()
     if passphrase:
         key = get_secret("serpapi", "api_key", passphrase)
         if key:

@@ -12,6 +12,7 @@ On POSIX the vault file is ``chmod 0600`` after every write.
 Public API::
 
     derive_key(passphrase, salt) -> bytes
+    resolve_passphrase() -> str | None
     read_vault(passphrase) -> dict
     write_vault(data, passphrase) -> None
     set_secret(provider, key, value, passphrase) -> None
@@ -20,9 +21,11 @@ Public API::
 
 CLI (for use from bash hooks)::
 
-    python seo_vault.py set <provider> <key> <value> --passphrase PASS
-    python seo_vault.py get <provider> <key> --passphrase PASS
-    python seo_vault.py remove <provider> --passphrase PASS
+    python seo_vault.py set <provider> <key> <value> [--passphrase PASS]
+    python seo_vault.py get <provider> <key> [--passphrase PASS]
+    python seo_vault.py remove <provider> [--passphrase PASS]
+
+When ``--passphrase`` is omitted the CLI falls back to ``resolve_passphrase()``.
 """
 
 from __future__ import annotations
@@ -78,6 +81,31 @@ def _default_vault_path() -> Path:
 # ---------------------------------------------------------------------------
 # Key derivation
 # ---------------------------------------------------------------------------
+
+
+def resolve_passphrase() -> str | None:
+    """Resolve the vault passphrase from the environment.
+
+    The passphrase is declared as the plugin's ``seo_vault_passphrase``
+    ``userConfig`` option, which Claude Code injects into every plugin
+    subprocess (hooks, command and skill Bash calls) as the environment
+    variable ``CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE``.
+
+    Resolution order:
+
+    1. ``CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE`` — the canonical runtime
+       source, populated from the plugin's encrypted userConfig value.
+    2. ``SEO_VAULT_PASSPHRASE`` — a plain override used by hook scripts and
+       tests, and as an escape hatch for scripted/CI usage.
+
+    Returns:
+        The passphrase string, or ``None`` if neither variable is set.
+    """
+    return (
+        os.environ.get("CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE")
+        or os.environ.get("SEO_VAULT_PASSPHRASE")
+        or None
+    )
 
 
 def derive_key(passphrase: str, salt: bytes = _PBKDF2_SALT) -> bytes:
@@ -265,7 +293,11 @@ def remove_provider(
 
 def _cli() -> None:
     parser = argparse.ArgumentParser(description="seo-toolkit vault CLI")
-    parser.add_argument("--passphrase", required=True, help="Vault passphrase")
+    parser.add_argument(
+        "--passphrase",
+        help="Vault passphrase. If omitted, resolved from "
+        "CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE or SEO_VAULT_PASSPHRASE.",
+    )
     parser.add_argument("--vault-path", help="Override vault file path")
 
     sub = parser.add_subparsers(dest="command", required=True)
@@ -284,6 +316,15 @@ def _cli() -> None:
 
     args = parser.parse_args()
     vault_path = Path(args.vault_path) if getattr(args, "vault_path", None) else None
+
+    passphrase = args.passphrase or resolve_passphrase()
+    if not passphrase:
+        sys.exit(
+            "seo-toolkit: no vault passphrase provided. Pass --passphrase, or set "
+            "the seo_vault_passphrase plugin option "
+            "(CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE)."
+        )
+    args.passphrase = passphrase
 
     if args.command == "set":
         set_secret(args.provider, args.key, args.value, args.passphrase, vault_path=vault_path)

@@ -34,7 +34,7 @@ If the user does not type `yes` (case-insensitive), abort with: "Disconnection c
 
 ### 3. Obtain the vault passphrase
 
-Read `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` from the environment. If not set, ask via AskUserQuestion: "Enter your vault passphrase to authorise the removal."
+Read `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` from the environment (populated from the `seo_vault_passphrase` plugin option) and store it as `$PASSPHRASE`. If it is empty, tell the user to set **Vault passphrase** in the seo-toolkit plugin settings and restart the session; as a session-only fallback you may ask via AskUserQuestion: "Enter your vault passphrase to authorise the removal." Pass it to the script below with `--passphrase "$PASSPHRASE"`.
 
 ### 4. Remove the provider
 
@@ -54,7 +54,7 @@ Tell the user: "**{provider}** credentials have been removed from the vault."
 Run the validator to show the updated status:
 
 ```bash
-"${CLAUDE_PLUGIN_ROOT}/.venv/bin/python" "${CLAUDE_PLUGIN_ROOT}/scripts/token_validator.py" --json
+"${CLAUDE_PLUGIN_ROOT}/.venv/bin/python" "${CLAUDE_PLUGIN_ROOT}/scripts/token_validator.py" --json --passphrase "$PASSPHRASE"
 ```
 
 Display the updated provider table (same format as `/seo-toolkit:seo-status`).

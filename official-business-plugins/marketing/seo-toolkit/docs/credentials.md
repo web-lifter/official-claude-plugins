@@ -98,13 +98,13 @@ On POSIX, the file is `chmod 0600` after each write. On Windows, it inherits the
 
 ## Environment variable table
 
-| Variable | Source | Maps to provider |
+| Variable | Source | Purpose |
 |---|---|---|
-| `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` | userConfig (sensitive) | Used to derive vault encryption key |
-| `SEO_VAULT_PATH` | Set by hook scripts | Override vault file path (testing) |
-| `SEO_VAULT_PASSPHRASE` | Set by hook scripts | Override passphrase (testing) |
+| `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` | `userConfig` (sensitive) — declared in `plugin.json` | **Canonical** passphrase source. Claude Code exports it into every plugin subprocess (hooks, commands, skill Bash calls). Used to derive the vault encryption key. |
+| `SEO_VAULT_PASSPHRASE` | Set manually / by tests / CI | Fallback passphrase, read only when the option var above is unset. |
+| `SEO_VAULT_PATH` | Set by hook scripts / tests | Override vault file path. |
 
-Scripts read credentials directly from the vault via `scripts/lib/seo_vault.py` — they do not rely on additional environment variables per provider.
+Every consumer resolves the passphrase through `resolve_passphrase()` in `scripts/lib/seo_vault.py`, which prefers `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` and falls back to `SEO_VAULT_PASSPHRASE`. The `token_validator.py` and `seo_vault.py` CLIs also accept an explicit `--passphrase` argument (used by the commands and the `check-credentials.sh` hook), which takes precedence over both env vars. Scripts read credentials directly from the vault — they do not rely on additional environment variables per provider.
 
 ---
 

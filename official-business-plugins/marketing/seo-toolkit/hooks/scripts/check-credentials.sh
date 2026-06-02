@@ -34,10 +34,13 @@ if [ ! -f "$VAULT_PATH" ]; then
 fi
 
 export SEO_VAULT_PATH="$VAULT_PATH"
-export SEO_VAULT_PASSPHRASE="$PASSPHRASE"
 
 # Run the validator in quiet mode. Exit 0 = healthy, 1 = something failed.
-OUTPUT=$("$PY" "$PLUGIN_ROOT/scripts/token_validator.py" --quiet --json 2>&1) || true
+# Pass the passphrase explicitly rather than via an exported env var: a hook
+# subprocess's exports do not propagate to other tool calls, so the only
+# reliable channel is the argument (the validator also reads
+# CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE, which is already in this env).
+OUTPUT=$("$PY" "$PLUGIN_ROOT/scripts/token_validator.py" --quiet --json --passphrase "$PASSPHRASE" 2>&1) || true
 EC=$?
 
 if [ $EC -eq 0 ]; then

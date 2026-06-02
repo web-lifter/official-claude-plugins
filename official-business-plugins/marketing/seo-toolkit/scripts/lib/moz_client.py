@@ -20,14 +20,14 @@ from typing import Any
 
 import httpx
 
-from .seo_vault import get_secret
+from .seo_vault import get_secret, resolve_passphrase
 
 _MOZ_BASE = "https://lsapi.seomoz.com/v2"
 
 
 def _get_auth_header() -> str:
     """Return Basic Auth header derived from vault credentials."""
-    passphrase = os.environ.get("SEO_VAULT_PASSPHRASE", "")
+    passphrase = resolve_passphrase()
     access_id = secret = ""
     if passphrase:
         access_id = get_secret("moz", "access_id", passphrase) or ""

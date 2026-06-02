@@ -25,14 +25,14 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).parent))
 
 import httpx
-from lib.seo_vault import get_secret
+from lib.seo_vault import get_secret, resolve_passphrase
 
 _PSI_ENDPOINT = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed"
 
 
 def _get_api_key() -> str:
     """Read the PSI API key from vault or environment."""
-    passphrase = os.environ.get("SEO_VAULT_PASSPHRASE", "")
+    passphrase = resolve_passphrase()
     if passphrase:
         key = get_secret("psi", "api_key", passphrase)
         if key:

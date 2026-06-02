@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed — `seo-toolkit` vault passphrase never reached runtime (2026-06-02)
+
+`seo-toolkit` 1.1.1 → 1.1.2. Credentials saved via `/seo-toolkit:seo-connect` were written to the encrypted vault correctly, but every provider reported its key as "missing" at runtime. Two defects combined:
+
+- The runtime clients and `token_validator.py` read the passphrase from `SEO_VAULT_PASSPHRASE` — an environment variable nothing in the skill/command execution path ever set. The only writer was a SessionStart hook whose `export` could not propagate to later tool-call subprocesses.
+- The documented `seo_vault_passphrase` setting was never declared as a `userConfig` option, so Claude Code never prompted for it and never exported `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE`.
+
+Fix:
+- Declared `seo_vault_passphrase` as a `sensitive`, `required` `userConfig` option in `plugin.json`.
+- Added `resolve_passphrase()` in `seo_vault.py` (reads `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE`, falls back to `SEO_VAULT_PASSPHRASE`); all provider clients and the validator now use it.
+- `token_validator.py` and the `seo_vault.py` CLI accept an optional `--passphrase`; commands pass it explicitly instead of relying on cross-process env propagation.
+
+**User action:** run `/plugin update`, then set the vault passphrase in the seo-toolkit plugin settings dialog (the same passphrase used at `seo-connect` time) and restart the session.
+
 ### Fixed — `plan-review` slash commands now use `/plan-review:` namespace (2026-05-24)
 
 The `plan-review` plugin's skill docs, command file, hook welcome banner, and plugin.json description all referenced the legacy `/utilities:` slash namespace (e.g. `/utilities:audit-resolve`, `/utilities:plan-completion-audit`). These were stale from a pre-split layout when both plan-review and engineering-utilities lived under a single `utilities` plugin.

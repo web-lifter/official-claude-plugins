@@ -22,14 +22,14 @@ from typing import Any
 
 import httpx
 
-from .seo_vault import get_secret
+from .seo_vault import get_secret, resolve_passphrase
 
 _DFS_BASE = "https://api.dataforseo.com/v3"
 
 
 def _get_auth_header() -> str:
     """Return Basic Auth header value derived from vault credentials."""
-    passphrase = os.environ.get("SEO_VAULT_PASSPHRASE", "")
+    passphrase = resolve_passphrase()
     login = password = ""
     if passphrase:
         login = get_secret("dataforseo", "login", passphrase) or ""

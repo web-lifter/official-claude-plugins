@@ -22,14 +22,14 @@ from typing import Any
 
 import httpx
 
-from .seo_vault import get_secret
+from .seo_vault import get_secret, resolve_passphrase
 
 _AHREFS_BASE = "https://api.ahrefs.com/v3"
 
 
 def _get_api_key() -> str:
     """Read the Ahrefs API key from vault or environment."""
-    passphrase = os.environ.get("SEO_VAULT_PASSPHRASE", "")
+    passphrase = resolve_passphrase()
     if passphrase:
         key = get_secret("ahrefs", "api_key", passphrase)
         if key:

@@ -18,11 +18,10 @@ Usage::
 
 from __future__ import annotations
 
-import os
 from datetime import datetime, timezone
 from typing import Any
 
-from .seo_vault import get_secret, set_secret
+from .seo_vault import get_secret, resolve_passphrase, set_secret
 
 _GSC_SCOPE = "https://www.googleapis.com/auth/webmasters.readonly"
 
@@ -32,10 +31,12 @@ def _get_credentials():
     from google.oauth2.credentials import Credentials
     from google.auth.transport.requests import Request
 
-    passphrase = os.environ.get("SEO_VAULT_PASSPHRASE", "")
+    passphrase = resolve_passphrase()
     if not passphrase:
         raise RuntimeError(
-            "SEO_VAULT_PASSPHRASE not set — cannot read GSC credentials from vault."
+            "Vault passphrase not set — cannot read GSC credentials. Set the "
+            "seo_vault_passphrase plugin option "
+            "(CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE)."
         )
 
     refresh_token = get_secret("gsc", "refresh_token", passphrase)

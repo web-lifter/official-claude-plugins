@@ -25,7 +25,7 @@ from pathlib import Path
 # Add scripts/ to path so lib imports work when called directly
 sys.path.insert(0, str(Path(__file__).parent))
 
-from lib.seo_vault import get_secret, read_vault
+from lib.seo_vault import get_secret, read_vault, resolve_passphrase
 
 
 _PROVIDERS = ["serpapi", "dataforseo", "ahrefs", "moz", "psi", "gsc", "ga4"]
@@ -153,17 +153,23 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Validate seo-toolkit credentials")
     parser.add_argument("--json", action="store_true", help="Output JSON")
     parser.add_argument("--quiet", action="store_true", help="Suppress non-JSON output")
+    parser.add_argument(
+        "--passphrase",
+        help="Vault passphrase. If omitted, resolved from "
+        "CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE or SEO_VAULT_PASSPHRASE.",
+    )
     args = parser.parse_args()
 
-    passphrase = os.environ.get("SEO_VAULT_PASSPHRASE", "")
+    passphrase = args.passphrase or resolve_passphrase()
     vault_path_env = os.environ.get("SEO_VAULT_PATH")
     vault_path = Path(vault_path_env) if vault_path_env else None
 
     if not passphrase:
+        msg = "vault passphrase not set (seo_vault_passphrase plugin option)"
         if args.json:
-            print(json.dumps({"status": "missing", "error": "SEO_VAULT_PASSPHRASE not set"}))
+            print(json.dumps({"status": "missing", "error": msg}))
         elif not args.quiet:
-            print("SEO_VAULT_PASSPHRASE not set", file=sys.stderr)
+            print(msg, file=sys.stderr)
         sys.exit(1)
 
     results = validate_all(passphrase, vault_path=vault_path)

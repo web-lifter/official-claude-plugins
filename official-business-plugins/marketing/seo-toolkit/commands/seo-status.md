@@ -10,16 +10,18 @@ You are checking and displaying the credential status for all SEO data providers
 
 ## Workflow
 
-### 1. Locate Python interpreter
+### 1. Locate Python interpreter and passphrase
 
 Read `${CLAUDE_PLUGIN_DATA}/python_path.txt` to get the venv Python path. If the file does not exist, tell the user to start a new Claude Code session so the `ensure-venv.sh` hook can run, then try again.
+
+Read the vault passphrase from `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` (populated from the `seo_vault_passphrase` plugin option) and store it as `$PASSPHRASE`. If it is empty, tell the user to set **Vault passphrase** in the seo-toolkit plugin settings and restart the session — without it the vault cannot be decrypted and every provider will read as "missing".
 
 ### 2. Run the validator
 
 Execute:
 
 ```bash
-"$PYTHON" "${CLAUDE_PLUGIN_ROOT}/scripts/token_validator.py" --json
+"$PYTHON" "${CLAUDE_PLUGIN_ROOT}/scripts/token_validator.py" --json --passphrase "$PASSPHRASE"
 ```
 
 Capture both stdout and the exit code. If the script fails to run (missing file, syntax error), report the error directly.

@@ -33,7 +33,9 @@ Parse `$ARGUMENTS`:
 
 Check that the Python venv exists at `${CLAUDE_PLUGIN_ROOT}/.venv`. If not, direct the user to run a fresh Claude Code session first (the `ensure-venv.sh` SessionStart hook will create it).
 
-Obtain the vault passphrase: read `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` from the environment. If not set, ask the user via AskUserQuestion: "Enter your seo-toolkit vault passphrase. This is stored securely in your OS keychain and used to encrypt your credentials." Store the response as the passphrase for this session.
+Obtain the vault passphrase from `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` — this is populated from the `seo_vault_passphrase` plugin option (declared in `plugin.json` as a sensitive `userConfig` field, stored in the OS keychain). Store it as `$PASSPHRASE` for this session and pass it to every vault/script call below with `--passphrase "$PASSPHRASE"`.
+
+If `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` is empty, the user has not set the plugin option yet. Tell them to open the seo-toolkit plugin settings and set **Vault passphrase**, then restart the session — this is the supported path and means the same passphrase is reused across every session. As a fallback for this session only, you may ask via AskUserQuestion: "Enter your seo-toolkit vault passphrase to encrypt your credentials." but warn them it will not persist unless set in plugin settings.
 
 ### 3. Configure each provider
 
@@ -85,7 +87,7 @@ For each OAuth provider:
 After all providers are configured, run:
 
 ```bash
-"${CLAUDE_PLUGIN_ROOT}/.venv/bin/python" "${CLAUDE_PLUGIN_ROOT}/scripts/token_validator.py" --json
+"${CLAUDE_PLUGIN_ROOT}/.venv/bin/python" "${CLAUDE_PLUGIN_ROOT}/scripts/token_validator.py" --json --passphrase "$PASSPHRASE"
 ```
 
 Present the results using the same table format as `/seo-toolkit:seo-status`.
