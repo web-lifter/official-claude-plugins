@@ -19,16 +19,15 @@
 | `content-brief-generator` | Single-keyword (or cluster-grounded) editorial brief |
 | `internal-linking-planner` | Recommend internal links from cluster topology |
 | `schema-markup-generator` | JSON-LD for Article/Product/FAQ/HowTo/LocalBusiness etc. |
-| `gsc-performance-report` | Click/impression/CTR/position deltas with significance bands |
 | `local-seo-audit` | NAP, GBP, citation, review velocity audit |
 | `redirect-map-builder` | Build a 301 map between old + new sitemaps |
 | `broken-link-scanner` | Crawl + flag 4xx/5xx and orphan pages |
 
 ## Setup
 
-1. Install Python deps: `pip install -r requirements.txt`
-2. Run `/seo-toolkit:seo-connect` to set up SerpAPI / DataForSEO / Ahrefs / Moz / PSI / GSC OAuth credentials. All secrets land in the encrypted Fernet vault at `${CLAUDE_PLUGIN_DATA}/tokens.enc`.
-3. Run `/seo-toolkit:seo-status` to verify.
+1. Install Python deps: `pip install -r requirements.txt` (the `ensure-venv.sh` SessionStart hook does this automatically).
+2. Run `/seo-toolkit:seo-setup` to create the credentials file, then paste your SerpAPI / DataForSEO / Ahrefs / Moz / PSI keys into `~/.claude/plugins/data/seo-toolkit/credentials.json`. It's a plaintext file — no vault, passphrase, or OAuth.
+3. Run `/seo-toolkit:seo-status` to verify which providers are configured.
 
 See [`docs/credentials.md`](docs/credentials.md), [`docs/data-sources.md`](docs/data-sources.md), and [`docs/quick-start.md`](docs/quick-start.md) for more.
 

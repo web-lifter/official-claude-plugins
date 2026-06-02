@@ -1,66 +1,68 @@
 ---
 name: seo-status
-description: Show the connection status of all configured SEO data providers — which are connected, when they were last validated, and when OAuth tokens expire.
+description: Show which SEO data providers have credentials configured in the seo-toolkit credentials file.
 argument-hint: ""
 ---
 
 # /seo-toolkit:seo-status
 
-You are checking and displaying the credential status for all SEO data providers configured in the seo-toolkit vault.
+You report which SEO data providers have credentials configured. seo-toolkit reads credentials from a single plaintext JSON file — there is no vault, passphrase, or OAuth.
 
 ## Workflow
 
-### 1. Locate Python interpreter and passphrase
+### 1. Locate the Python interpreter
 
-Read `${CLAUDE_PLUGIN_DATA}/python_path.txt` to get the venv Python path. If the file does not exist, tell the user to start a new Claude Code session so the `ensure-venv.sh` hook can run, then try again.
+Read `${CLAUDE_PLUGIN_DATA}/python_path.txt` for the venv Python path. If it does not exist, start a new Claude Code session so the `ensure-venv.sh` hook can build the venv, then retry. If that still fails, any system `python` (3.11+) also works.
 
-Read the vault passphrase from `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` (populated from the `seo_vault_passphrase` plugin option) and store it as `$PASSPHRASE`. If it is empty, tell the user to set **Vault passphrase** in the seo-toolkit plugin settings and restart the session — without it the vault cannot be decrypted and every provider will read as "missing".
-
-### 2. Run the validator
-
-Execute:
+### 2. Run the status script
 
 ```bash
-"$PYTHON" "${CLAUDE_PLUGIN_ROOT}/scripts/token_validator.py" --json --passphrase "$PASSPHRASE"
+"$PYTHON" "${CLAUDE_PLUGIN_ROOT}/scripts/seo_status.py" --json
 ```
 
-Capture both stdout and the exit code. If the script fails to run (missing file, syntax error), report the error directly.
+This never prints secret values — only whether each provider is configured.
 
-### 3. Parse and render the results
+### 3. Render the result
 
-Parse the JSON output. Render a markdown table:
+Parse the JSON and show:
+
+- The path to the credentials file in use (or a note that none was found).
+- A table of providers and whether each is configured:
 
 ```markdown
 ## SEO Toolkit — Credential Status
 
-| Provider     | Connected | Last Validated         | Expires In    | Notes            |
-|-------------|:---------:|------------------------|---------------|-----------------|
-| SerpAPI      | ✓         | 2026-05-20 14:32 AEST  | Never (API key) | —              |
-| DataForSEO   | ✓         | 2026-05-20 14:32 AEST  | Never (API key) | —              |
-| Ahrefs       | ✗         | —                      | —             | Not configured  |
-| Moz          | ✗         | —                      | —             | Not configured  |
-| PSI          | ✓         | 2026-05-20 14:32 AEST  | Never (API key) | —              |
-| GSC (OAuth)  | ✓         | 2026-05-20 14:32 AEST  | 58 days       | —              |
-| GA4 (OAuth)  | ✗         | —                      | —             | Not configured  |
+Credentials file: `C:\Users\<you>\.claude\plugins\data\seo-toolkit\credentials.json`
+
+| Provider            | Configured |
+|---------------------|:----------:|
+| SerpAPI             | yes        |
+| DataForSEO          | no         |
+| Ahrefs              | no         |
+| Moz                 | no         |
+| PageSpeed Insights  | yes        |
 ```
 
-Rules for the table:
-- **Connected**: ✓ if the provider's status is `ok`, ✗ otherwise.
-- **Last Validated**: ISO timestamp from the validator output, formatted as `YYYY-MM-DD HH:mm AEST`. If never validated, show `—`.
-- **Expires In**: For OAuth providers, show days until token expiry. For API-key providers, show `Never (API key)`. If token is expired, show `EXPIRED` in bold.
-- **Notes**: Surface any warning from the validator (e.g. "expiring soon", "invalid key").
+### 4. Next step
 
-### 4. Overall health summary
+If no credentials file exists, tell the user to run `/seo-toolkit:seo-setup` (or create the file manually — see below). If some providers are unconfigured, point them at the same file.
 
-Below the table, add a one-line summary:
-- If all configured providers are healthy: "All configured providers are connected and healthy."
-- If any provider is expiring within 7 days: "Warning: GSC token expires in N days. Run `/seo-toolkit:seo-connect gsc` to refresh."
-- If any provider is missing or stale: "N provider(s) need attention. Run `/seo-toolkit:seo-connect <provider>` to reconnect."
+## The credentials file
 
-### 5. Suggest next step
+Single plaintext JSON file at `~/.claude/plugins/data/seo-toolkit/credentials.json`:
 
-If no providers are configured at all, tell the user to run `/seo-toolkit:seo-connect` to get started.
+```json
+{
+  "serpapi":    { "api_key": "YOUR_SERPAPI_KEY" },
+  "dataforseo": { "login": "YOUR_LOGIN", "password": "YOUR_PASSWORD" },
+  "ahrefs":     { "api_key": "YOUR_AHREFS_KEY" },
+  "moz":        { "access_id": "YOUR_ID", "secret": "YOUR_SECRET" },
+  "psi":        { "api_key": "YOUR_PSI_KEY" }
+}
+```
+
+Only include the providers you use. Each value can also be supplied via an environment variable (`SERPAPI_KEY`, `DATAFORSEO_LOGIN`/`DATAFORSEO_PASSWORD`, `AHREFS_API_KEY`, `MOZ_ACCESS_ID`/`MOZ_SECRET`, `PSI_API_KEY`), which takes precedence over the file.
 
 ## Security note
 
-Never print API keys, passwords, or OAuth tokens — the validator output never includes raw credentials, only status fields.
+Never print credential values in the transcript — the status script only reports presence.

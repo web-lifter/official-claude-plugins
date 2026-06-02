@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — `seo-toolkit` 2.0.0: credentials simplified to a plaintext file, vault + OAuth removed (2026-06-02)
+
+`seo-toolkit` 1.1.2 → 2.0.0 (**breaking**). The encrypted-vault + passphrase + OAuth + setup-wizard stack proved too hard to use. Replaced with the simplest possible model:
+
+- **One plaintext file**: `~/.claude/plugins/data/seo-toolkit/credentials.json`. Every provider reads from it directly; per-provider env vars (`SERPAPI_KEY`, etc.) still override. No encryption, passphrase, OAuth, or wizard.
+- **Removed**: the Fernet vault (`seo_vault.py`), the `seo_vault_passphrase` userConfig option, GSC + GA4 OAuth providers (and the `gsc-performance-report` skill, 20 → 19 skills), the `seo-connect`/`seo-disconnect` commands, `token_validator.py`, and the `cryptography`/`filelock`/`google-auth*` dependencies.
+- **Added**: `scripts/lib/credentials.py`, `scripts/seo_status.py`, the `/seo-toolkit:seo-setup` command, and a `credentials.example.json` template.
+
+**User action:** run `/plugin update`, then `/seo-toolkit:seo-setup` to create the credentials file and paste in your keys. Re-enter any keys previously held in the encrypted vault; the old `tokens.enc` is no longer read and can be deleted.
+
 ### Fixed — `seo-toolkit` vault passphrase never reached runtime (2026-06-02)
 
 `seo-toolkit` 1.1.1 → 1.1.2. Credentials saved via `/seo-toolkit:seo-connect` were written to the encrypted vault correctly, but every provider reported its key as "missing" at runtime. Two defects combined:

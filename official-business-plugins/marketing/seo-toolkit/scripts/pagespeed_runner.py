@@ -4,7 +4,8 @@ Calls the Google PageSpeed Insights API for a given URL and extracts Core Web
 Vitals (LCP, INP, CLS, TTFB) plus the overall Lighthouse performance score.
 Emits JSON to stdout for consumption by skills.
 
-PSI API key is read from the vault under provider ``psi``, key ``api_key``.
+PSI API key is read from the credentials file under provider ``psi``, key
+``api_key`` (or the ``PSI_API_KEY`` environment variable).
 
 Usage::
 
@@ -17,7 +18,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -25,22 +25,18 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).parent))
 
 import httpx
-from lib.seo_vault import get_secret, resolve_passphrase
+from lib.credentials import canonical_path, get_credential
 
 _PSI_ENDPOINT = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed"
 
 
 def _get_api_key() -> str:
-    """Read the PSI API key from vault or environment."""
-    passphrase = resolve_passphrase()
-    if passphrase:
-        key = get_secret("psi", "api_key", passphrase)
-        if key:
-            return key
-    key = os.environ.get("PSI_API_KEY", "")
+    """Read the PSI API key from the credentials file or env var."""
+    key = get_credential("psi", "api_key", env_var="PSI_API_KEY")
     if not key:
         raise RuntimeError(
-            "PSI API key not found. Run /seo-toolkit:seo-connect psi to configure it."
+            f"PSI API key not found. Add it to {canonical_path()} as "
+            '{"psi": {"api_key": "YOUR_KEY"}} (or set the PSI_API_KEY env var).'
         )
     return key
 

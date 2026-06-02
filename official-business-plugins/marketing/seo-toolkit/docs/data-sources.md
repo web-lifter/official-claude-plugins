@@ -13,8 +13,8 @@ When to use each data provider, what each is best for, and their cost and rate-l
 | **Ahrefs** | Backlink data, referring domains, domain rating | USD 99–999/mo | Near real-time (updated daily) | API plan required (USD 999+/mo); expensive | No |
 | **Moz** | Domain Authority, link metrics, spam score | USD 99–599/mo | Updated weekly | 25 000 rows/mo on standard; 10 req/s | No (limited free API) |
 | **PSI (Google)** | Core Web Vitals, Lighthouse scores, field data | Free | Real-time (lab) + 28d rolling (field) | 400 requests/day per key; no charge | Yes — free API |
-| **GSC (Google)** | Organic impressions, clicks, average position, query data | Free | ~3 day lag | 200 req/100s per property; no charge | Yes — free OAuth |
-| **GA4 (Google)** | Organic traffic, conversion data, user behaviour | Free | ~24h lag (standard) | 10 concurrent requests; no charge | Yes — free OAuth |
+
+> Note: seo-toolkit reads API keys for the five providers above from a plaintext `credentials.json`. Google Search Console / Analytics (OAuth) are not built in; where a skill can use GSC/GA4 data, supply it as a manually exported CSV.
 
 ---
 
@@ -62,19 +62,7 @@ Best skills: `core-web-vitals-report`, `technical-seo-audit`
 
 The API is free with a Google API key. Rate limit is 400 requests/day per key — sufficient for most audits.
 
-### Google Search Console (GSC)
-
-Use GSC for **owned-site organic performance data** — what queries are driving impressions and clicks, which pages rank, average position, and click-through rate. This is first-party data from Google.
-
-Best skills: `gsc-performance-report`, `content-gap-analysis`, `keyword-research`
-
-Limitations: data is only available for properties the user has verified in GSC. Queries with very low impressions are anonymised.
-
-### Google Analytics 4 (GA4)
-
-Use GA4 for **post-click behaviour** — sessions, bounce rate, goal completions, and conversion attribution for organic traffic. Combine with GSC data for a full funnel view (impressions → clicks → conversions).
-
-Best skills: `content-gap-analysis`, `gsc-performance-report`
+> Google Search Console / Analytics data: not built in as a provider. Skills that can use it (e.g. content-gap-analysis, backlink-audit, core-web-vitals-report) accept a manually exported CSV from the GSC/GA4 UI.
 
 ---
 
@@ -84,10 +72,10 @@ Best skills: `content-gap-analysis`, `gsc-performance-report`
 |---|---|---|
 | Keyword research | DataForSEO (volume) | SerpAPI (SERP snapshot) |
 | Competitor analysis | SerpAPI (SERP) | Ahrefs (backlinks) |
-| Content gap analysis | GSC (owned performance) | DataForSEO (opportunity volume) |
-| Technical audit | PSI (CWV) | GSC (indexation signals) |
+| Content gap analysis | DataForSEO (opportunity volume) | SerpAPI (SERP snapshot) |
+| Technical audit | PSI (CWV) | SerpAPI (SERP signals) |
 | Backlink audit | Ahrefs | Moz (DA benchmarking) |
-| Local SEO | SerpAPI (Local Pack) | GSC (local query data) |
+| Local SEO | SerpAPI (Local Pack) | DataForSEO (local volume) |
 
 ---
 
@@ -95,7 +83,7 @@ Best skills: `content-gap-analysis`, `gsc-performance-report`
 
 If you want maximum coverage with minimal cost:
 
-1. **Free tier only**: PSI + GSC + GA4 — covers Core Web Vitals, owned query data, and traffic analysis at no cost.
+1. **Free tier only**: PSI — covers Core Web Vitals at no cost. Add a free SerpAPI key (100 searches/mo) for SERP analysis.
 2. **Add keyword data**: DataForSEO pay-per-use — extremely low cost for volume lookups.
 3. **Add SERP snapshots**: SerpAPI free tier (100 searches/mo) — enough for targeted competitive analysis.
 4. **Skip Ahrefs/Moz** unless backlink analysis is a core requirement — both require paid plans.

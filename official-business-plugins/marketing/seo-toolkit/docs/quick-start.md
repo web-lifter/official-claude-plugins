@@ -8,7 +8,7 @@ Get from zero to your first SEO analysis in under five minutes.
 
 - Claude Code with this plugin installed
 - Python 3.11+ on your PATH
-- At least one SEO data provider account (free options: SerpAPI trial, PSI API key, GSC OAuth)
+- At least one SEO data provider API key (free options: SerpAPI trial, PageSpeed Insights API key)
 
 ---
 
@@ -27,31 +27,39 @@ If the venv was not created, check `${CLAUDE_PLUGIN_DATA}/install.log` for error
 
 ---
 
-## Step 2 — Connect your first provider
+## Step 2 — Add your API keys
 
-Run the interactive setup wizard:
+Run:
 
 ```
-/seo-toolkit:seo-connect
+/seo-toolkit:seo-setup
 ```
 
-You will be prompted to choose a provider. For a quick start, pick one of:
+This creates a plaintext file at `~/.claude/plugins/data/seo-toolkit/credentials.json`. Open it and paste in the keys for the providers you use, then save — that's the whole setup. No vault, no passphrase, no OAuth.
 
-- **SerpAPI** — free 100 searches/mo, great for SERP analysis. Get your key at https://serpapi.com/dashboard.
-- **PSI** — completely free, no sign-up beyond a Google API key. Enable at https://console.cloud.google.com → APIs & Services → PageSpeed Insights API.
-- **GSC** — free OAuth, requires a verified Google Search Console property.
+```json
+{
+  "serpapi": { "api_key": "YOUR_SERPAPI_KEY" },
+  "psi":     { "api_key": "YOUR_PSI_KEY" }
+}
+```
 
-The wizard stores your credentials in an encrypted vault. You will be prompted for a vault passphrase — store this somewhere safe (it will also be saved in your OS keychain via Claude Code's userConfig).
+Good free starting points:
+
+- **SerpAPI** — free 100 searches/mo, great for SERP analysis. Key: https://serpapi.com/dashboard.
+- **PSI** — completely free Google API key. Enable at https://console.cloud.google.com → APIs & Services → PageSpeed Insights API.
+
+(Each key can also be set via an environment variable instead — `SERPAPI_KEY`, `PSI_API_KEY`, etc.)
 
 ---
 
-## Step 3 — Validate your connection
+## Step 3 — Verify
 
 ```
 /seo-toolkit:seo-status
 ```
 
-This runs `scripts/token_validator.py` and renders a table showing which providers are connected and healthy. A ✓ means the credential is present and verified.
+Renders a table showing which providers are configured. Edits to the credentials file take effect immediately — no restart.
 
 ---
 
@@ -71,15 +79,7 @@ For example:
 
 This will pull SERP data, classify intent, and return a structured keyword report.
 
-### If you connected GSC
-
-```
-/seo-toolkit:gsc-performance-report
-```
-
-This will pull your top queries and pages from the last 90 days and surface quick wins (high impressions, low CTR) and content gap opportunities.
-
-### If you connected PSI
+### If you configured PSI
 
 ```
 /seo-toolkit:core-web-vitals-report [your-domain.com.au]
@@ -109,7 +109,7 @@ Once installed, the `scripts/lighthouse_runner.sh` helper will automatically use
 
 ## Next steps
 
-- Connect additional providers with `/seo-toolkit:seo-connect <provider>` — see `docs/data-sources.md` for guidance on which providers to prioritise.
+- Add more provider keys to `~/.claude/plugins/data/seo-toolkit/credentials.json` — see `docs/data-sources.md` for which to prioritise.
 - Run a full technical audit: `/seo-toolkit:technical-seo-audit [your-domain.com.au]`
 - Analyse your competitors: `/seo-toolkit:competitor-seo-audit [competitor-domain.com.au]`
 - Build a keyword cluster map: `/seo-toolkit:keyword-clustering-and-mapping [topic]`

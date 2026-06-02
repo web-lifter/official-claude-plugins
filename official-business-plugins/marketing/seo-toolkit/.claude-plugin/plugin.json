@@ -1,7 +1,7 @@
 {
   "name": "seo-toolkit",
-  "version": "1.1.2",
-  "description": "20 skills for end-to-end SEO — keyword research + list dev + clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, GSC reporting, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder).",
+  "version": "2.0.0",
+  "description": "19 skills for end-to-end SEO — keyword research + list dev + clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder). Credentials via a single plaintext credentials.json — no vault or OAuth.",
   "author": {
     "name": "John O'Connor",
     "email": "john@anthril.com",
@@ -13,7 +13,6 @@
   "keywords": [
     "seo",
     "serp",
-    "gsc",
     "keyword-research",
     "keyword-clustering",
     "content",
@@ -32,14 +31,5 @@
     "./skills/technical-seo-audit/agents/seo-auditor.md",
     "./skills/serp-analysis/agents/serp-analyst.md",
     "./skills/keyword-clustering-and-mapping/agents/content-strategist.md"
-  ],
-  "userConfig": {
-    "seo_vault_passphrase": {
-      "type": "string",
-      "title": "Vault passphrase",
-      "description": "Passphrase used to encrypt and decrypt your SEO provider credentials (SerpAPI, DataForSEO, Ahrefs, Moz, PSI, GSC, GA4). Stored in your OS keychain — never written to settings.json. Required before running /seo-toolkit:seo-connect or any data-backed skill.",
-      "sensitive": true,
-      "required": true
-    }
-  }
+  ]
 }

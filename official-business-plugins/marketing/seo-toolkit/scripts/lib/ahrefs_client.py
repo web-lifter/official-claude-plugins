@@ -17,27 +17,22 @@ Usage::
 
 from __future__ import annotations
 
-import os
 from typing import Any
 
 import httpx
 
-from .seo_vault import get_secret, resolve_passphrase
+from .credentials import canonical_path, get_credential
 
 _AHREFS_BASE = "https://api.ahrefs.com/v3"
 
 
 def _get_api_key() -> str:
-    """Read the Ahrefs API key from vault or environment."""
-    passphrase = resolve_passphrase()
-    if passphrase:
-        key = get_secret("ahrefs", "api_key", passphrase)
-        if key:
-            return key
-    key = os.environ.get("AHREFS_API_KEY", "")
+    """Read the Ahrefs API key from the credentials file or env var."""
+    key = get_credential("ahrefs", "api_key", env_var="AHREFS_API_KEY")
     if not key:
         raise RuntimeError(
-            "Ahrefs API key not found. Run /seo-toolkit:seo-connect ahrefs to configure it."
+            f"Ahrefs API key not found. Add it to {canonical_path()} as "
+            '{"ahrefs": {"api_key": "YOUR_KEY"}} (or set the AHREFS_API_KEY env var).'
         )
     return key
 

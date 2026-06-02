@@ -3,8 +3,8 @@
 Provides a thin wrapper around the SerpAPI Google Search endpoint, with
 results cached via ``http_cache.cached_get``.
 
-Credentials are read from the encrypted vault under provider ``serpapi``,
-key ``api_key``.
+Credentials are read from the plaintext credentials file under provider
+``serpapi``, key ``api_key`` (or the ``SERPAPI_KEY`` environment variable).
 
 Usage::
 
@@ -16,28 +16,22 @@ Usage::
 
 from __future__ import annotations
 
-import os
 from typing import Any
 
+from .credentials import canonical_path, get_credential
 from .http_cache import cached_get
-from .seo_vault import get_secret, resolve_passphrase
 
 _SERPAPI_ENDPOINT = "https://serpapi.com/search"
 
 
 def _get_api_key() -> str:
-    """Read the SerpAPI key from the vault or fall back to env var."""
-    passphrase = resolve_passphrase()
-    if passphrase:
-        key = get_secret("serpapi", "api_key", passphrase)
-        if key:
-            return key
-    # Fallback: allow direct env var for CI / scripted usage
-    env_key = os.environ.get("SERPAPI_KEY", "")
-    if env_key:
-        return env_key
+    """Read the SerpAPI key from the credentials file or env var."""
+    key = get_credential("serpapi", "api_key", env_var="SERPAPI_KEY")
+    if key:
+        return key
     raise RuntimeError(
-        "SerpAPI key not found. Run /seo-toolkit:seo-connect serpapi to configure it."
+        f"SerpAPI key not found. Add it to {canonical_path()} as "
+        '{"serpapi": {"api_key": "YOUR_KEY"}} (or set the SERPAPI_KEY env var).'
     )
 
 

@@ -1,215 +1,92 @@
-# SEO Toolkit — Credential Architecture
+# SEO Toolkit — Credentials
 
-This document explains how `seo-toolkit` stores, loads, and validates credentials for SerpAPI, DataForSEO, Ahrefs, Moz, PageSpeed Insights, Google Search Console (OAuth), and Google Analytics 4 (OAuth). Read this if you want to understand what is on disk, how tokens rotate, and how to revoke or back up the vault.
-
----
-
-## Quick reference
-
-| Where | What | Protection |
-|---|---|---|
-| Claude Code keychain (via `userConfig.sensitive=true`) | `seo_vault_passphrase` | OS keychain (macOS) or `~/.claude/.credentials.json` mode 0600 (Linux/Windows) |
-| `${CLAUDE_PLUGIN_DATA}/tokens.enc` | API keys for SerpAPI/DataForSEO/Ahrefs/Moz/PSI; OAuth refresh tokens for GSC and GA4 | Fernet (AES-128-CBC + HMAC-SHA256), key derived from vault passphrase via PBKDF2-HMAC-SHA256 100 000 iterations |
-| `${CLAUDE_PLUGIN_ROOT}/.venv/` | Python dependencies (cryptography, httpx, google-auth, etc.) | None — not secrets |
-| `${CLAUDE_PLUGIN_DATA}/install.log` | pip install stderr | None — diagnostic only |
-| `${CLAUDE_PLUGIN_DATA}/requirements.stamp` | Copy of `requirements.txt` to skip pip when unchanged | None |
-| `${CLAUDE_PLUGIN_DATA}/python_path.txt` | Resolved path to the venv's Python interpreter | None |
-| `${CLAUDE_PLUGIN_DATA}/cache/` | HTTP response cache (24h TTL, keyed by URL + params SHA-256) | None — no secrets cached |
-
-No tokens are ever stored in `settings.json`, shell environment variables, or the filesystem outside `${CLAUDE_PLUGIN_DATA}`.
+seo-toolkit reads all provider API keys from **one plaintext JSON file**. There is no encryption, no passphrase, no OAuth, and no setup wizard. You create the file once, paste your keys in, and every skill reads from it.
 
 ---
 
-## Two-tier architecture
+## Where the file lives
 
-### Tier 1 — Claude Code `userConfig` with `sensitive: true`
+The canonical location is:
 
-One field is stored in the OS keychain:
+| OS | Path |
+|---|---|
+| Windows | `%USERPROFILE%\.claude\plugins\data\seo-toolkit\credentials.json` |
+| macOS / Linux | `~/.claude/plugins/data/seo-toolkit/credentials.json` |
 
-- `seo_vault_passphrase` — the passphrase used to derive the vault encryption key.
+The loader checks these locations in order and uses the first that exists:
 
-This is set once during plugin setup. It never appears in the transcript, skill output, or any log file.
+1. `$SEO_CREDENTIALS_FILE` — explicit path override
+2. `$CLAUDE_PLUGIN_DATA/credentials.json` — the installed plugin's data dir
+3. `~/.claude/plugins/data/seo-toolkit/credentials.json` — the canonical default
 
-At runtime it is exposed to scripts via:
+The simplest approach: always use the canonical path.
 
-```
-CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE
-```
+---
 
-### Tier 2 — Encrypted vault
-
-The vault lives at `${CLAUDE_PLUGIN_DATA}/tokens.enc` and contains:
+## File shape
 
 ```json
 {
-  "version": 1,
-  "updated_at": "<ISO-8601>",
-  "serpapi": {
-    "api_key": "..."
-  },
-  "dataforseo": {
-    "login": "...",
-    "password": "..."
-  },
-  "ahrefs": {
-    "api_key": "..."
-  },
-  "moz": {
-    "access_id": "...",
-    "secret": "..."
-  },
-  "psi": {
-    "api_key": "..."
-  },
-  "gsc": {
-    "client_id": "...",
-    "client_secret": "...",
-    "refresh_token": "...",
-    "access_token": "...",
-    "access_token_expires_at": "<ISO-8601>"
-  },
-  "ga4": {
-    "client_id": "...",
-    "client_secret": "...",
-    "refresh_token": "...",
-    "access_token": "...",
-    "access_token_expires_at": "<ISO-8601>"
-  }
+  "serpapi":    { "api_key": "..." },
+  "dataforseo": { "login": "...", "password": "..." },
+  "ahrefs":     { "api_key": "..." },
+  "moz":        { "access_id": "...", "secret": "..." },
+  "psi":        { "api_key": "..." }
 }
 ```
 
-The file is **encrypted at rest** with Fernet. The key is derived from the vault passphrase via PBKDF2-HMAC-SHA256 with 100 000 iterations. If you copy `tokens.enc` to another machine, you need both the file and the passphrase to decrypt it.
+Only include the providers you use — delete the rest. Edits take effect immediately; no restart needed.
 
-Writes are atomic: `seo_vault.py` writes to `tokens.enc.tmp`, fsyncs, and then `os.replace()`s to the final path. A `filelock` around the write prevents concurrent writes from multiple scripts.
-
-On POSIX, the file is `chmod 0600` after each write. On Windows, it inherits the user's profile ACLs.
+Create it the easy way by running `/seo-toolkit:seo-setup`, or copy `credentials.example.json` from the plugin root.
 
 ---
 
-## On-disk location by OS
+## Where to get each key
 
-| OS | Vault path |
+| Provider | What it unlocks | Get a key |
+|---|---|---|
+| `serpapi` | SERP data, keyword research | https://serpapi.com/dashboard |
+| `dataforseo` | Keyword volume, suggestions (login + password) | https://app.dataforseo.com/api-access |
+| `ahrefs` | Backlink data, domain metrics | https://app.ahrefs.com/account/api |
+| `moz` | Domain Authority, link metrics (access ID + secret) | https://moz.com/products/api/keys |
+| `psi` | PageSpeed Insights / Core Web Vitals | https://console.cloud.google.com → Credentials → API key (enable "PageSpeed Insights API") |
+
+---
+
+## Environment-variable overrides
+
+Each credential can also be supplied via an environment variable, which **takes precedence** over the file. Handy for CI or one-off scripted runs:
+
+| Provider | Variable(s) |
 |---|---|
-| macOS | `~/.claude/plugins/data/seo-toolkit/tokens.enc` |
-| Linux | `~/.claude/plugins/data/seo-toolkit/tokens.enc` |
-| Windows | `%USERPROFILE%\.claude\plugins\data\seo-toolkit\tokens.enc` |
+| `serpapi` | `SERPAPI_KEY` |
+| `dataforseo` | `DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD` |
+| `ahrefs` | `AHREFS_API_KEY` |
+| `moz` | `MOZ_ACCESS_ID`, `MOZ_SECRET` |
+| `psi` | `PSI_API_KEY` |
 
 ---
 
-## Environment variable table
-
-| Variable | Source | Purpose |
-|---|---|---|
-| `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` | `userConfig` (sensitive) — declared in `plugin.json` | **Canonical** passphrase source. Claude Code exports it into every plugin subprocess (hooks, commands, skill Bash calls). Used to derive the vault encryption key. |
-| `SEO_VAULT_PASSPHRASE` | Set manually / by tests / CI | Fallback passphrase, read only when the option var above is unset. |
-| `SEO_VAULT_PATH` | Set by hook scripts / tests | Override vault file path. |
-
-Every consumer resolves the passphrase through `resolve_passphrase()` in `scripts/lib/seo_vault.py`, which prefers `CLAUDE_PLUGIN_OPTION_SEO_VAULT_PASSPHRASE` and falls back to `SEO_VAULT_PASSPHRASE`. The `token_validator.py` and `seo_vault.py` CLIs also accept an explicit `--passphrase` argument (used by the commands and the `check-credentials.sh` hook), which takes precedence over both env vars. Scripts read credentials directly from the vault — they do not rely on additional environment variables per provider.
-
----
-
-## OAuth flow diagrams
-
-### Google Search Console (GSC)
+## Checking status
 
 ```
-User runs /seo-toolkit:seo-connect gsc
-  │
-  ├─► oauth_gsc.py starts loopback server on localhost:PORT
-  │
-  ├─► Opens browser to Google OAuth consent URL
-  │     (scope: webmasters.readonly)
-  │
-  ├─► User grants consent in browser
-  │
-  ├─► Google redirects to http://localhost:PORT/?code=AUTH_CODE
-  │
-  ├─► oauth_gsc.py exchanges code for access + refresh tokens
-  │
-  └─► Writes refresh_token + access_token to vault under "gsc"
+/seo-toolkit:seo-status
 ```
 
-### Google Analytics 4 (GA4)
-
-Identical flow to GSC, with scope `analytics.readonly` and vault key `ga4`.
+Shows which providers are configured (presence only — never prints key values).
 
 ---
 
-## Token refresh
+## Security notes
 
-### API keys (SerpAPI, DataForSEO, Ahrefs, Moz, PSI)
-
-API keys do not expire. They are read from the vault at runtime by each client module and used directly in HTTP requests. No refresh logic is needed.
-
-### OAuth tokens (GSC, GA4)
-
-1. Each client module calls `get_secret(provider, "refresh_token", passphrase)`.
-2. If the cached access token is within 60 seconds of expiry (or absent), the client uses `google-auth` to call `google.auth.transport.requests.Request()` and refresh the token.
-3. The new access token and expiry are written back to the vault.
-4. If the refresh token itself is invalid (`invalid_grant`), the client raises an error directing the user to re-run `/seo-toolkit:seo-connect <provider>`.
-
----
-
-## Threat model
-
-| Threat | Mitigation | Residual risk |
-|---|---|---|
-| Attacker reads `tokens.enc` from disk | Fernet encryption + PBKDF2 key derivation — useless without passphrase | PBKDF2 cracking if weak passphrase chosen |
-| Tampering with `tokens.enc` | Fernet includes HMAC-SHA256 — any modification fails decryption | None (integrity is verified on every read) |
-| Torn vault write during crash | Atomic write via `.tmp` + `os.replace()` + `filelock` | None (file is either old or new, never partial) |
-| Passphrase leaked via environment | Passphrase stored in OS keychain; injected at runtime; never logged | Claude Code process environment is accessible to local code execution |
-| API key leaked via logs | `install.log` contains only pip output; no credential-writing steps log values | None |
-| Compromised pip package | Requirements are version-pinned; `cryptography` is a well-audited library | Supply-chain risk inherent to any Python project |
-
----
-
-## Backing up the vault
-
-The vault is safe to back up anywhere — it is encrypted:
-
-```bash
-cp ~/.claude/plugins/data/seo-toolkit/tokens.enc ~/backups/seo-tokens-2026-05-20.enc
-```
-
-To restore: copy the file to `${CLAUDE_PLUGIN_DATA}/tokens.enc` on the target machine and ensure the `seo_vault_passphrase` plugin setting matches the original.
-
----
-
-## Revoking access
-
-### API key providers
-
-Delete the key from the provider's dashboard, then run `/seo-toolkit:seo-disconnect <provider>` to remove it from the local vault.
-
-### OAuth providers (GSC, GA4)
-
-1. Go to [myaccount.google.com/permissions](https://myaccount.google.com/permissions) and revoke the OAuth app's access.
-2. Run `/seo-toolkit:seo-disconnect gsc` (or `ga4`) to remove the refresh token from the vault.
-
-### Full reset
-
-```bash
-rm -rf ~/.claude/plugins/data/seo-toolkit
-```
-
-Then re-enable the plugin and run `/seo-toolkit:seo-connect` to start fresh.
+- The file is **plaintext**. It lives in your `~/.claude` data directory, outside any git repository, so it is never committed.
+- On a shared machine, restrict it yourself (e.g. `chmod 600` on POSIX).
+- Deleting access: remove the provider's block from the file (and revoke the key in the provider's dashboard if you want to fully kill it).
 
 ---
 
 ## Troubleshooting
 
-### "Vault passphrase not set"
+**"… key not found. Add it to …"** — the provider has no entry in the file and no env var is set. Run `/seo-toolkit:seo-setup` or edit the file directly.
 
-Set `seo_vault_passphrase` in the plugin settings (Claude Code userConfig). It should appear in the plugin enable dialog.
-
-### "Failed to decrypt vault — wrong passphrase or corrupt file"
-
-Either the passphrase changed or `tokens.enc` is corrupted. If you remember the passphrase, re-enter it in plugin settings. If the file is corrupt, delete `tokens.enc` and re-run `/seo-toolkit:seo-connect`.
-
-### "Credential vault not found — run seo-connect"
-
-No vault exists yet. Run `/seo-toolkit:seo-connect` to create one and add credentials.
-
-### "pip install failed — see install.log"
-
-Check `${CLAUDE_PLUGIN_DATA}/install.log`. Common causes: Python < 3.11 on PATH, no internet during first install, or missing C build tools for the `cryptography` package (install platform build tools, then restart the session).
+**"credentials.json is not valid JSON"** — you have a syntax error (trailing comma, missing quote). Fix it or delete and re-create via `/seo-toolkit:seo-setup`.

@@ -17,30 +17,24 @@ Usage::
 from __future__ import annotations
 
 import base64
-import os
 from typing import Any
 
 import httpx
 
-from .seo_vault import get_secret, resolve_passphrase
+from .credentials import canonical_path, get_credential
 
 _DFS_BASE = "https://api.dataforseo.com/v3"
 
 
 def _get_auth_header() -> str:
-    """Return Basic Auth header value derived from vault credentials."""
-    passphrase = resolve_passphrase()
-    login = password = ""
-    if passphrase:
-        login = get_secret("dataforseo", "login", passphrase) or ""
-        password = get_secret("dataforseo", "password", passphrase) or ""
-    # Fallbacks for scripted usage
-    login = login or os.environ.get("DATAFORSEO_LOGIN", "")
-    password = password or os.environ.get("DATAFORSEO_PASSWORD", "")
+    """Return Basic Auth header value derived from the credentials file."""
+    login = get_credential("dataforseo", "login", env_var="DATAFORSEO_LOGIN") or ""
+    password = get_credential("dataforseo", "password", env_var="DATAFORSEO_PASSWORD") or ""
     if not login or not password:
         raise RuntimeError(
-            "DataForSEO credentials not found. "
-            "Run /seo-toolkit:seo-connect dataforseo to configure them."
+            f"DataForSEO credentials not found. Add them to {canonical_path()} as "
+            '{"dataforseo": {"login": "...", "password": "..."}} '
+            "(or set DATAFORSEO_LOGIN / DATAFORSEO_PASSWORD env vars)."
         )
     token = base64.b64encode(f"{login}:{password}".encode()).decode()
     return f"Basic {token}"

@@ -15,28 +15,24 @@ Usage::
 from __future__ import annotations
 
 import base64
-import os
 from typing import Any
 
 import httpx
 
-from .seo_vault import get_secret, resolve_passphrase
+from .credentials import canonical_path, get_credential
 
 _MOZ_BASE = "https://lsapi.seomoz.com/v2"
 
 
 def _get_auth_header() -> str:
-    """Return Basic Auth header derived from vault credentials."""
-    passphrase = resolve_passphrase()
-    access_id = secret = ""
-    if passphrase:
-        access_id = get_secret("moz", "access_id", passphrase) or ""
-        secret = get_secret("moz", "secret", passphrase) or ""
-    access_id = access_id or os.environ.get("MOZ_ACCESS_ID", "")
-    secret = secret or os.environ.get("MOZ_SECRET", "")
+    """Return Basic Auth header derived from the credentials file."""
+    access_id = get_credential("moz", "access_id", env_var="MOZ_ACCESS_ID") or ""
+    secret = get_credential("moz", "secret", env_var="MOZ_SECRET") or ""
     if not access_id or not secret:
         raise RuntimeError(
-            "Moz credentials not found. Run /seo-toolkit:seo-connect moz to configure them."
+            f"Moz credentials not found. Add them to {canonical_path()} as "
+            '{"moz": {"access_id": "...", "secret": "..."}} '
+            "(or set MOZ_ACCESS_ID / MOZ_SECRET env vars)."
         )
     token = base64.b64encode(f"{access_id}:{secret}".encode()).decode()
     return f"Basic {token}"

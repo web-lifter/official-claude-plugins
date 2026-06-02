@@ -22,7 +22,7 @@ ultrathink
 - **Ahrefs API key** — required for the Ahrefs tier. Set as `AHREFS_API_KEY`. Provides DR, anchor text, first/last seen dates.
 - **Moz API credentials** — required for the Moz tier. Set `MOZ_ACCESS_ID` and `MOZ_SECRET_KEY`. Provides DA/PA and spam scores.
 - **Free tier** — uses Google search operators and a user-supplied GSC link report CSV (no API key required, but data is incomplete and indicative only).
-- **Plugin scripts** — `${CLAUDE_PLUGIN_ROOT}/scripts/lib/ahrefs_client.py` and `moz_client.py` wrap the paid-tier APIs; `seo_vault.py` resolves secrets.
+- **Plugin scripts** — `${CLAUDE_PLUGIN_ROOT}/scripts/lib/ahrefs_client.py` and `moz_client.py` wrap the paid-tier APIs; `credentials.py` reads keys from the plaintext credentials file.
 - See `reference.md` for the anchor-text taxonomy, toxicity indicators, authority banding definitions, and the disavow file format.
 
 ## Tool Use Rationale
