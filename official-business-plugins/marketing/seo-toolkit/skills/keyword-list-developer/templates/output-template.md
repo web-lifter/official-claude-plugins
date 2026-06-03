@@ -85,7 +85,7 @@ keyword-cluster run \
   --keywords {{csv_path}} \
   --pages <pages.csv> \
   --method kmeans \
-  --clusters auto \
+  --auto-k silhouette \
   --output ${CLAUDE_PLUGIN_DATA}/clusters/{{slug}}/
 ```
 

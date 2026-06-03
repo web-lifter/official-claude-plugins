@@ -27,7 +27,7 @@ ultrathink
 
 Builds the definitive master keyword list for a business or campaign. Ingests seed terms and business context, then expands coverage through multiple sources: SerpAPI related/PAA queries, DataForSEO Keywords-for-Site, Google Search Console top queries (if connected), competitor keyword extraction, and LLM semantic expansion.
 
-The output is a deduplicated, intent-classified CSV at `${CLAUDE_PLUGIN_DATA}/keywords/<slug>-master.csv` with a precise schema consumed directly by the external `keyword-clustering` package. This is the canonical handoff between research and strategy.
+The output is a deduplicated, intent-classified CSV at `${CLAUDE_PLUGIN_DATA}/keywords/<slug>-master.csv`, plus a `focus.json` capturing what to prioritise and exclude. Both are consumed directly by `keyword-clustering-and-mapping`. This is the canonical handoff between research and strategy.
 
 For the full CSV schema, source-code reference, deduplication rules, and volume-floor guidelines see `reference.md`. A realistic end-to-end run is shown in `examples/example-output.md`.
 
@@ -59,28 +59,36 @@ The user has provided the following seed terms and business context:
 
 $ARGUMENTS
 
-If no arguments were provided, begin Phase 1 by asking for seed terms, business description, market/locale, and target audience before proceeding.
+If no arguments were provided, begin Phase 1 with the focus gate — ask for seed terms, business description, services to **prioritise**, services/topics to **exclude**, and market/locale — before proceeding.
 
 ---
 
-## Phase 1: Seed Intake and Scoping
+## Phase 1: Focus Intake and Scoping
 
 ### Objective
-Define the scope and quality parameters for the master list.
+Pin down *what to target and what to exclude* before any expansion — this is the gate that stops the list filling with keywords for services the business doesn't offer.
 
-1. Ask (or extract from $ARGUMENTS):
-   - **Seed terms** — existing keywords or CSV path from a prior `keyword-research` run
-   - **Business context** — what the business sells, its primary audience, geographic market
-   - **Market / locale** — en-AU (default), en-US, en-GB
-   - **Volume floor** — minimum monthly search volume to include (default: 50)
-   - **Maximum list size** — upper bound for output (default: 1,000 keywords)
-   - **Include branded terms?** — yes/no (default: yes, segregated)
-   - **Include competitor brand terms?** — yes/no (default: no)
-2. Derive a URL-safe slug from the primary business or campaign name.
-3. Confirm the output CSV path: `${CLAUDE_PLUGIN_DATA}/keywords/<slug>-master.csv`
+1. **Focus gate — use `AskUserQuestion`** (do not infer silently). Capture, even if some come from `$ARGUMENTS`:
+   - **Services / topics to prioritise** — the offerings to build the list around (e.g. "web design", "PPC management", "Shopify development").
+   - **Services / topics to EXCLUDE** — things the business does **not** offer and must be kept out (e.g. "SEO", "digital marketing", "logo design"). These become a hard negative filter.
+   - **Market / locale & target cities** — en-AU (default), en-US, en-GB; plus any priority cities/regions for local intent.
+   - **Intent focus** — commercial/transactional (buyer intent) vs informational, or balanced.
+2. Confirm the remaining scope parameters (defaults in brackets): **seed terms** (or a prior `keyword-research` CSV), **volume floor** (50), **maximum list size** (1,000), **branded terms** (yes, segregated), **competitor brand terms** (no).
+3. Derive a URL-safe slug from the primary business or campaign name.
+4. **Persist the focus** to `.anthril/data/keyword-clustering-and-mapping/focus.json` so the clustering skill can re-apply it:
+   ```json
+   {
+     "prioritise": ["web design", "ppc management", "shopify development"],
+     "exclude": ["seo", "digital marketing"],
+     "locale": "en-AU",
+     "cities": ["perth", "sydney", "melbourne", "brisbane"],
+     "intent_focus": "commercial"
+   }
+   ```
+5. Confirm the output CSV path: `${CLAUDE_PLUGIN_DATA}/keywords/<slug>-master.csv`.
 
 ### Output
-Confirmed scope parameters and slug.
+Confirmed prioritise/exclude focus, scope parameters, slug, and a written `focus.json`.
 
 ---
 
@@ -116,7 +124,7 @@ Apply the deduplication rules and source-priority order documented in `reference
 2. Remove exact duplicates; keep the record with the highest-quality source (dataforseo-volume > serpapi > llm-semantic).
 3. Remove near-duplicates (singular/plural, hyphenation variants, common misspellings) — keep canonical form.
 4. Apply volume floor — drop keywords with confirmed volume below the floor. For `[ESTIMATED]` items, apply judgement: keep if semantically valuable.
-5. Remove clearly off-topic candidates — log reason in exclusion notes.
+5. **Apply the exclusion filter from `focus.json`.** Drop any candidate whose terms match an excluded service/topic (whole-word match on the `exclude` list). This is the primary defence against off-service keywords — be decisive. Also remove clearly off-topic candidates. Log every drop (term + matched exclusion) in the exclusion notes; record the excluded count.
 6. If list exceeds maximum list size after filtering, apply a secondary filter: sort by volume descending, keep top N up to max.
 
 ### Output
@@ -169,8 +177,7 @@ Save the master CSV and produce the handoff summary.
    - Top 10 Quick Wins (volume ≥ floor, difficulty ≤ 30)
    - Data quality notes (ESTIMATED flags, exclusions, missing data)
 3. Append a **handoff note** directing the user to run `keyword-clustering-and-mapping`:
-   > Master list ready. Run `keyword-clustering-and-mapping` with:
-   > `keyword-cluster run --keywords {{csv_path}} --pages <pages.csv> --method kmeans --clusters auto`
+   > Master list ready at `{{csv_path}}` and focus saved to `focus.json`. Run the **`keyword-clustering-and-mapping`** skill next — it is self-contained (sets up its own venv and runs the bundled engine), picks up `focus.json` automatically, and will ask which mode you want (optimise-only / optimise + expand / greenfield). Have your sitemap or domain ready so it can build the pages CSV.
 
 ### Output
 CSV saved, markdown summary rendered, handoff note appended.
@@ -185,14 +192,14 @@ Use the template at `templates/output-template.md`. The CSV schema is defined in
 
 ## Behavioural Rules
 
-1. **Schema integrity is non-negotiable.** The output CSV must exactly match the schema in `reference.md`. The `keyword-clustering` package will fail silently on schema mismatches.
+1. **Schema integrity is non-negotiable.** The output CSV must exactly match the schema in `reference.md`. `keyword-clustering-and-mapping` only strictly needs a `keyword` column, but a clean schema keeps scoring/intent accurate.
 2. **Source tags must be preserved.** The `source` column must reflect the actual data origin — never overwrite with a generic value.
 3. **ESTIMATED flags must propagate.** If a volume figure was estimated rather than retrieved from an API, the `volume` value must be prefixed `[ESTIMATED]` or stored as `-1` with a note.
 4. **Deduplication is a data decision, not a shortcut.** Log every deduplication decision in the exclusion notes section.
 5. **Maximum list size is a hard cap.** If the enriched list exceeds the user's stated maximum, trim by volume — do not ask the user to choose which keywords to drop individually.
 6. **Branded keywords are segregated, not removed.** Mark them with `intent: Navigational` and `sub_intent: Navigational/Brand`. Never silently drop them.
 7. **Australian English in all narrative output.** CSV column names are in US English (industry standard). Report text uses Australian English.
-8. **Handoff note is mandatory.** Every run must end with the exact CLI command to feed the CSV into `keyword-clustering-and-mapping`. Do not omit it.
+8. **Handoff note is mandatory.** Every run must end by pointing the user to `keyword-clustering-and-mapping` as the next step, and confirm `focus.json` was written. Do not omit it.
 9. **Warn on thin lists.** If the final list is under 50 keywords, flag this prominently — clustering will produce poor results below this threshold.
 10. **No filler.** Do not pad the report with generic SEO commentary. Every sentence must be actionable or data-derived.
 

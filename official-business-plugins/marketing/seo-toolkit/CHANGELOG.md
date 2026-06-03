@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.1.0] - 2026-06-03
+
+### Added
+- **`keyword-clustering-and-mapping` is now fully self-contained.** The clustering engine is vendored under `skills/keyword-clustering-and-mapping/scripts/keyword_clustering/` and run locally via `scripts/run_clustering.py` — no external `keyword-cluster` CLI or network API. `scripts/setup_env.py` builds a venv from `scripts/requirements.txt` (degrades to tf-idf if `sentence-transformers` is unavailable). Helpers: `scripts/crawl_pages.py`, `scripts/build_dashboard.py`.
+- **Page-type & intent-aware page mapping** (`keyword_clustering/page_types.py` + `scoring.map_keywords_to_pages`). Every page is classified (`service/landing/blog/guide/news/tool/nav`) and commercial keywords are steered to service/landing pages and kept off blog/news/tool pages. A commercial cluster with no compatible page now becomes a genuine gap instead of being mis-mapped to whichever article has the richest body text.
+- **Structured site-architecture plan** (`keyword_clustering/architecture.py` → `architecture.json`): per-cluster `action` (create/optimise/consolidate/gap/deprioritise), target page type, hub/spoke role, URL slug, volume, and rationale. Narrated into `proposed-architecture.md`.
+- **Clustering-mode gate** (`AskUserQuestion`): `optimise_only`, `optimise_expand` (recommended), `greenfield`.
+- **Single offline `dashboard.html`** combining every chart (Plotly inlined — opens with no internet) plus rendered reports and data previews. Raw CSV/HTML/brief files are preserved.
+- **`keyword-list-developer` focus/exclusion gate**: a structured `AskUserQuestion` capturing services to prioritise/exclude, locale, and intent, persisted to `focus.json` and applied as a hard negative filter — stops off-service keywords (e.g. services the business doesn't offer) entering the list. The clustering skill re-applies `focus.json` via `--focus-file`.
+
+### Fixed
+- **Opportunity matrix no longer renders empty.** The engine now aliases `volume→search_volume` and `difficulty→keyword_difficulty`, and `plot_opportunity_matrix` tolerates either column name and shows a placeholder instead of an empty plot when difficulty data is absent.
+- Plotly marker sizes clip negative "unknown" sentinels (`-1`) that previously crashed chart generation on real provider data.
+- De-duplicated page-brief slugs (`api---integration-api---integration.md` → `api-integration.md`).
+
+## [2.0.1] - 2026-06-03
+
+### Fixed
+- **`keyword-clustering-and-mapping` skill now matches the real `keyword-cluster` CLI.** Earlier docs described an interface the package does not have, so runs failed or produced no usable mapping:
+  - `--pages` requires `url,page_name` columns (was wrongly documented as `url,title,h1,meta_description,word_count`).
+  - Documented the `crawl` / `enrich-pages` subcommand that enriches a pages CSV with `title`/`meta_description`/`h1`/`headings`/`body_excerpt`, which the run folds into page-matching text to sharpen mapping.
+  - Cluster count: `--clusters` is an integer only (default 8); automatic selection is `--auto-k silhouette` for kmeans/agglomerative. Removed the invalid `--clusters auto`.
+  - Embedding presets corrected to the real `ST_PRESETS` (`tfidf` default, `mini`→all-MiniLM-L6-v2, `mpnet`→all-mpnet-base-v2, `e5-*`, `bge-*`); semantic embeddings require `--similarity semantic|hybrid`. Removed the non-existent `MiniLM`/`multilingual-MiniLM`/`OpenAI` options and the bogus OpenAI-key prerequisite.
+- **Corrected output filenames and schemas** across SKILL.md, reference.md, the content-strategist agent, templates, and examples: `page_map.csv`→`keyword_page_map.csv` (per-keyword) and `gap_report.csv`→`content_gap_report.csv` (per-keyword), plus the real columns for `cannibalization_report.csv` and `cluster_summary.csv`, and documented `cluster_quality_report.csv`.
+- **`internal-linking-planner` and `keyword-list-developer`** updated to reference the correct output filenames and the `--auto-k silhouette` invocation, so cross-skill handoffs resolve to files that actually exist.
+
 ## [2.0.0] - 2026-06-02
 
 ### Changed (BREAKING)

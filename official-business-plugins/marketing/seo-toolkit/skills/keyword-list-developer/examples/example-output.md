@@ -125,7 +125,7 @@ keyword-cluster run \
   --keywords /home/user/.claude/plugin-data/keywords/harbour-finance-master.csv \
   --pages pages.csv \
   --method kmeans \
-  --clusters auto \
+  --auto-k silhouette \
   --output /home/user/.claude/plugin-data/clusters/harbour-finance/
 ```
 

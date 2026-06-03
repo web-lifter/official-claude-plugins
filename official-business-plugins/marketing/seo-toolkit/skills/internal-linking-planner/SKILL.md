@@ -21,7 +21,7 @@ ultrathink
 ## Prerequisites
 
 - **Sitemap or URL list** — XML sitemap URL, sitemap file, or plain-text URL list.
-- **Cluster handoff (optional)** — `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/` containing `page_map.csv` and `cluster_summary.csv` from `keyword-clustering-and-mapping`. Improves classification accuracy.
+- **Cluster handoff (optional)** — `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/` containing `keyword_page_map.csv` and `cluster_summary.csv` from `keyword-clustering-and-mapping`. Improves classification accuracy.
 - **Existing link matrix (optional)** — CSV of `source_url,target_url[,anchor]` from Screaming Frog, Ahrefs, or similar. Without this, in-degree scores are estimated from URL depth and cluster role.
 - **Plugin helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/sitemap_parser.py` and `crawler.py` are used to fetch and parse sitemaps when a URL is supplied.
 - See `reference.md` for the hub-and-spoke model, anchor-text best practice, link-depth principle, PageRank flow rules, and orphan remediation matrix.
@@ -74,7 +74,7 @@ Normalise the URL set and confirm clustering source and recommendation caps.
 3. Exclude URLs that should not be linked to internally: `/wp-admin/`, `/wp-json/`, `/feed/`, `/tag/`, `/author/`, pagination pages (`?page=`, `/page/2/`), and any URL pattern the user flags as excluded.
 4. Report URL count and any parsing issues.
 5. Ask (or extract from `$ARGUMENTS`):
-   - **Cluster source** — use an existing handoff at `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/` (prefers `page_map.csv` and `cluster_summary.csv`) or build clusters ad-hoc from URL structure and titles?
+   - **Cluster source** — use an existing handoff at `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/` (prefers `keyword_page_map.csv` and `cluster_summary.csv`) or build clusters ad-hoc from URL structure and titles?
    - **Max recommendations per page** — default 5; user may specify lower or higher.
    - **Preserve existing links** — if the user supplies a current link matrix, should recommendations add-only or also suggest removing low-value links?
 
@@ -91,9 +91,9 @@ Classify each URL into a topical cluster and label its role (hub / spoke / stand
 
 ### Steps
 **If using an existing handoff:**
-1. Load `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/page_map.csv` — maps each URL to its `cluster_id` and `role` (hub / spoke / orphan).
-2. Load `cluster_summary.csv` — provides `parent_topic` and `hub_url` per cluster.
-3. Mark URLs not present in the page map as `unclassified`.
+1. Load `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/keyword_page_map.csv` — per-keyword rows with `recommended_url` and `cluster_label`. Group by `recommended_url` to map each existing URL to its dominant `cluster_label`.
+2. Load `cluster_summary.csv` — provides per-cluster aggregates (`cluster_label`, `keyword_count`, volume) used to size clusters and pick the highest-authority URL as the hub.
+3. Assign each URL's role (hub / spoke / standalone) here in Phase 2 — the handoff does not carry roles. Mark URLs absent from the map as `unclassified`.
 
 **If building ad-hoc:**
 1. Extract topic signals from each URL: path segments, slug keywords.
@@ -146,7 +146,7 @@ Confirm exactly one hub per cluster; identify orphan candidates. See `reference.
 Confirm or assign the hub page for each cluster:
 
 - The hub page should be the highest composite authority page in the cluster
-- If a `page_map.csv` handoff is used, the hub is already designated
+- A `keyword_page_map.csv` handoff does not designate a hub — pick it here from the highest-authority URL mapped to the cluster
 - A cluster should have exactly one hub; if multiple strong candidates exist, recommend consolidation (e.g. merge two thin hub candidates into one canonical hub)
 - Standalone pages with no cluster should either be assigned to the nearest cluster or flagged as orphan candidates
 
@@ -215,7 +215,7 @@ Markdown document saved as `internal-linking-plan-<domain>-<YYYY-MM-DD>.md`.
 2. **Max 5 recommendations per page by default.** Over-linking dilutes anchor text diversity and looks unnatural. Respect the user's configured limit.
 3. **Anchor text must be descriptive.** Never recommend "click here" or "read more". Every anchor should describe what the target page is about.
 4. **Exact-match anchors capped at 1 per target.** If the target page is "best hiking boots Australia", only one internal link should use that exact phrase. Others should use variants.
-5. **Cluster handoff takes precedence.** If a valid page_map.csv is available, always use it. Do not re-cluster pages that have already been mapped.
+5. **Cluster handoff takes precedence.** If a valid `keyword_page_map.csv` handoff is available, always use it. Do not re-cluster pages that have already been mapped.
 6. **Flag orphans immediately.** An orphan page (no internal links pointing to it) is both an SEO risk and a content investment wasted. Prioritise connecting orphans.
 7. **3-click rule.** No page that has external backlinks or monetisation value should be more than 3 clicks from the homepage. Flag violations.
 8. **Australian English throughout.** Optimise, recognise, analyse, colour.
@@ -230,5 +230,5 @@ Markdown document saved as `internal-linking-plan-<domain>-<YYYY-MM-DD>.md`.
 2. **Site has no clear topical clustering** (e.g. a news blog with 1,000 unrelated articles) → Apply a flat link architecture instead of hub-and-spoke. Recommend category/tag pages as pseudo-hubs.
 3. **All pages are already highly interlinked** → Audit for anchor-text diversity issues and over-linking instead of adding more links.
 4. **User provides no existing link data** → Note that in-degree scores are estimated from URL structure. Recommend the user supply a link matrix from Screaming Frog or Ahrefs for a more accurate authority score.
-5. **Cluster handoff is available but page_map.csv is incomplete** → Use handoff for classified pages; fall back to ad-hoc for unclassified URLs. Note the gap.
+5. **Cluster handoff is available but `keyword_page_map.csv` is incomplete** → Use handoff for classified pages; fall back to ad-hoc for unclassified URLs. Note the gap.
 6. **Multilingual or multi-region site** → Treat each language/region path as a separate site for clustering purposes (e.g. `/en/` and `/fr/` are separate clusters).

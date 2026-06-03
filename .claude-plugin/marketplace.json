@@ -218,7 +218,7 @@
     },
     {
       "name": "seo-toolkit",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "description": "19 skills for end-to-end SEO — keyword research + list dev + clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder). Credentials via a single plaintext credentials.json — no vault or OAuth.",
       "source": "./official-business-plugins/marketing/seo-toolkit",
       "category": "marketing",

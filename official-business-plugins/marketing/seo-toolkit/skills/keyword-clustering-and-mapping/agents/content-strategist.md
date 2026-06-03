@@ -18,20 +18,21 @@ When artefacts from the `keyword-clustering-and-mapping` skill exist under `${CL
 
 | File | Columns | Purpose |
 |---|---|---|
-| `clustered_keywords.csv` | `keyword, cluster_id, cluster_label, parent_topic, intent, similarity_score` | Every keyword assigned to a cluster with its intent profile |
-| `page_map.csv` | `cluster_id, target_url, confidence, status` | Maps each cluster to an existing URL (`mapped`), an identified gap (`gap`), or a cannibalisation conflict (`cannibalised`) |
-| `gap_report.csv` | `keyword, cluster_id, volume, opportunity_score, suggested_intent` | Keywords with no existing page ranked for them, scored by opportunity |
-| `cannibalization_report.csv` | `cluster_id, urls[], conflict_severity` | Clusters where multiple URLs are competing, diluting ranking signals |
-| `cluster_summary.csv` | `cluster_id, cluster_label, parent_topic, keyword_count, total_volume, avg_difficulty` | Rolled-up cluster metrics for prioritisation |
+| `clustered_keywords.csv` | `keyword, cluster_id, cluster_label, primary_intent, recommended_page, recommended_url, page_similarity_score, match_confidence, content_gap, …` | Every keyword assigned to a cluster, with its intent, best page match, and gap flag |
+| `keyword_page_map.csv` | `keyword, recommended_page, recommended_url, page_similarity_score, match_confidence, cluster_label, primary_intent` | Per-keyword best existing-page match (aggregate by `cluster_label` for a cluster view) |
+| `content_gap_report.csv` | `keyword, cluster_label, primary_intent, search_volume, keyword_difficulty, opportunity_score, page_similarity_score` | Keywords with no confident page match, scored by opportunity |
+| `cannibalization_report.csv` | `cluster_id, cluster_label, cannibalization_type, detail, keyword_count` | Clusters where multiple URLs compete (`ranking_cannibalization` / `mapping_conflict`), diluting ranking signals |
+| `cluster_summary.csv` | `cluster_id, cluster_label, keyword_count, top_keywords, search_volume_sum, search_volume_mean, keyword_difficulty_mean, opportunity_score_mean` | Rolled-up cluster metrics for prioritisation |
+| `cluster_quality_report.csv` | per-cluster quality (silhouette, intra-cluster similarity, sizes) | Diagnostics for degenerate runs |
 | `recommendations.md` | Narrative — | The clustering skill's own strategic recommendations |
 
 ### How to use the artefacts
 
 - **Always load `cluster_summary.csv` first** to understand the full topic landscape before diving into individual clusters.
-- **Prioritise by `opportunity_score` in `gap_report.csv`**, not by raw volume alone — the score weights volume against difficulty and current cannibalisation risk.
-- **Resolve cannibalisation before creating new content.** If `cannibalization_report.csv` flags a cluster as `HIGH` severity, recommend consolidation (301 redirect + canonical) before any new content brief for that cluster.
-- **Anchor every recommendation to a `cluster_id` and `parent_topic`**, not to ad-hoc keyword lists. This keeps `content-brief-generator` and `content-gap-analysis` aligned with the same source of truth.
-- **Respect the `intent` field in `clustered_keywords.csv`.** A cluster labelled `commercial-investigation` should produce a comparison/review content type, not a how-to guide.
+- **Prioritise by `opportunity_score` in `content_gap_report.csv`**, not by raw volume alone — the score weights volume against difficulty. Roll up per-keyword gap rows by `cluster_label` to rank cluster-level opportunities.
+- **Resolve cannibalisation before creating new content.** If `cannibalization_report.csv` flags a cluster (`cannibalization_type` = `ranking_cannibalization` or `mapping_conflict`), recommend consolidation (301 redirect + canonical) before any new content brief for that cluster.
+- **Anchor every recommendation to a `cluster_id` / `cluster_label`**, not to ad-hoc keyword lists. This keeps `content-brief-generator` and `content-gap-analysis` aligned with the same source of truth.
+- **Respect the `primary_intent` field in `clustered_keywords.csv`.** A cluster with `commercial` intent should produce a comparison/review content type, not a how-to guide.
 
 ### When artefacts are absent
 
@@ -40,10 +41,10 @@ If clustering artefacts do not exist, perform ad-hoc keyword grouping using sema
 ## Content gap analysis method
 
 1. Load `cluster_summary.csv` — map the full topic coverage.
-2. Cross-reference `page_map.csv` rows with `status = "gap"` — these are clusters with demand but no existing page.
-3. Rank gaps by `opportunity_score` from `gap_report.csv`.
-4. For each top-10 gap: identify the target intent from `clustered_keywords.csv`, identify the content type from SERP analysis, estimate effort (word count, media requirements, internal linking needs).
-5. Flag any `cannibalised` clusters as requiring consolidation rather than new content creation.
+2. Read `content_gap_report.csv` (or filter `clustered_keywords.csv` where `content_gap` is true) — these are keywords/clusters with demand but no confident existing-page match.
+3. Roll up gap rows by `cluster_label` and rank by `opportunity_score` (and total `search_volume`).
+4. For each top-10 gap cluster: identify the target intent from `primary_intent`, identify the content type from SERP analysis, estimate effort (word count, media requirements, internal linking needs).
+5. Flag clusters appearing in `cannibalization_report.csv` as requiring consolidation rather than new content creation.
 
 ## Content brief method
 
@@ -52,11 +53,11 @@ A brief produced from cluster artefacts must include:
 - **Cluster ID and label** — anchors the brief to the source cluster
 - **Parent topic** — the pillar page this brief belongs under
 - **Primary keyword + secondary keywords** — pulled from `clustered_keywords.csv` for that `cluster_id`
-- **Target intent** — from the cluster's `intent` field
+- **Target intent** — from the cluster's `primary_intent` field
 - **Recommended content type** — derived from SERP analysis via `serp-analyst` agent
 - **Target word count** — based on SERP competitive analysis
 - **Suggested URL slug** — consistent with existing URL taxonomy
-- **Internal linking requirements** — which existing pages should link to this, and which pages this should link to (drawn from `page_map.csv` and site crawl data)
+- **Internal linking requirements** — which existing pages should link to this, and which pages this should link to (drawn from `keyword_page_map.csv` and site crawl data)
 - **Schema markup recommendation** — per the SERP feature profile from `serp-analyst`
 - **Competitor differentiation angle** — one concrete way to improve on the current top-3 results
 

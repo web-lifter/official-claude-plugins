@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — `seo-toolkit` 2.1.0: self-contained clustering engine, page-type-aware mapping, architecture plan, unified dashboard (2026-06-03)
+
+`seo-toolkit` 2.0.1 → 2.1.0. The `keyword-clustering-and-mapping` skill is now fully self-contained and substantially smarter:
+
+- **Self-contained engine** — the clustering engine is vendored into `skills/keyword-clustering-and-mapping/scripts/` and run locally via `run_clustering.py` (venv built by `setup_env.py`). No external `keyword-cluster` CLI or network API. Degrades to tf-idf if `sentence-transformers` is unavailable.
+- **Page-type & intent-aware mapping** — pages are classified (service/landing/blog/guide/news/tool/nav) and commercial keywords are steered to service/landing pages, never blog/news/tool pages. Fixes the core failure where buyer-intent keywords were mis-mapped to blog posts and news articles.
+- **Structured architecture** — `architecture.json` (create/optimise/consolidate/deprioritise per cluster, hub/spoke, slugs) narrated into `proposed-architecture.md`. A new **mode gate** asks: optimise-only / optimise + expand / greenfield.
+- **One offline `dashboard.html`** — every chart (Plotly inlined) + reports in a single file that opens with no internet; raw files preserved.
+- **`keyword-list-developer` focus gate** — `AskUserQuestion` capturing prioritise/exclude/locale/intent → `focus.json`, applied as a hard negative filter and carried into clustering, so off-service keywords stop entering the list.
+- **Fixes** — opportunity matrix now populates (column aliasing + tolerant plotting), negative "unknown" (`-1`) sentinels no longer crash charts, and page-brief slugs are de-duplicated.
+
+**User action:** run `/plugin update`. On first clustering run the skill sets up its venv (semantic deps pull `torch` — a large one-time install).
+
+### Fixed — `seo-toolkit` 2.0.1: `keyword-clustering-and-mapping` docs corrected to the real CLI (2026-06-03)
+
+`seo-toolkit` 2.0.0 → 2.0.1. The `keyword-clustering-and-mapping` skill documented a `keyword-cluster` interface the package does not have, so runs failed or produced empty page-mapping. Verified every claim against the installed package and corrected the skill, its reference, agent, templates, examples, and the two downstream skills that consume its output:
+
+- **`--pages` requires `url,page_name`** (not the previously documented 5-column schema). Documented the `crawl` / `enrich-pages` subcommand that enriches pages with `title`/`meta_description`/`h1`/`headings`/`body_excerpt` — folded into the run's page-matching text to sharpen mapping.
+- **Cluster count**: `--clusters` is an integer only (default 8); automatic selection is `--auto-k silhouette` (kmeans/agglomerative). Removed the invalid `--clusters auto` from all skills/examples/templates.
+- **Embedding presets** corrected to the real set (`tfidf` default, `mini`, `mpnet`, `e5-*`, `bge-*`); semantic embeddings require `--similarity semantic|hybrid`. Removed the non-existent `MiniLM`/`multilingual-MiniLM`/`OpenAI` options and the bogus OpenAI-key prerequisite.
+- **Output filenames + schemas** fixed: `page_map.csv` → `keyword_page_map.csv`, `gap_report.csv` → `content_gap_report.csv` (both per-keyword), plus real `cannibalization_report.csv`/`cluster_summary.csv` columns and the previously undocumented `cluster_quality_report.csv`. `internal-linking-planner` and `keyword-list-developer` updated to match so cross-skill handoffs resolve to files that exist.
+
+**User action:** run `/plugin update` (then sanity-check this entry). No credential or config changes.
+
 ### Changed — `seo-toolkit` 2.0.0: credentials simplified to a plaintext file, vault + OAuth removed (2026-06-02)
 
 `seo-toolkit` 1.1.2 → 2.0.0 (**breaking**). The encrypted-vault + passphrase + OAuth + setup-wizard stack proved too hard to use. Replaced with the simplest possible model:

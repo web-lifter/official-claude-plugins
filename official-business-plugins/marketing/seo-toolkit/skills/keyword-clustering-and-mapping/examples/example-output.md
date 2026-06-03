@@ -2,7 +2,7 @@
 
 **Keywords CSV:** `/home/user/.claude/plugin-data/keywords/harbour-finance-master.csv`
 **Method:** kmeans | **Clusters requested:** 14 | **Clusters produced:** 14
-**Embedding model:** MiniLM (local)
+**Similarity:** semantic | **Embedding model:** mpnet (all-mpnet-base-v2, local)
 **SERP overlap:** Disabled
 **Generated:** 15/05/2026
 
@@ -141,8 +141,8 @@ _(Incorporated from `recommendations.md`)_
 | File | Path |
 |---|---|
 | Clustered keywords | `/home/user/.claude/plugin-data/clusters/harbour-finance/clustered_keywords.csv` |
-| Page map | `/home/user/.claude/plugin-data/clusters/harbour-finance/page_map.csv` |
-| Gap report | `/home/user/.claude/plugin-data/clusters/harbour-finance/gap_report.csv` |
+| Keyword page map | `/home/user/.claude/plugin-data/clusters/harbour-finance/keyword_page_map.csv` |
+| Content gap report | `/home/user/.claude/plugin-data/clusters/harbour-finance/content_gap_report.csv` |
 | Cannibalisation report | `/home/user/.claude/plugin-data/clusters/harbour-finance/cannibalization_report.csv` |
 | Cluster summary | `/home/user/.claude/plugin-data/clusters/harbour-finance/cluster_summary.csv` |
 | Handoff JSON | `/home/user/.claude/plugin-data/clusters/harbour-finance/handoff.json` |
