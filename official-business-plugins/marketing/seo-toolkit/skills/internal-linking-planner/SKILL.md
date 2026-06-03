@@ -12,16 +12,16 @@ ultrathink
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/plans/`.
-> Run `mkdir -p .anthril/plans` before the first `Write` call.
-> Primary artefact: `.anthril/plans/internal-linking-plan.md`.
+> All file outputs from this skill MUST be written under `.anthril/marketing/.seo/plans/`.
+> Run `mkdir -p .anthril/marketing/.seo/plans` before the first `Write` call.
+> Primary artefact: `.anthril/marketing/.seo/plans/internal-linking-plan.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
 ## Prerequisites
 
 - **Sitemap or URL list** — XML sitemap URL, sitemap file, or plain-text URL list.
-- **Cluster handoff (optional)** — `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/` containing `keyword_page_map.csv` and `cluster_summary.csv` from `keyword-clustering-and-mapping`. Improves classification accuracy.
+- **Cluster handoff (optional)** — `.anthril/marketing/.seo/clusters/<slug>/` containing `keyword_page_map.csv` and `cluster_summary.csv` from `keyword-clustering-and-mapping`. Improves classification accuracy.
 - **Existing link matrix (optional)** — CSV of `source_url,target_url[,anchor]` from Screaming Frog, Ahrefs, or similar. Without this, in-degree scores are estimated from URL depth and cluster role.
 - **Plugin helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/sitemap_parser.py` and `crawler.py` are used to fetch and parse sitemaps when a URL is supplied.
 - See `reference.md` for the hub-and-spoke model, anchor-text best practice, link-depth principle, PageRank flow rules, and orphan remediation matrix.
@@ -74,7 +74,7 @@ Normalise the URL set and confirm clustering source and recommendation caps.
 3. Exclude URLs that should not be linked to internally: `/wp-admin/`, `/wp-json/`, `/feed/`, `/tag/`, `/author/`, pagination pages (`?page=`, `/page/2/`), and any URL pattern the user flags as excluded.
 4. Report URL count and any parsing issues.
 5. Ask (or extract from `$ARGUMENTS`):
-   - **Cluster source** — use an existing handoff at `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/` (prefers `keyword_page_map.csv` and `cluster_summary.csv`) or build clusters ad-hoc from URL structure and titles?
+   - **Cluster source** — use an existing handoff at `.anthril/marketing/.seo/clusters/<slug>/` (prefers `keyword_page_map.csv` and `cluster_summary.csv`) or build clusters ad-hoc from URL structure and titles?
    - **Max recommendations per page** — default 5; user may specify lower or higher.
    - **Preserve existing links** — if the user supplies a current link matrix, should recommendations add-only or also suggest removing low-value links?
 
@@ -91,7 +91,7 @@ Classify each URL into a topical cluster and label its role (hub / spoke / stand
 
 ### Steps
 **If using an existing handoff:**
-1. Load `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/keyword_page_map.csv` — per-keyword rows with `recommended_url` and `cluster_label`. Group by `recommended_url` to map each existing URL to its dominant `cluster_label`.
+1. Load `.anthril/marketing/.seo/clusters/<slug>/keyword_page_map.csv` — per-keyword rows with `recommended_url` and `cluster_label`. Group by `recommended_url` to map each existing URL to its dominant `cluster_label`.
 2. Load `cluster_summary.csv` — provides per-cluster aggregates (`cluster_label`, `keyword_count`, volume) used to size clusters and pick the highest-authority URL as the hub.
 3. Assign each URL's role (hub / spoke / standalone) here in Phase 2 — the handoff does not carry roles. Mark URLs absent from the map as `unclassified`.
 

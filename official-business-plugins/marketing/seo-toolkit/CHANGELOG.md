@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.1] - 2026-06-03
+
+### Changed
+- **Output paths namespaced under `.anthril/marketing/.seo/`.** All skill artefacts that previously wrote to top-level `.anthril/{reports,audits,scaffolds,data,plans}/` now write under `.anthril/marketing/.seo/` (sub-folders preserved). Output artefacts previously under `${CLAUDE_PLUGIN_DATA}` (`keywords/`, `clusters/`, `serp-analysis/`, `cwv/`) also move to `.anthril/marketing/.seo/`. Credentials (`credentials.json`), the bundled clustering venv, and caches remain in `${CLAUDE_PLUGIN_DATA}` so runtime/auth is unaffected.
+
 ## [2.1.0] - 2026-06-03
 
 ### Added

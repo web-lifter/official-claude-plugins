@@ -12,9 +12,9 @@ ultrathink
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/reports/content-gap-analysis/`.
-> Run `mkdir -p .anthril/reports/content-gap-analysis` before the first `Write` call.
-> Primary artefact: `.anthril/reports/content-gap-analysis/<artefact>`.
+> All file outputs from this skill MUST be written under `.anthril/marketing/.seo/reports/content-gap-analysis/`.
+> Run `mkdir -p .anthril/marketing/.seo/reports/content-gap-analysis` before the first `Write` call.
+> Primary artefact: `.anthril/marketing/.seo/reports/content-gap-analysis/<artefact>`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -54,7 +54,7 @@ If no domains are provided, ask for them before proceeding.
   - DataForSEO API credentials (`DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD`) — preferred path; client at `${CLAUDE_PLUGIN_ROOT}/scripts/lib/dataforseo_client.py`.
   - Ahrefs API key (`AHREFS_API_KEY`) — uses `${CLAUDE_PLUGIN_ROOT}/scripts/lib/ahrefs_client.py`.
   - SerpAPI key (`SERPAPI_KEY`) — qualitative fallback via `${CLAUDE_PLUGIN_ROOT}/scripts/lib/serpapi_client.py`.
-- **Cluster handoff (optional)** — output from `keyword-clustering-and-mapping` at `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/` (provides `clustered_keywords.csv` and `cluster_summary.csv`).
+- **Cluster handoff (optional)** — output from `keyword-clustering-and-mapping` at `.anthril/marketing/.seo/clusters/<slug>/` (provides `clustered_keywords.csv` and `cluster_summary.csv`).
 - See `reference.md` for the topical-authority model, opportunity scoring formula, and content-angle matrix.
 
 ## Tool Use Rationale
@@ -74,9 +74,9 @@ Resolve target vs competitor domains, cluster source, and opportunity-scoring we
 1. Parse the domain list from `$ARGUMENTS`. Identify which is the target (first domain, or ask if ambiguous).
 2. Ask (or extract from `$ARGUMENTS`):
    - **Comparison mode** — all competitors pooled into one gap set, or per-competitor gap analysis (separate gap per competitor)?
-   - **Cluster source** — use an existing handoff from `keyword-clustering-and-mapping` at `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/` if available, or build clusters ad-hoc?
+   - **Cluster source** — use an existing handoff from `keyword-clustering-and-mapping` at `.anthril/marketing/.seo/clusters/<slug>/` if available, or build clusters ad-hoc?
    - **Opportunity scoring weights** — default is equal weight (volume 33%, difficulty inverse 33%, position gap 33%); the user may shift weights toward volume (traffic focus), difficulty inverse (quick wins), or position gap (competition intensity).
-3. Check for an existing cluster handoff: look for `${CLAUDE_PLUGIN_DATA}/clusters/*/handoff.json`. If found, list available slugs and ask which to use.
+3. Check for an existing cluster handoff: look for `.anthril/marketing/.seo/clusters/*/handoff.json`. If found, list available slugs and ask which to use.
 
 ### Output
 
@@ -142,7 +142,7 @@ Group gap keywords into topical clusters using either an existing handoff or ad-
 
 ### Steps
 **If using an existing handoff:**
-1. Load `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/clustered_keywords.csv` and `cluster_summary.csv`.
+1. Load `.anthril/marketing/.seo/clusters/<slug>/clustered_keywords.csv` and `cluster_summary.csv`.
 2. Map each gap keyword to its cluster using the `cluster_id` and `parent_topic` fields.
 3. For gap keywords not present in the existing cluster file, assign them to the nearest cluster by semantic similarity or create a new `ungrouped` cluster.
 

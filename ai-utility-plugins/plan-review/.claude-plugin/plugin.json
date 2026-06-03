@@ -1,6 +1,6 @@
 {
   "name": "plan-review",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Plan-vs-implementation auditing — run a full-stack plan-completion-audit and then close the loop with audit-resolver. Includes /plan-review:audit-resolve command.",
   "author": {
     "name": "John O'Connor",

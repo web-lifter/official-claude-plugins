@@ -10,9 +10,9 @@ effort: medium
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/data/color-palette/`.
-> Run `mkdir -p .anthril/data/color-palette` before the first `Write` call.
-> Primary artefact: `.anthril/data/color-palette/<artefact>`.
+> All file outputs from this skill MUST be written under `.anthril/marketing/.branding/data/color-palette/`.
+> Run `mkdir -p .anthril/marketing/.branding/data/color-palette` before the first `Write` call.
+> Primary artefact: `.anthril/marketing/.branding/data/color-palette/<artefact>`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

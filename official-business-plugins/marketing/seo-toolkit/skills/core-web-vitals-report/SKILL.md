@@ -11,9 +11,9 @@ ultrathink
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/reports/`.
-> Run `mkdir -p .anthril/reports` before the first `Write` call.
-> Primary artefact: `.anthril/reports/core-web-vitals-report.md`.
+> All file outputs from this skill MUST be written under `.anthril/marketing/.seo/reports/`.
+> Run `mkdir -p .anthril/marketing/.seo/reports` before the first `Write` call.
+> Primary artefact: `.anthril/marketing/.seo/reports/core-web-vitals-report.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -93,7 +93,7 @@ Retrieve CWV data for each URL via pagespeed_runner.py.
    python ${CLAUDE_PLUGIN_ROOT}/scripts/pagespeed_runner.py \
      --urls <url_list_file> \
      --strategy <mobile|desktop|both> \
-     --output ${CLAUDE_PLUGIN_DATA}/cwv/<slug>-cwv.json
+     --output .anthril/marketing/.seo/cwv/<slug>-cwv.json
    ```
 2. For each URL, extract from the PSI response (full schema: see `reference.md` — *pagespeed_runner.py Output Schema*):
    - **Field data (CrUX)** — real-user 75th percentile: LCP, INP, CLS, FCP, TTFB (where available)

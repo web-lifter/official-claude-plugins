@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — output paths namespaced per plugin (2026-06-03)
+
+Reworked where skills write their artefacts so each plugin owns a namespaced output root under `.anthril/`, instead of sharing top-level `.anthril/{reports,scaffolds,audits,...}` folders. Existing sub-folders are preserved under the new root (e.g. `.anthril/reports/x.md` → `.anthril/.economics/reports/x.md`).
+
+- `seo-toolkit` 2.1.0 → 2.1.1 → `.anthril/marketing/.seo/` (output artefacts under `${CLAUDE_PLUGIN_DATA}` — keywords/clusters/serp-analysis/cwv — also moved here; credentials, the venv and caches stay in `${CLAUDE_PLUGIN_DATA}`).
+- `brand-manager` 1.0.3 → 1.0.4 → `.anthril/marketing/.branding/`.
+- `plan-review` 2.2.1 → 2.2.2 → `.anthril/.plan-review/`.
+
+Note: `economics`, `data-science`, and `ppc-management` were remapped on disk too (`.anthril/.economics/`, `.anthril/.data-science/`, `.anthril/marketing/.ppc/`) but are gitignored in this repo, so those changes are local-only here.
+
 ### Added — `seo-toolkit` 2.1.0: self-contained clustering engine, page-type-aware mapping, architecture plan, unified dashboard (2026-06-03)
 
 `seo-toolkit` 2.0.1 → 2.1.0. The `keyword-clustering-and-mapping` skill is now fully self-contained and substantially smarter:

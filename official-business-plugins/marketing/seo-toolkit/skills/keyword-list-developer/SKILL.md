@@ -5,7 +5,7 @@ argument-hint: [seed-terms-and-business-context]
 allowed-tools: Read Write Edit
 # Tool justification:
 #   Read  — load seed CSVs from prior keyword-research runs and the pages CSV (Phase 1)
-#   Write — emit the master keyword CSV at ${CLAUDE_PLUGIN_DATA}/keywords/<slug>-master.csv (Phase 6)
+#   Write — emit the master keyword CSV at .anthril/marketing/.seo/keywords/<slug>-master.csv (Phase 6)
 #   Edit  — patch an existing master CSV in place when re-running enrichment-only passes (Phase 5)
 effort: medium
 # agent rationale: content-strategist persona governs intent classification and parent-topic tagging
@@ -17,9 +17,9 @@ ultrathink
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/data/`.
-> Run `mkdir -p .anthril/data` before the first `Write` call.
-> Primary artefact: `.anthril/data/keyword-list.csv`.
+> All file outputs from this skill MUST be written under `.anthril/marketing/.seo/data/`.
+> Run `mkdir -p .anthril/marketing/.seo/data` before the first `Write` call.
+> Primary artefact: `.anthril/marketing/.seo/data/keyword-list.csv`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -27,7 +27,7 @@ ultrathink
 
 Builds the definitive master keyword list for a business or campaign. Ingests seed terms and business context, then expands coverage through multiple sources: SerpAPI related/PAA queries, DataForSEO Keywords-for-Site, Google Search Console top queries (if connected), competitor keyword extraction, and LLM semantic expansion.
 
-The output is a deduplicated, intent-classified CSV at `${CLAUDE_PLUGIN_DATA}/keywords/<slug>-master.csv`, plus a `focus.json` capturing what to prioritise and exclude. Both are consumed directly by `keyword-clustering-and-mapping`. This is the canonical handoff between research and strategy.
+The output is a deduplicated, intent-classified CSV at `.anthril/marketing/.seo/keywords/<slug>-master.csv`, plus a `focus.json` capturing what to prioritise and exclude. Both are consumed directly by `keyword-clustering-and-mapping`. This is the canonical handoff between research and strategy.
 
 For the full CSV schema, source-code reference, deduplication rules, and volume-floor guidelines see `reference.md`. A realistic end-to-end run is shown in `examples/example-output.md`.
 
@@ -75,7 +75,7 @@ Pin down *what to target and what to exclude* before any expansion — this is t
    - **Intent focus** — commercial/transactional (buyer intent) vs informational, or balanced.
 2. Confirm the remaining scope parameters (defaults in brackets): **seed terms** (or a prior `keyword-research` CSV), **volume floor** (50), **maximum list size** (1,000), **branded terms** (yes, segregated), **competitor brand terms** (no).
 3. Derive a URL-safe slug from the primary business or campaign name.
-4. **Persist the focus** to `.anthril/data/keyword-clustering-and-mapping/focus.json` so the clustering skill can re-apply it:
+4. **Persist the focus** to `.anthril/marketing/.seo/data/keyword-clustering-and-mapping/focus.json` so the clustering skill can re-apply it:
    ```json
    {
      "prioritise": ["web design", "ppc management", "shopify development"],
@@ -85,7 +85,7 @@ Pin down *what to target and what to exclude* before any expansion — this is t
      "intent_focus": "commercial"
    }
    ```
-5. Confirm the output CSV path: `${CLAUDE_PLUGIN_DATA}/keywords/<slug>-master.csv`.
+5. Confirm the output CSV path: `.anthril/marketing/.seo/keywords/<slug>-master.csv`.
 
 ### Output
 Confirmed prioritise/exclude focus, scope parameters, slug, and a written `focus.json`.
@@ -169,7 +169,7 @@ Fully enriched list ready for CSV emission.
 ### Objective
 Save the master CSV and produce the handoff summary.
 
-1. Save the CSV to `${CLAUDE_PLUGIN_DATA}/keywords/<slug>-master.csv` with EXACT column order (see `reference.md` § Master CSV Output Schema — `keyword,volume,difficulty,intent,parent_topic,source,current_url,serp_features`).
+1. Save the CSV to `.anthril/marketing/.seo/keywords/<slug>-master.csv` with EXACT column order (see `reference.md` § Master CSV Output Schema — `keyword,volume,difficulty,intent,parent_topic,source,current_url,serp_features`).
 2. Produce a markdown summary report in the conversation:
    - Total keywords in master list
    - Breakdown by intent and difficulty band

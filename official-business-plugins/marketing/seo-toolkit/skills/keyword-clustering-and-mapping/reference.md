@@ -160,7 +160,7 @@ There is **no OpenAI embedding option**. Passing an unrecognised name like `Mini
 
 ## Handoff.json Schema
 
-Written to `${CLAUDE_PLUGIN_DATA}/clusters/<slug>/handoff.json`.
+Written to `.anthril/marketing/.seo/clusters/<slug>/handoff.json`.
 
 ```json
 {

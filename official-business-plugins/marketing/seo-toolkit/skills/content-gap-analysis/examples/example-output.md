@@ -125,7 +125,7 @@
 
 Ad-hoc clustering applied. Grouping method: semantic similarity via noun-phrase extraction + intent classification. 1,847 gap keywords grouped into 24 clusters in one pass.
 
-To refine these clusters into a full topical map with pillar/spoke assignments, run `keyword-clustering-and-mapping` with the gap keyword list as input and save the handoff to `${CLAUDE_PLUGIN_DATA}/clusters/trailblaze-gap-may26/`.
+To refine these clusters into a full topical map with pillar/spoke assignments, run `keyword-clustering-and-mapping` with the gap keyword list as input and save the handoff to `.anthril/marketing/.seo/clusters/trailblaze-gap-may26/`.
 
 ---
 

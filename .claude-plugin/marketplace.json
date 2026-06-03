@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "plan-review",
-      "version": "2.2.1",
+      "version": "2.2.2",
       "description": "Plan-vs-implementation auditing — run a full-stack plan-completion-audit and then close the loop with audit-resolver. Includes /utilities:audit-resolve command.",
       "source": "./ai-utility-plugins/plan-review",
       "category": "utilities",
@@ -192,7 +192,7 @@
     },
     {
       "name": "brand-manager",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "description": "9 skills for end-to-end brand creation — identity, guidelines, audience, competitors, logo briefs, colour, design tokens, legal disclaimers, and website copy",
       "source": "./official-business-plugins/marketing/brand-management",
       "category": "marketing",
@@ -218,7 +218,7 @@
     },
     {
       "name": "seo-toolkit",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "description": "19 skills for end-to-end SEO — keyword research + list dev + clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder). Credentials via a single plaintext credentials.json — no vault or OAuth.",
       "source": "./official-business-plugins/marketing/seo-toolkit",
       "category": "marketing",
