@@ -6,6 +6,10 @@
 #   - Version drift between marketplace.json plugin entries and each
 #     plugin's own plugin.json (which Claude Code silently lets win,
 #     causing published updates to appear to do nothing on user machines)
+#   - A plugin whose files changed without a version bump. Claude Code caches
+#     installed plugins in a version-keyed directory and only re-copies files
+#     when the version string changes, so a same-version content change never
+#     reaches end users ("the marketplace does not update"). PR-only.
 # =============================================================================
 
 name: Validate marketplace
@@ -24,6 +28,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history so the version-bump guard can diff against the PR base.
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -36,10 +43,28 @@ jobs:
       - name: Check every plugin.json is valid JSON
         run: |
           set -euo pipefail
-          for f in {lifestyle,smb,marketing,engineering,data-science,economics,utilities}/*/.claude-plugin/plugin.json; do
+          found=0
+          while IFS= read -r -d '' f; do
             echo "parsing $f"
             node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))"
-          done
+            found=$((found + 1))
+          done < <(find . -type d -name node_modules -prune -o \
+                     -type f -path '*/.claude-plugin/plugin.json' -print0)
+          echo "validated $found plugin.json file(s)"
+          if [ "$found" -eq 0 ]; then
+            echo "::error::no plugin.json files found — directory layout changed?"
+            exit 1
+          fi
 
       - name: Enforce marketplace ↔ plugin.json version sync
         run: node scripts/check-versions.mjs
+
+      - name: Enforce version bump on plugin content changes
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: origin/${{ github.base_ref }}
+          HEAD_REF: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=200 origin "${{ github.base_ref }}"
+          node scripts/check-version-bumps.mjs
