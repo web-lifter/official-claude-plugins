@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 # PostToolUse hook for Write|Edit.
 #
-# Two regimes:
-#
-# 1. Parent-repo plugins: when any file inside <category>/<plugin>/ is
-#    modified, require BOTH the plugin's plugin.json AND the root
-#    .claude-plugin/marketplace.json to be dirty.
-#
-# 2. anthril-os submodule plugins: when any file inside the submodule's
-#    plugin tree is modified, require BOTH the plugin's plugin.json AND
-#    anthril-os/.claude-plugin/marketplace.json to be dirty.
+# When any file inside <category>/<plugin>/ is modified, require BOTH the
+# plugin's plugin.json AND the root .claude-plugin/marketplace.json to be
+# dirty.
 #
 # Rationale: Claude Code's plugin marketplace caches do not auto-refresh.
 # The marketplace catalogue is the only signal users see when running
@@ -17,6 +11,9 @@
 # new behaviour ships silently and users on cached versions never receive it.
 #
 # Chains with changelog-reminder.sh + version-bump-reminder.sh.
+#
+# (The anthril-os repo carries its own copy of this hook; it is a separate
+# standalone repo, not a submodule here.)
 #
 # Implemented without jq so it runs on bare Git Bash on Windows.
 
@@ -49,80 +46,14 @@ if [ ! -d "$TARGET_DIR" ]; then
 fi
 
 REPO_ROOT=$(git -C "$TARGET_DIR" rev-parse --show-toplevel 2>/dev/null) || exit 0
+HOOK_REPO="$REPO_ROOT"
 
-case "$REPO_ROOT" in
-  */anthril-os) SUBMODULE_REGIME=1 ;;
-  *) SUBMODULE_REGIME=0 ;;
-esac
-
-# Find the parent repo root (parent of submodule) for hook self-identification.
-if [ "$SUBMODULE_REGIME" = "1" ]; then
-  HOOK_REPO=$(git -C "$(dirname "$REPO_ROOT")" rev-parse --show-toplevel 2>/dev/null || echo "")
-else
-  HOOK_REPO="$REPO_ROOT"
-fi
-
-if [ -z "$HOOK_REPO" ] || [ ! -f "$HOOK_REPO/.claude/hooks/plugin-manifest-reminder.sh" ]; then
+if [ ! -f "$HOOK_REPO/.claude/hooks/plugin-manifest-reminder.sh" ]; then
   exit 0
 fi
 
 cd "$REPO_ROOT"
 
-if [ "$SUBMODULE_REGIME" = "1" ]; then
-  # ---- anthril-os regime ----
-  # Walk up from the edited file's directory to find the nearest enclosing
-  # .claude-plugin/plugin.json — that defines the plugin root.
-  REL="${NORMALISED#${REPO_ROOT}/}"
-  PLUGIN_DIR=""
-  CANDIDATE=$(dirname "$REL")
-  while [ -n "$CANDIDATE" ] && [ "$CANDIDATE" != "." ] && [ "$CANDIDATE" != "/" ]; do
-    if [ -f "$REPO_ROOT/$CANDIDATE/.claude-plugin/plugin.json" ]; then
-      PLUGIN_DIR="$CANDIDATE"
-      break
-    fi
-    CANDIDATE=$(dirname "$CANDIDATE")
-  done
-
-  if [ -z "$PLUGIN_DIR" ]; then
-    # Edit was not inside a plugin tree (e.g. anthril-os/docs/...).
-    exit 0
-  fi
-
-  PLUGIN_NAME=$(basename "$PLUGIN_DIR")
-  PLUGIN_MANIFEST="$PLUGIN_DIR/.claude-plugin/plugin.json"
-  MARKETPLACE=".claude-plugin/marketplace.json"
-
-  SOURCE_DIRTY=$(git status --porcelain -- "$REL" 2>/dev/null || true)
-  if [ -z "$SOURCE_DIRTY" ]; then
-    exit 0
-  fi
-
-  PLUGIN_DIRTY=$(git status --porcelain -- "$PLUGIN_MANIFEST" 2>/dev/null || true)
-  MARKETPLACE_DIRTY=$(git status --porcelain -- "$MARKETPLACE" 2>/dev/null || true)
-
-  MISSING=""
-  if [ -z "$PLUGIN_DIRTY" ]; then
-    MISSING="anthril-os/${PLUGIN_MANIFEST}"
-  fi
-  if [ -z "$MARKETPLACE_DIRTY" ]; then
-    if [ -n "$MISSING" ]; then
-      MISSING="${MISSING} and anthril-os/${MARKETPLACE}"
-    else
-      MISSING="anthril-os/${MARKETPLACE}"
-    fi
-  fi
-
-  if [ -z "$MISSING" ]; then
-    exit 0
-  fi
-
-  REASON="anthril-os plugin source changed (${PLUGIN_NAME}: ${REL}) but ${MISSING} has not been updated. Bump the version in anthril-os/${PLUGIN_MANIFEST} (semver: patch for fixes, minor for new skills/features, major for breaking changes) AND update the matching entry in anthril-os/${MARKETPLACE} (version + description if scope changed). Both files must stay in sync — submodule marketplace caches do not auto-refresh."
-
-  printf '{"decision":"block","reason":"%s"}\n' "$REASON"
-  exit 0
-fi
-
-# ---- Parent repo regime ----
 # Only fire for files inside a known plugin tree.
 case "$NORMALISED" in
   */lifestyle/*|*/smb/*|*/marketing/*|*/engineering/*|*/data-science/*|*/economics/*|*/utilities/*|*/ai-utility-plugins/*|*/official-business-plugins/*|*/official-lifestyle-plugins/*) ;;

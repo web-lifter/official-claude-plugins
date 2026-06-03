@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # PostToolUse hook for Write|Edit.
 #
-# When a plugin.json (parent repo OR anthril-os submodule) is dirty BUT its
-# "version" field is unchanged vs HEAD, block the turn and tell the agent to
-# bump the version.
+# When a plugin.json is dirty BUT its "version" field is unchanged vs HEAD,
+# block the turn and tell the agent to bump the version.
 #
 # This catches edits that satisfy plugin-manifest-reminder.sh (the manifest
 # file is dirty) but didn't actually advance the semver — e.g. description
@@ -45,19 +44,9 @@ if [ ! -d "$TARGET_DIR" ]; then
   TARGET_DIR=$(dirname "$TARGET_DIR")
 fi
 REPO_ROOT=$(git -C "$TARGET_DIR" rev-parse --show-toplevel 2>/dev/null) || exit 0
+HOOK_REPO="$REPO_ROOT"
 
-# Find parent repo for hook self-identification (this script lives in
-# parent .claude/, not in the submodule).
-case "$REPO_ROOT" in
-  */anthril-os)
-    HOOK_REPO=$(git -C "$(dirname "$REPO_ROOT")" rev-parse --show-toplevel 2>/dev/null || echo "")
-    ;;
-  *)
-    HOOK_REPO="$REPO_ROOT"
-    ;;
-esac
-
-if [ -z "$HOOK_REPO" ] || [ ! -f "$HOOK_REPO/.claude/hooks/version-bump-reminder.sh" ]; then
+if [ ! -f "$HOOK_REPO/.claude/hooks/version-bump-reminder.sh" ]; then
   exit 0
 fi
 
@@ -105,15 +94,7 @@ if [ "$HEAD_VERSION" != "$WORKING_VERSION" ]; then
 fi
 
 # Version unchanged but file is dirty → nudge.
-PLUGIN_DIR=$(dirname "$(dirname "$REL")")
-PLUGIN_NAME=$(basename "$PLUGIN_DIR")
-
-case "$REPO_ROOT" in
-  */anthril-os) PREFIX="anthril-os/" ;;
-  *) PREFIX="" ;;
-esac
-
-REASON="${PREFIX}${REL} was modified but the version field is still ${HEAD_VERSION}. Bump it (semver: PATCH for fixes, MINOR for new skills/features, MAJOR for breaking changes) and update the matching entry in the marketplace catalogue. Plugin marketplace caches key off the version string — same-version manifests ship silently and users never receive the update."
+REASON="${REL} was modified but the version field is still ${HEAD_VERSION}. Bump it (semver: PATCH for fixes, MINOR for new skills/features, MAJOR for breaking changes) and update the matching entry in the marketplace catalogue. Plugin marketplace caches key off the version string — same-version manifests ship silently and users never receive the update."
 
 printf '{"decision":"block","reason":"%s"}\n' "$REASON"
 exit 0
