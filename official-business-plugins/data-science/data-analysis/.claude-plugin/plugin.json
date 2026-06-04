@@ -1,0 +1,19 @@
+{
+  "name": "data-analysis",
+  "version": "1.0.4",
+  "description": "5 skills for data profiling, quality auditing, pipeline design, cohort analysis, and anomaly detection",
+  "author": {
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/data-science/data-analysis",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "data-science",
+    "data",
+    "analysis"
+  ],
+  "skills": "./skills/"
+}

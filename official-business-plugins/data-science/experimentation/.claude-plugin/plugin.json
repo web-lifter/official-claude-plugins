@@ -1,0 +1,24 @@
+{
+  "name": "experimentation",
+  "version": "1.0.2",
+  "description": "4 data-science skills for A/B test design, experiment readouts, time-series forecasting, and causal-impact analysis — turn hypothesis questions into rigorous test plans and readouts",
+  "author": {
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/data-science/experimentation",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "data-science",
+    "experimentation",
+    "ab-testing",
+    "forecasting",
+    "causal-inference"
+  ],
+  "skills": "./skills/",
+  "agents": [
+    "./skills/ab-test-designer/agents/stats-reviewer.md"
+  ]
+}
