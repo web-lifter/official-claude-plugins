@@ -1,0 +1,1 @@
+[] Needs to have a self learning engine. For example, I make changes to 8 out of 10 account campaign and send 7 of them back into a learning phase because of the scale of the changes. This needs to be documented so that future large scale modifications are spread out of a number of weeks.

@@ -10,9 +10,20 @@ effort: high
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.plan-review/audits/plan-completion-audit/`.
-> Run `mkdir -p .anthril/.plan-review/audits/plan-completion-audit` before the first `Write` call.
-> Primary artefact: `.anthril/.plan-review/audits/plan-completion-audit/<artefact>`.
+> Each audit run writes ONE timestamped report to:
+> `.anthril/audits/plan-completion-audit/<TIMESTAMP>.md`
+> where `<TIMESTAMP>` is `YYYY-MM-DD_HHMMSS`.
+> Before the first `Write`, capture the timestamp once and create the folder so every
+> artefact from this run shares the same stamp:
+> ```bash
+> AUDIT_TS=$(date +%Y-%m-%d_%H%M%S)
+> AUDIT_DIR=.anthril/audits/plan-completion-audit
+> mkdir -p "$AUDIT_DIR"
+> echo "$AUDIT_DIR/$AUDIT_TS.md"   # ← canonical report path for this run
+> ```
+> One run = one new file. NEVER overwrite or reuse a prior run's file, and NEVER write a
+> bare `audit.md` — the timestamp is what keeps runs from colliding and is how the
+> `[[audit-resolver]]` skill discovers the latest report.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -303,6 +314,11 @@ Detailed checklist in [`reference.md`](reference.md). Five things to verify:
 ## Reporting
 
 After all phases, produce a structured report. Use the template in `${CLAUDE_PLUGIN_ROOT}/skills/plan-completion-audit/templates/audit-report.md` as the base structure.
+
+Write the finished report to the canonical run path from the output-path directive above —
+`.anthril/audits/plan-completion-audit/<TIMESTAMP>.md` (the `$AUDIT_DIR/$AUDIT_TS.md`
+value you captured before the first `Write`). This is the single report file for this run; do not
+write it anywhere else and do not name it `audit.md`.
 
 The report must include:
 - A clear PASS / FAIL / NOT IMPLEMENTED / PASS WITH WARNINGS verdict per phase
