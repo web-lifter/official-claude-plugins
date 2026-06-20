@@ -11,9 +11,9 @@ ultrathink
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/marketing/.seo/audits/backlink-audit/`.
-> Run `mkdir -p .anthril/marketing/.seo/audits/backlink-audit` before the first `Write` call.
-> Primary artefact: `.anthril/marketing/.seo/audits/backlink-audit/<artefact>`.
+> All file outputs from this skill MUST be written under `.anthril/.marketing-os/seo/audits/backlink-audit/`.
+> Run `mkdir -p .anthril/.marketing-os/seo/audits/backlink-audit` before the first `Write` call.
+> Primary artefact: `.anthril/.marketing-os/seo/audits/backlink-audit/<artefact>`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

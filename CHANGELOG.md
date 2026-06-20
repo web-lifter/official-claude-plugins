@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — `seo-toolkit` 2.1.2: output root moved to `.anthril/.marketing-os/seo/` (2026-06-20)
+
+`seo-toolkit` 2.1.1 → 2.1.2. All 19 skills now write their artefacts under `.anthril/.marketing-os/seo/` instead of `.anthril/marketing/.seo/`, aligning the toolkit with the shared `.anthril/.marketing-os/` marketing workspace namespace. Existing sub-folders are preserved under the new root (`audits/`, `reports/`, `data/`, `scaffolds/`, `plans/`, `briefs/`, `clusters/`, `keywords/`, `serp-analysis/`, `cwv/`). The change touches every SKILL.md output directive and in-body path, plus the supporting `reference.md`, templates, the `content-strategist` agent, and example outputs; cross-skill handoffs (keyword-list-developer → keyword-clustering-and-mapping → content-brief-generator / content-gap-analysis / internal-linking-planner) were updated in lockstep so they still resolve. Credentials, the clustering venv, and caches remain in `${CLAUDE_PLUGIN_DATA}`.
+
+**User action:** run `/plugin update`.
+
 ### Changed — output paths namespaced per plugin (2026-06-03)
 
 Reworked where skills write their artefacts so each plugin owns a namespaced output root under `.anthril/`, instead of sharing top-level `.anthril/{reports,scaffolds,audits,...}` folders. Existing sub-folders are preserved under the new root (e.g. `.anthril/reports/x.md` → `.anthril/.economics/reports/x.md`).

@@ -12,9 +12,9 @@ ultrathink
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/marketing/.seo/briefs/`.
-> Run `mkdir -p .anthril/marketing/.seo/briefs` before the first `Write` call.
-> Primary artefact: `.anthril/marketing/.seo/briefs/content-brief.md`.
+> All file outputs from this skill MUST be written under `.anthril/.marketing-os/seo/briefs/`.
+> Run `mkdir -p .anthril/.marketing-os/seo/briefs` before the first `Write` call.
+> Primary artefact: `.anthril/.marketing-os/seo/briefs/content-brief.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -50,7 +50,7 @@ If neither a keyword nor a cluster ID is provided, ask before proceeding.
 
 ## Prerequisites
 
-- **Cluster handoff (optional)** — output from `keyword-clustering-and-mapping` under `.anthril/marketing/.seo/clusters/<slug>/`. When present, the brief is grounded in the cluster's hub keyword and intent profile; absent, the skill falls back to keyword-only mode.
+- **Cluster handoff (optional)** — output from `keyword-clustering-and-mapping` under `.anthril/.marketing-os/seo/clusters/<slug>/`. When present, the brief is grounded in the cluster's hub keyword and intent profile; absent, the skill falls back to keyword-only mode.
 - **PAA / SERP data (optional)** — the user may supply a People Also Ask list or screenshot to ground Phase 2; if absent, the skill drafts likely PAA questions and marks them `[est]`.
 - See `reference.md` for the full brief structure, word-count matrix, schema recommendation matrix, and E-E-A-T checklist.
 
@@ -68,13 +68,13 @@ Resolve target keyword vs cluster ID, load cluster context if any, and capture b
 
 ### Steps
 1. Identify whether the input is a keyword string or a cluster ID.
-   - If cluster ID: look for `.anthril/marketing/.seo/clusters/<slug>/handoff.json`. If found, load `cluster_summary.csv` and `clustered_keywords.csv` to extract `parent_topic`, `intent_profile`, and member keywords for the target cluster.
+   - If cluster ID: look for `.anthril/.marketing-os/seo/clusters/<slug>/handoff.json`. If found, load `cluster_summary.csv` and `clustered_keywords.csv` to extract `parent_topic`, `intent_profile`, and member keywords for the target cluster.
    - If keyword string: proceed with the keyword as-is.
 2. Ask the three AskUserQuestion items:
    - **Target funnel stage** — TOFU (awareness/informational), MOFU (consideration/commercial investigation), or BOFU (decision/transactional)?
    - **Word-count band** — 800 (short-form / FAQ), 1,500 (standard guide), or 2,500+ (comprehensive / pillar)?
    - **Brand voice notes** — any tone or style constraints? (e.g. "avoid jargon", "conversational but expert", "neutral and factual")
-3. If no cluster ID was supplied in `$ARGUMENTS` and a cluster handoff may exist, ask: "Do you have a cluster slug to load context from `.anthril/marketing/.seo/clusters/`? (optional — press Enter to skip)".
+3. If no cluster ID was supplied in `$ARGUMENTS` and a cluster handoff may exist, ask: "Do you have a cluster slug to load context from `.anthril/.marketing-os/seo/clusters/`? (optional — press Enter to skip)".
 4. If cluster context loaded, confirm: hub keyword, intent profile, top member keywords.
 
 ### Output

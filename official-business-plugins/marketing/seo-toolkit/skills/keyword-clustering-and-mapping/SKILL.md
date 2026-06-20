@@ -18,9 +18,9 @@ ultrathink
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/marketing/.seo/data/keyword-clustering-and-mapping/`.
-> Run `mkdir -p .anthril/marketing/.seo/data/keyword-clustering-and-mapping` before the first `Write` call.
-> Primary artefact: `.anthril/marketing/.seo/data/keyword-clustering-and-mapping/<artefact>`.
+> All file outputs from this skill MUST be written under `.anthril/.marketing-os/seo/data/keyword-clustering-and-mapping/`.
+> Run `mkdir -p .anthril/.marketing-os/seo/data/keyword-clustering-and-mapping` before the first `Write` call.
+> Primary artefact: `.anthril/.marketing-os/seo/data/keyword-clustering-and-mapping/<artefact>`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -76,7 +76,7 @@ The user has provided the following keyword CSV path and context:
 
 $ARGUMENTS
 
-If no arguments were provided, ask for the CSV path or offer to retrieve the most recent CSV from `.anthril/marketing/.seo/keywords/`.
+If no arguments were provided, ask for the CSV path or offer to retrieve the most recent CSV from `.anthril/.marketing-os/seo/keywords/`.
 
 ---
 
@@ -99,14 +99,14 @@ A working `$PY` interpreter with the engine importable.
 Confirm inputs are in order before running the engine.
 
 1. **Validate keyword CSV:** Read the file at the provided path. It needs at least a `keyword` column; `volume`/`difficulty`/`intent`/`current_url` enrich scoring and the opportunity matrix when present (the engine aliases `volume→search_volume`, `difficulty→keyword_difficulty` automatically).
-2. **Locate or generate pages CSV:** `--pages` needs at minimum **`url,page_name`**. Check `.anthril/marketing/.seo/data/keyword-clustering-and-mapping/pages.csv`. If absent, ask the user for a CSV or their domain, then build one from `<domain>/sitemap.xml` (the bundled `scripts/sitemap_parser.py` helper does this).
+2. **Locate or generate pages CSV:** `--pages` needs at minimum **`url,page_name`**. Check `.anthril/.marketing-os/seo/data/keyword-clustering-and-mapping/pages.csv`. If absent, ask the user for a CSV or their domain, then build one from `<domain>/sitemap.xml` (the bundled `scripts/sitemap_parser.py` helper does this).
    - **Recommended — enrich for sharper, page-type-aware mapping:** run
      ```bash
      $PY "${SCRIPTS}/crawl_pages.py" --pages pages.csv --output pages-enriched.csv
      ```
      to add `title`, `meta_description`, `h1`, `headings`, `body_excerpt`, `word_count`. The engine composes page-matching text from these *and* uses URL/title to classify each page's type. Feed the enriched CSV to `--pages`. (If a page's type is mis-detected, add an explicit `page_type` column to override it.)
-3. **Determine output directory:** `.anthril/marketing/.seo/data/keyword-clustering-and-mapping/output/`. Create if absent.
-4. **Load focus/exclusions:** if `.anthril/marketing/.seo/data/keyword-clustering-and-mapping/focus.json` exists (written by `keyword-list-developer`), pass it as `--focus-file` so off-service topics are dropped before clustering and marked `deprioritise` in the architecture.
+3. **Determine output directory:** `.anthril/.marketing-os/seo/data/keyword-clustering-and-mapping/output/`. Create if absent.
+4. **Load focus/exclusions:** if `.anthril/.marketing-os/seo/data/keyword-clustering-and-mapping/focus.json` exists (written by `keyword-list-developer`), pass it as `--focus-file` so off-service topics are dropped before clustering and marked `deprioritise` in the architecture.
 
 ### Output
 Validated keyword CSV, an enriched pages CSV, output dir, optional focus file.
@@ -169,7 +169,7 @@ Run the local engine — no external CLI.
 4. If the runner fails, display the full error and halt. Do not re-implement clustering by hand.
 
 ### Output
-Confirmed outputs at `.anthril/marketing/.seo/data/keyword-clustering-and-mapping/output/`, including `dashboard.html`.
+Confirmed outputs at `.anthril/.marketing-os/seo/data/keyword-clustering-and-mapping/output/`, including `dashboard.html`.
 
 ---
 
@@ -208,7 +208,7 @@ Produce the Anthril-standard markdown report and write the handoff JSON.
 7. **30/60/90-Day Roadmap** — 0–30: quick-win optimisations + fix cannibalisation; 31–60: create top gap pages by volume; 61–90: next gap pages + internal linking per the hub/spoke plan.
 8. **Dashboard & Raw Outputs** — link `dashboard.html` (single offline view of everything) and list the preserved CSV/HTML/brief paths.
 
-**Handoff JSON — write to `.anthril/marketing/.seo/clusters/<slug>/handoff.json`:**
+**Handoff JSON — write to `.anthril/.marketing-os/seo/clusters/<slug>/handoff.json`:**
 ```json
 {
   "slug": "<slug>",

@@ -12,7 +12,7 @@ You are a senior content strategist specialising in topic cluster architecture, 
 
 ## Cluster-grounded reasoning (CRITICAL)
 
-When artefacts from the `keyword-clustering-and-mapping` skill exist under `.anthril/marketing/.seo/clusters/<slug>/`, you MUST use them as the primary source of truth. These artefacts are:
+When artefacts from the `keyword-clustering-and-mapping` skill exist under `.anthril/.marketing-os/seo/clusters/<slug>/`, you MUST use them as the primary source of truth. These artefacts are:
 
 ### Artefact schema
 

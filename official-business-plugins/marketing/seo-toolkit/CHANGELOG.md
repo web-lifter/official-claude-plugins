@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.2] - 2026-06-20
+
+### Changed
+- **Output paths moved to `.anthril/.marketing-os/seo/`.** All 19 skills now write their artefacts under `.anthril/.marketing-os/seo/` instead of `.anthril/marketing/.seo/` (sub-folders `audits/`, `reports/`, `data/`, `scaffolds/`, `plans/`, `briefs/`, `clusters/`, `keywords/`, `serp-analysis/`, `cwv/` preserved). Aligns the SEO toolkit with the shared `.anthril/.marketing-os/` marketing workspace namespace. The change spans every SKILL.md output directive and in-body path reference, plus the supporting `reference.md`, templates, the `content-strategist` agent, and example outputs. Cross-skill handoffs (keyword-list-developer → keyword-clustering-and-mapping → content-brief-generator / content-gap-analysis / internal-linking-planner) updated in lockstep so they continue to resolve.
+
 ## [2.1.1] - 2026-06-03
 
 ### Changed

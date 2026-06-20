@@ -86,7 +86,7 @@ keyword-cluster run \
   --pages <pages.csv> \
   --method kmeans \
   --auto-k silhouette \
-  --output .anthril/marketing/.seo/clusters/{{slug}}/
+  --output .anthril/.marketing-os/seo/clusters/{{slug}}/
 ```
 
 Or use the `keyword-clustering-and-mapping` skill which will handle method selection interactively.

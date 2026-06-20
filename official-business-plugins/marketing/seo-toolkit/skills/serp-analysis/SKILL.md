@@ -17,9 +17,9 @@ ultrathink
 
 <!-- anthril-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/marketing/.seo/reports/`.
-> Run `mkdir -p .anthril/marketing/.seo/reports` before the first `Write` call.
-> Primary artefact: `.anthril/marketing/.seo/reports/serp-analysis.md`.
+> All file outputs from this skill MUST be written under `.anthril/.marketing-os/seo/reports/`.
+> Run `mkdir -p .anthril/.marketing-os/seo/reports` before the first `Write` call.
+> Primary artefact: `.anthril/.marketing-os/seo/reports/serp-analysis.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -195,7 +195,7 @@ Ranked opportunity list + content brief starter (format, word count, H1, SERP fe
 
 Use the template at `templates/output-template.md`. The report is markdown, one page per query.
 
-Persist the rendered report to `.anthril/marketing/.seo/serp-analysis/<slug>-<YYYY-MM-DD>.md` using the `Write` tool, where `<slug>` is derived from the query (lowercase, non-alphanumerics → `-`).
+Persist the rendered report to `.anthril/.marketing-os/seo/serp-analysis/<slug>-<YYYY-MM-DD>.md` using the `Write` tool, where `<slug>` is derived from the query (lowercase, non-alphanumerics → `-`).
 
 ---
 
