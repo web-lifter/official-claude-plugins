@@ -8,11 +8,11 @@ effort: medium
 
 # Stakeholder Brief Builder
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/briefs/`.
-> Run `mkdir -p .anthril/briefs` before the first `Write` call.
-> Primary artefact: `.anthril/briefs/stakeholder-brief.md`.
+> All file outputs from this skill MUST be written under `.project/briefs/`.
+> Run `mkdir -p .project/briefs` before the first `Write` call.
+> Primary artefact: `.project/briefs/stakeholder-brief.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

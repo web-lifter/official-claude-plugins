@@ -9,11 +9,11 @@ effort: high
 # Break-Even Scenario Modeller
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.economics/reports/`.
-> Run `mkdir -p .anthril/.economics/reports` before the first `Write` call.
-> Primary artefact: `.anthril/.economics/reports/break-even-analysis.md`.
+> All file outputs from this skill MUST be written under `.project/.economics/reports/`.
+> Run `mkdir -p .project/.economics/reports` before the first `Write` call.
+> Primary artefact: `.project/.economics/reports/break-even-analysis.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -98,9 +98,9 @@ The user implements the chart in their BI tool; this skill provides the structur
 
 ### Phase 6: Output
 
-Save as `.anthril/.economics/reports/break-even-analysis.md` .
+Save as `.project/.economics/reports/break-even-analysis.md` .
 
-Create the output folder first: `mkdir -p .anthril/.economics/reports`.
+Create the output folder first: `mkdir -p .project/.economics/reports`.
 
 ---
 

@@ -166,11 +166,11 @@ If any row is `failed`, diagnose from its `detail` field and direct the user to 
 Finally, produce a short status summary:
 
 ```
-Google accounts: 1 (default — john@anthril.com)
+Google accounts: 1 (default — john@weblifter.com.au)
   Scopes: tagmanager.edit.containers, analytics.edit, adwords (+ 2 more)
 Google Ads accounts: 2 (acme-ltd, weblifter)
   MCC login_customer_id: 1234567890
-Meta accounts: 1 (default — Anthril Facebook)
+Meta accounts: 1 (default — Web Lifter Facebook)
   Ad accounts: 3 (Acme, Weblifter, Koala & Co.)
   Token expires: 2026-06-10 (60 days)
 ```

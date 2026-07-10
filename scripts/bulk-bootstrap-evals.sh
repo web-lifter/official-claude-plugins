@@ -18,7 +18,7 @@
 # Output:
 #   - One <skill>/evals/suite.yaml per missing skill (with a header noting seed status)
 #   - One <skill>/evals/iteration-log.md per missing skill (if absent)
-#   - .anthril/reports/bulk-bootstrap-review.md — review checklist grouped by category
+#   - .project/reports/bulk-bootstrap-review.md — review checklist grouped by category
 
 set -eu
 
@@ -29,7 +29,7 @@ DRY_RUN=0
 [ "${1:-}" = "--dry-run" ] && DRY_RUN=1
 
 TODAY="$(date '+%Y-%m-%d')"
-REVIEW_DIR=".anthril/reports"
+REVIEW_DIR=".project/reports"
 REVIEW_FILE="$REVIEW_DIR/bulk-bootstrap-review.md"
 mkdir -p "$REVIEW_DIR"
 

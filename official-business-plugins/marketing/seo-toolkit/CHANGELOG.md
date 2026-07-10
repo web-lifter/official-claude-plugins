@@ -3,12 +3,12 @@
 ## [2.1.2] - 2026-06-20
 
 ### Changed
-- **Output paths moved to `.anthril/.marketing-os/seo/`.** All 19 skills now write their artefacts under `.anthril/.marketing-os/seo/` instead of `.anthril/marketing/.seo/` (sub-folders `audits/`, `reports/`, `data/`, `scaffolds/`, `plans/`, `briefs/`, `clusters/`, `keywords/`, `serp-analysis/`, `cwv/` preserved). Aligns the SEO toolkit with the shared `.anthril/.marketing-os/` marketing workspace namespace. The change spans every SKILL.md output directive and in-body path reference, plus the supporting `reference.md`, templates, the `content-strategist` agent, and example outputs. Cross-skill handoffs (keyword-list-developer → keyword-clustering-and-mapping → content-brief-generator / content-gap-analysis / internal-linking-planner) updated in lockstep so they continue to resolve.
+- **Output paths moved to `.project/.marketing-os/seo/`.** All 19 skills now write their artefacts under `.project/.marketing-os/seo/` instead of `.project/marketing/.seo/` (sub-folders `audits/`, `reports/`, `data/`, `scaffolds/`, `plans/`, `briefs/`, `clusters/`, `keywords/`, `serp-analysis/`, `cwv/` preserved). Aligns the SEO toolkit with the shared `.project/.marketing-os/` marketing workspace namespace. The change spans every SKILL.md output directive and in-body path reference, plus the supporting `reference.md`, templates, the `content-strategist` agent, and example outputs. Cross-skill handoffs (keyword-list-developer → keyword-clustering-and-mapping → content-brief-generator / content-gap-analysis / internal-linking-planner) updated in lockstep so they continue to resolve.
 
 ## [2.1.1] - 2026-06-03
 
 ### Changed
-- **Output paths namespaced under `.anthril/marketing/.seo/`.** All skill artefacts that previously wrote to top-level `.anthril/{reports,audits,scaffolds,data,plans}/` now write under `.anthril/marketing/.seo/` (sub-folders preserved). Output artefacts previously under `${CLAUDE_PLUGIN_DATA}` (`keywords/`, `clusters/`, `serp-analysis/`, `cwv/`) also move to `.anthril/marketing/.seo/`. Credentials (`credentials.json`), the bundled clustering venv, and caches remain in `${CLAUDE_PLUGIN_DATA}` so runtime/auth is unaffected.
+- **Output paths namespaced under `.project/marketing/.seo/`.** All skill artefacts that previously wrote to top-level `.project/{reports,audits,scaffolds,data,plans}/` now write under `.project/marketing/.seo/` (sub-folders preserved). Output artefacts previously under `${CLAUDE_PLUGIN_DATA}` (`keywords/`, `clusters/`, `serp-analysis/`, `cwv/`) also move to `.project/marketing/.seo/`. Credentials (`credentials.json`), the bundled clustering venv, and caches remain in `${CLAUDE_PLUGIN_DATA}` so runtime/auth is unaffected.
 
 ## [2.1.0] - 2026-06-03
 

@@ -4,11 +4,11 @@
   "description": "Scaffold new Claude Code skills — generates SKILL.md, frontmatter, templates, examples, and supporting files via the skill-creator skill.",
   "author": {
     "name": "John O'Connor",
-    "email": "john@anthril.com",
+    "email": "john@weblifter.com.au",
     "url": "https://github.com/johnoconnor0"
   },
-  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/ai-utility-plugins/skill-ops",
-  "repository": "https://github.com/anthril/official-claude-plugins",
+  "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/ai-utility-plugins/skill-ops",
+  "repository": "https://github.com/johnoconnor0/official-claude-plugins",
   "license": "MIT",
   "keywords": [
     "utilities",

@@ -24,7 +24,7 @@ def test_full_lifecycle(tmp_path, passphrase):
         "default",
         {
             "label": "default",
-            "email": "john@anthril.com",
+            "email": "john@weblifter.com.au",
             "refresh_token": "1//0g-test",
             "access_token": "ya29.test",
             "scopes": ["https://www.googleapis.com/auth/adwords"],
@@ -82,4 +82,4 @@ def test_passphrase_change_requires_rewrite(tmp_path, sample_vault_data):
         PPCVault(path, "old-passphrase").load()
     # New passphrase works
     reloaded = PPCVault(path, "new-passphrase").load()
-    assert reloaded["google"]["accounts"]["default"]["email"] == "john@anthril.com"
+    assert reloaded["google"]["accounts"]["default"]["email"] == "john@weblifter.com.au"

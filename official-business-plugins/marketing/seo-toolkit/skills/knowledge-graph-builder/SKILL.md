@@ -8,11 +8,11 @@ effort: high
 
 # Knowledge Graph Builder
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.marketing-os/seo/scaffolds/`.
-> Run `mkdir -p .anthril/.marketing-os/seo/scaffolds` before the first `Write` call.
-> Primary artefact: `.anthril/.marketing-os/seo/scaffolds/knowledge-graph.md`.
+> All file outputs from this skill MUST be written under `.project/.marketing-os/seo/scaffolds/`.
+> Run `mkdir -p .project/.marketing-os/seo/scaffolds` before the first `Write` call.
+> Primary artefact: `.project/.marketing-os/seo/scaffolds/knowledge-graph.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

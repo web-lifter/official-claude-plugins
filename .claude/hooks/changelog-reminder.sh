@@ -9,7 +9,7 @@
 # users discover new versions via CHANGELOG.md. Drift between manifests and
 # the changelog produces silent "no update available" reports downstream.
 #
-# (The anthril-os repo carries its own copy of this hook with a per-plugin
+# (The johns-os repo carries its own copy of this hook with a per-plugin
 # CHANGELOG regime; it is a separate standalone repo, not a submodule here.)
 #
 # Implemented without jq so it runs on bare Git Bash on Windows.

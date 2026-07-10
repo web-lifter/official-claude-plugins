@@ -9,11 +9,11 @@ effort: high
 # Elasticity Estimator
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.economics/scaffolds/`.
-> Run `mkdir -p .anthril/.economics/scaffolds` before the first `Write` call.
-> Primary artefact: `.anthril/.economics/scaffolds/elasticity-method-spec.md`.
+> All file outputs from this skill MUST be written under `.project/.economics/scaffolds/`.
+> Run `mkdir -p .project/.economics/scaffolds` before the first `Write` call.
+> Primary artefact: `.project/.economics/scaffolds/elasticity-method-spec.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -93,9 +93,9 @@ Surface the standard pitfalls for the chosen method:
 
 ### Phase 5: Output
 
-Save as `.anthril/.economics/scaffolds/elasticity-method-spec.md` .
+Save as `.project/.economics/scaffolds/elasticity-method-spec.md` .
 
-Create the output folder first: `mkdir -p .anthril/.economics/scaffolds`.
+Create the output folder first: `mkdir -p .project/.economics/scaffolds`.
 
 ---
 

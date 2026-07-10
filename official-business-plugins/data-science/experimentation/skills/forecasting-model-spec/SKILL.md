@@ -9,11 +9,11 @@ effort: high
 # Forecasting Model Spec
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.data-science/scaffolds/`.
-> Run `mkdir -p .anthril/.data-science/scaffolds` before the first `Write` call.
-> Primary artefact: `.anthril/.data-science/scaffolds/forecasting-model-spec.md`.
+> All file outputs from this skill MUST be written under `.project/.data-science/scaffolds/`.
+> Run `mkdir -p .project/.data-science/scaffolds` before the first `Write` call.
+> Primary artefact: `.project/.data-science/scaffolds/forecasting-model-spec.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -100,9 +100,9 @@ Retraining triggers:
 
 ### Phase 6: Output
 
-Save as `.anthril/.data-science/scaffolds/forecasting-model-spec.md` .
+Save as `.project/.data-science/scaffolds/forecasting-model-spec.md` .
 
-Create the output folder first: `mkdir -p .anthril/.data-science/scaffolds`.
+Create the output folder first: `mkdir -p .project/.data-science/scaffolds`.
 
 ---
 

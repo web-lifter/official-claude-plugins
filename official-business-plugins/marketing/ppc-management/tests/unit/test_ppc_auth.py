@@ -100,7 +100,7 @@ class TestGoogleAccountLookup:
         vault.save(sample_vault_data)
         auth = PPCAuth(vault)
         account = auth._get_google_account("default")
-        assert account["email"] == "john@anthril.com"
+        assert account["email"] == "john@weblifter.com.au"
 
 
 class TestGetGoogleCredentials:

@@ -1,27 +1,27 @@
 # Changelog
 
-All notable changes to the Anthril Official Claude Plugins marketplace will be documented in this file.
+All notable changes to the Web Lifter Official Claude Plugins marketplace will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-### Changed — `seo-toolkit` 2.1.2: output root moved to `.anthril/.marketing-os/seo/` (2026-06-20)
+### Changed — `seo-toolkit` 2.1.2: output root moved to `.project/.marketing-os/seo/` (2026-06-20)
 
-`seo-toolkit` 2.1.1 → 2.1.2. All 19 skills now write their artefacts under `.anthril/.marketing-os/seo/` instead of `.anthril/marketing/.seo/`, aligning the toolkit with the shared `.anthril/.marketing-os/` marketing workspace namespace. Existing sub-folders are preserved under the new root (`audits/`, `reports/`, `data/`, `scaffolds/`, `plans/`, `briefs/`, `clusters/`, `keywords/`, `serp-analysis/`, `cwv/`). The change touches every SKILL.md output directive and in-body path, plus the supporting `reference.md`, templates, the `content-strategist` agent, and example outputs; cross-skill handoffs (keyword-list-developer → keyword-clustering-and-mapping → content-brief-generator / content-gap-analysis / internal-linking-planner) were updated in lockstep so they still resolve. Credentials, the clustering venv, and caches remain in `${CLAUDE_PLUGIN_DATA}`.
+`seo-toolkit` 2.1.1 → 2.1.2. All 19 skills now write their artefacts under `.project/.marketing-os/seo/` instead of `.project/marketing/.seo/`, aligning the toolkit with the shared `.project/.marketing-os/` marketing workspace namespace. Existing sub-folders are preserved under the new root (`audits/`, `reports/`, `data/`, `scaffolds/`, `plans/`, `briefs/`, `clusters/`, `keywords/`, `serp-analysis/`, `cwv/`). The change touches every SKILL.md output directive and in-body path, plus the supporting `reference.md`, templates, the `content-strategist` agent, and example outputs; cross-skill handoffs (keyword-list-developer → keyword-clustering-and-mapping → content-brief-generator / content-gap-analysis / internal-linking-planner) were updated in lockstep so they still resolve. Credentials, the clustering venv, and caches remain in `${CLAUDE_PLUGIN_DATA}`.
 
 **User action:** run `/plugin update`.
 
 ### Changed — output paths namespaced per plugin (2026-06-03)
 
-Reworked where skills write their artefacts so each plugin owns a namespaced output root under `.anthril/`, instead of sharing top-level `.anthril/{reports,scaffolds,audits,...}` folders. Existing sub-folders are preserved under the new root (e.g. `.anthril/reports/x.md` → `.anthril/.economics/reports/x.md`).
+Reworked where skills write their artefacts so each plugin owns a namespaced output root under `.project/`, instead of sharing top-level `.project/{reports,scaffolds,audits,...}` folders. Existing sub-folders are preserved under the new root (e.g. `.project/reports/x.md` → `.project/.economics/reports/x.md`).
 
-- `seo-toolkit` 2.1.0 → 2.1.1 → `.anthril/marketing/.seo/` (output artefacts under `${CLAUDE_PLUGIN_DATA}` — keywords/clusters/serp-analysis/cwv — also moved here; credentials, the venv and caches stay in `${CLAUDE_PLUGIN_DATA}`).
-- `brand-manager` 1.0.3 → 1.0.4 → `.anthril/marketing/.branding/`.
-- `plan-review` 2.2.1 → 2.2.2 → `.anthril/.plan-review/`.
+- `seo-toolkit` 2.1.0 → 2.1.1 → `.project/marketing/.seo/` (output artefacts under `${CLAUDE_PLUGIN_DATA}` — keywords/clusters/serp-analysis/cwv — also moved here; credentials, the venv and caches stay in `${CLAUDE_PLUGIN_DATA}`).
+- `brand-manager` 1.0.3 → 1.0.4 → `.project/marketing/.branding/`.
+- `plan-review` 2.2.1 → 2.2.2 → `.project/.plan-review/`.
 
-Note: `economics`, `data-science`, and `ppc-management` were remapped on disk too (`.anthril/.economics/`, `.anthril/.data-science/`, `.anthril/marketing/.ppc/`) but are gitignored in this repo, so those changes are local-only here.
+Note: `economics`, `data-science`, and `ppc-management` were remapped on disk too (`.project/.economics/`, `.project/.data-science/`, `.project/marketing/.ppc/`) but are gitignored in this repo, so those changes are local-only here.
 
 ### Added — `seo-toolkit` 2.1.0: self-contained clustering engine, page-type-aware mapping, architecture plan, unified dashboard (2026-06-03)
 
@@ -88,21 +88,21 @@ The marketplace plugin previously named `engineering-utilities` (folder `officia
 - README.md, tests/README.md, prior CHANGELOG path references — updated to the new folder.
 - Skill contents unchanged: `changelog-generator`, `pr-description-writer`, `env-var-auditor`, `doc-link-validator`, `repo-snapshot`.
 
-**User action required:** run `/plugin update` after pulling. Anyone previously installed under the `engineering-utilities` plugin name should `/plugin uninstall engineering-utilities` and `/plugin install programming-utilities@anthril`.
+**User action required:** run `/plugin update` after pulling. Anyone previously installed under the `engineering-utilities` plugin name should `/plugin uninstall engineering-utilities` and `/plugin install programming-utilities@web-lifter`.
 
 ### Restructured — repo layout consolidated into named plugin roots (2026-05-23)
 
 Top-level category directories (`smb/`, `marketing/`, `engineering/`, `data-science/`, `economics/`, `utilities/`, `seo/`, `lifestyle/`) have been replaced with named plugin roots:
 
 - `ai-utility-plugins/` — `resource-manager`, `skill-ops` (skill-creator only), `plan-review` (plan-completion-audit + audit-resolver)
-- `anthril-os/` — `engineering-os/` (20 role plugins + `software-assurance-audit-program`), `venture-os/`
+- `johns-os/` — `engineering-os/` (20 role plugins + `software-assurance-audit-program`), `venture-os/`
 - `official-business-plugins/` — `data-science/`, `economics/`, `engineering/`, `general/`, `marketing/`, `startups/`
 - `official-lifestyle-plugins/` — `health-wellness`, `home-life-logistics`, `personal-finance`, `personal-productivity`
 - `internal-utilities/` — `observability`, `skill-ops` (evaluators + autonomous-iteration-loop) — NOT included in marketplace
 
 Companion fixes that landed alongside the restructure:
 
-- **Marketplace** — `.claude-plugin/marketplace.json` regenerated to list the 29 user-facing plugins under the three official roots: `ai-utility-plugins/` (3), `official-business-plugins/` (22 across data-science, economics, engineering, general, marketing, startups), and `official-lifestyle-plugins/` (4). The `anthril-os/` (engineering-os + venture-os) and `internal-utilities/` trees live on disk for direct-path installation but are excluded from the marketplace by design.
+- **Marketplace** — `.claude-plugin/marketplace.json` regenerated to list the 29 user-facing plugins under the three official roots: `ai-utility-plugins/` (3), `official-business-plugins/` (22 across data-science, economics, engineering, general, marketing, startups), and `official-lifestyle-plugins/` (4). The `johns-os/` (engineering-os + venture-os) and `internal-utilities/` trees live on disk for direct-path installation but are excluded from the marketplace by design.
 - **`homepage` URLs** — every plugin manifest's `homepage` updated to its new on-disk path.
 - **`dependencies` field stripped** — the undocumented top-level `dependencies` array has been removed from 11 manifests (9 startups plugins + `experimentation` + `strategic-economics`) per the documented Claude Code plugin schema.
 - **Split plugin descriptions rewritten** — the four split plugins (`ai-utility-plugins/skill-ops`, `ai-utility-plugins/plan-review`, `internal-utilities/skill-ops`, `official-business-plugins/engineering/utilities`) now have descriptions matching their actual contents instead of inheriting the legacy unified blurb. `ai-utility-plugins/plan-review` was renamed from internal `name: "ai-utilities"` to `name: "plan-review"`.
@@ -121,7 +121,7 @@ The uniform "Phase 1 Load context / Phase 2 Plan / Phase 3 Produce / Phase 4 Val
 
 ### Added — Engineering OS suite v0.1.0 (Waves 1, 2, 3)
 
-The full 20-plugin **Engineering OS** suite has been scaffolded under `anthril-os/engineering-os/`, covering primary engineering work plus specialist and executive domains:
+The full 20-plugin **Engineering OS** suite has been scaffolded under `johns-os/engineering-os/`, covering primary engineering work plus specialist and executive domains:
 
 - **Wave 1 (12 plugins, 134 skills, 96 agents):** `eng-core`, `eng-product`, `eng-architecture`, `eng-app`, `eng-platform`, `eng-devops`, `eng-sre`, `eng-database`, `eng-quality`, `eng-security`, `eng-tpm`, `eng-docs`.
 - **Wave 2 (6 plugins, 74 skills, 52 agents):** `eng-design`, `eng-data`, `eng-ai`, `eng-it`, `eng-grc`, `eng-customer`.
@@ -129,9 +129,9 @@ The full 20-plugin **Engineering OS** suite has been scaffolded under `anthril-o
 
 Each plugin ships a manifest, README, CHANGELOG, MIT licence, full skill set with SKILL.md + template + example per skill, full agent set, standard hooks (`seed-workspace.sh` SessionStart + `suggest-related.sh` Stop), and placeholder MCP/LSP/monitor configs. Total: **232 SKILL.md files, 159 agent files, ~1,075 artefacts.**
 
-The suite is data-driven: edit `anthril-os/engineering-os/_suite/spec/suite-spec.json` and re-run `node scripts/eng-os/scaffold-suite.mjs` to regenerate. Hand-tuned content is preserved across regenerations (detected by absence of the `<!-- AUTO-GENERATED -->` marker).
+The suite is data-driven: edit `johns-os/engineering-os/_suite/spec/suite-spec.json` and re-run `node scripts/eng-os/scaffold-suite.mjs` to regenerate. Hand-tuned content is preserved across regenerations (detected by absence of the `<!-- AUTO-GENERATED -->` marker).
 
-- **Shared workspace contract:** every plugin reads/writes `.eng-os/` (profiles, service catalog, decisions, handoffs, work, reports). Schema and safety modes documented in `anthril-os/engineering-os/CONVENTIONS.md`.
+- **Shared workspace contract:** every plugin reads/writes `.eng-os/` (profiles, service catalog, decisions, handoffs, work, reports). Schema and safety modes documented in `johns-os/engineering-os/CONVENTIONS.md`.
 - **Handoff schema validated by `scripts/eng-os/validate-handoff.mjs`.** Worked fixture at `_suite/fixtures/checkout-revamp/` exercises the chain from `eng-product` → `eng-architecture` → `eng-app`.
 - **Marketplace updated:** `.claude-plugin/marketplace.json` recreated with 20 entries under `category: engineering`.
 - **Validation:** all 20 plugins pass `node scripts/check-validate.mjs` and `node scripts/check-versions.mjs`.
@@ -152,13 +152,13 @@ This release supersedes the deprecation announcement in `software-development` v
 
 ### Changed — `software-development` v1.5.0 (BREAKING: `application-audit` removed)
 
-The Next.js + Supabase + Postgres-biased `application-audit` skill and its three companion commands (`/audit-proceed`, `/audit-compile-plan`, `/audit-work`) have been **removed** from `software-development`. The skill's eleven specialist agents have been ported, generalised, and re-shipped under the new cross-stack `software-assurance-audit-program` plugin (see below). The legacy `.anthril/` workspace format is preserved as a read-only import source — `/software-assurance-audit-program:migrate-anthril` normalises it into `.saap/migrations/anthril-imports/<timestamp>/` without modifying the original tree.
+The Next.js + Supabase + Postgres-biased `application-audit` skill and its three companion commands (`/audit-proceed`, `/audit-compile-plan`, `/audit-work`) have been **removed** from `software-development`. The skill's eleven specialist agents have been ported, generalised, and re-shipped under the new cross-stack `software-assurance-audit-program` plugin (see below). The legacy `.project/` workspace format is preserved as a read-only import source — `/software-assurance-audit-program:migrate-web-lifter` normalises it into `.saap/migrations/web-lifter-imports/<timestamp>/` without modifying the original tree.
 
 `software-development` now ships four skills: `dead-code-audit`, `write-path-mapping`, `plan-orchestrator`, and `codebase-profiler`. The plugin manifest's `agents` list dropped from 23 to 12 entries.
 
 ### Added — `software-assurance-audit-program` plugin v0.1.0 (Phases 0–3 internal alpha)
 
-Profile-first, cross-stack assurance audit plugin. Replaces the legacy `application-audit` skill with a workflow that profiles any stack (Node/TS, Python, Go, Rust, Java/JVM, .NET, PHP, Ruby, mobile, serverless, containers/k8s, data platforms, AI/LLM) before routing audit domains, validates every finding against shared schemas, and writes all output under `.saap/`. Phases 0 (docs), 1 (skeleton + manifest), 2 (profile + 14 stack adapters + 5 profiler agents + 7 detectors), and 3 (8 ported/refit domain agents, 6 new skills, finding/evidence/audit-plan schemas, full `.anthril/`-to-`.saap/` migration pipeline) have landed.
+Profile-first, cross-stack assurance audit plugin. Replaces the legacy `application-audit` skill with a workflow that profiles any stack (Node/TS, Python, Go, Rust, Java/JVM, .NET, PHP, Ruby, mobile, serverless, containers/k8s, data platforms, AI/LLM) before routing audit domains, validates every finding against shared schemas, and writes all output under `.saap/`. Phases 0 (docs), 1 (skeleton + manifest), 2 (profile + 14 stack adapters + 5 profiler agents + 7 detectors), and 3 (8 ported/refit domain agents, 6 new skills, finding/evidence/audit-plan schemas, full `.project/`-to-`.saap/` migration pipeline) have landed.
 
 Public marketplace install will follow once SAAP cuts 0.1.0 with the full skill set (Phase 7 of the SAAP roadmap). Until then it is internal-alpha.
 
@@ -194,11 +194,11 @@ All 19 affected plugins have been given a patch-version bump:
 
 `node scripts/check-versions.mjs` exits 0 — all 28 plugins in sync.
 
-### Changed — `.gitignore` excludes `.anthril/.docs/`
+### Changed — `.gitignore` excludes `.project/.docs/`
 
-`.anthril/.docs/` contains fetched copies of external Claude Code documentation pages (8 files, ~580 KB). These are runtime cache — always available fresh from `code.claude.com` — and should not be tracked in git where they go stale and bloat the repo. Added to `.gitignore`.
+`.project/.docs/` contains fetched copies of external Claude Code documentation pages (8 files, ~580 KB). These are runtime cache — always available fresh from `code.claude.com` — and should not be tracked in git where they go stale and bloat the repo. Added to `.gitignore`.
 
-`tests/` and `scripts/` remain at the repo root. They are conventional developer tooling directories referenced throughout `CLAUDE.md` and the CHANGELOG verification steps; they are not Claude runtime artefacts and should not move into `.anthril/`.
+`tests/` and `scripts/` remain at the repo root. They are conventional developer tooling directories referenced throughout `CLAUDE.md` and the CHANGELOG verification steps; they are not Claude runtime artefacts and should not move into `.project/`.
 
 ## [2.12.0] - 2026-05-22
 
@@ -278,7 +278,7 @@ Introduces the **startups** category for venture/customer-development workflows.
 
 - Full-mode `/skill-evaluator` qualitative subagent pass on all 70 skills.
 - Full-mode `/skill-eval-harness` functional + LLM-as-judge pass on all 70 suites.
-- `@anthril/claude-memex` `venture` profile (the chassis dependency for `venture-init`).
+- `@web-lifter/claude-memex` `venture` profile (the chassis dependency for `venture-init`).
 - Cross-skill end-to-end workflow harness.
 - Connector mock fixtures so harness can exercise connected paths for Supabase/Cloudflare/Figma without a live MCP.
 
@@ -311,7 +311,7 @@ Root cause was the `agents` field in `plugin.json` containing trailing-slash dir
 
 Closes the audit → fix loop. Pairs with the existing `plan-completion-audit` skill: after an audit produces a report, `audit-resolver` reads it, plans the fixes, executes them with safety gates, and produces a durable ledger of what changed.
 
-- **New skill:** `utilities/utilities/skills/audit-resolver/` — 7-phase workflow (discovery → triage → confirmation gate → pre-flight → batched execute → optional re-audit → ledger). Reads any `plan-completion-audit` report under `.anthril/audits/`, parses every finding into a structured ledger, classifies each (AUTO / SUB-SKILL / PLAN-FIRST / HUMAN-INPUT / DEFER), and applies fixes batch-by-batch with verifier checks (`tsc --noEmit`, `npm test`, `python tests/...`, `node scripts/check-versions.mjs` — auto-detected per stack via `scripts/verify-stack.sh`).
+- **New skill:** `utilities/utilities/skills/audit-resolver/` — 7-phase workflow (discovery → triage → confirmation gate → pre-flight → batched execute → optional re-audit → ledger). Reads any `plan-completion-audit` report under `.project/audits/`, parses every finding into a structured ledger, classifies each (AUTO / SUB-SKILL / PLAN-FIRST / HUMAN-INPUT / DEFER), and applies fixes batch-by-batch with verifier checks (`tsc --noEmit`, `npm test`, `python tests/...`, `node scripts/check-versions.mjs` — auto-detected per stack via `scripts/verify-stack.sh`).
 - **New command:** `utilities/utilities/commands/audit-resolve.md` — convenient slash invocation `/utilities:audit-resolve [report-path] [flags]`. Thin wrapper that dispatches to the skill.
 - **Supporting artefacts:**
   - `templates/output-template.md` — resolution-ledger structure
@@ -387,7 +387,7 @@ This patch release rolls up the P1 + P2 + P3 findings from the 2.8.0 skill-evalu
   - `savings-game-plan` — FIRE-leaning 55% savings rate scenario
   - `competitive-dynamics-analyser` — two-sided marketplace (AU food delivery)
   - `supabase-schema-bootstrap` — minimal SaaS with full RLS bundle inlined
-  - `repo-snapshot` — non-anthril repo (typical Next.js + Supabase B2B SaaS)
+  - `repo-snapshot` — non-web-lifter repo (typical Next.js + Supabase B2B SaaS)
 - **P3.2 — Python smoke-test harness** at `tests/scripts/test_smoke.py` (12 tests, pure stdlib, ~0.6s runtime). Covers all 6 plugin-level Python scripts shipped in 2.8.0.
 - **P3.4 — `paths` glob for auto-activation** added to frontmatter of 6 skills (`sunday-reset`, `debt-knockout-plan`, `rainy-day-plan`, `competitive-dynamics-analyser`, `moat-strength-audit`, `thoughtful-gifts-plan`).
 
@@ -440,10 +440,10 @@ All new skills follow the canonical structure (SKILL.md + LICENSE.txt + template
 Users who had `knowledge-engineering` installed should switch to the new plugin homes:
 
 ```bash
-/plugin uninstall knowledge-engineering@anthril-claude-plugins
-/plugin marketplace update anthril-claude-plugins
-/plugin install seo-toolkit@anthril-claude-plugins     # for entity / KG / Schema.org skills
-/plugin install database-design@anthril-claude-plugins # for business-data-model-designer
+/plugin uninstall knowledge-engineering@web-lifter-plugins
+/plugin marketplace update web-lifter-plugins
+/plugin install seo-toolkit@web-lifter-plugins     # for entity / KG / Schema.org skills
+/plugin install database-design@web-lifter-plugins # for business-data-model-designer
 ```
 
 All four skill names and slash commands are unchanged — only the plugin envelope moved.
@@ -451,8 +451,8 @@ All four skill names and slash commands are unchanged — only the plugin envelo
 ## [2.6.0] - 2026-05-20
 
 ### Changed
-- **BREAKING — plugin rename: `skillops` → `skill-ops`** (v1.3.0 → v2.0.0). Brings the plugin into kebab-case alignment with every other plugin in the marketplace. Directory moved from `utilities/skillops/` to `utilities/skill-ops/`. Marketplace install command becomes `/plugin install skill-ops@anthril-claude-plugins`. All four contained skills (`skill-creator`, `skill-evaluator`, `skill-eval-harness`, `skill-eval-bootstrap`) keep their names and slash commands; only the plugin envelope was renamed.
-- **BREAKING — plugin rename: `plan-completion-audit` → `utilities`** (v1.0.3 → v2.0.0). Refactored from a single-skill plugin into a generic utilities plugin that can host future cross-cutting helper skills. Directory moved from `utilities/plan-completion-audit/` to `utilities/utilities/`. The `plan-completion-audit` skill itself is unchanged (still at `skills/plan-completion-audit/`, still invoked as `/plan-completion-audit`). Marketplace install command becomes `/plugin install utilities@anthril-claude-plugins`.
+- **BREAKING — plugin rename: `skillops` → `skill-ops`** (v1.3.0 → v2.0.0). Brings the plugin into kebab-case alignment with every other plugin in the marketplace. Directory moved from `utilities/skillops/` to `utilities/skill-ops/`. Marketplace install command becomes `/plugin install skill-ops@web-lifter-plugins`. All four contained skills (`skill-creator`, `skill-evaluator`, `skill-eval-harness`, `skill-eval-bootstrap`) keep their names and slash commands; only the plugin envelope was renamed.
+- **BREAKING — plugin rename: `plan-completion-audit` → `utilities`** (v1.0.3 → v2.0.0). Refactored from a single-skill plugin into a generic utilities plugin that can host future cross-cutting helper skills. Directory moved from `utilities/plan-completion-audit/` to `utilities/utilities/`. The `plan-completion-audit` skill itself is unchanged (still at `skills/plan-completion-audit/`, still invoked as `/plan-completion-audit`). Marketplace install command becomes `/plugin install utilities@web-lifter-plugins`.
 - `.virustotal/skillops.json` → `.virustotal/skill-ops.json`; `.virustotal/plan-completion-audit.json` → `.virustotal/utilities.json`.
 - Updated all in-repo references (README, SECURITY summary table, welcome hook narrative, example artefacts in `skill-ops/skills/*/examples/`, resolver script message strings).
 
@@ -461,11 +461,11 @@ All four skill names and slash commands are unchanged — only the plugin envelo
 Users with the old plugin names installed need to re-install under the new names:
 
 ```bash
-/plugin uninstall skillops@anthril-claude-plugins
-/plugin uninstall plan-completion-audit@anthril-claude-plugins
-/plugin marketplace update anthril-claude-plugins
-/plugin install skill-ops@anthril-claude-plugins
-/plugin install utilities@anthril-claude-plugins
+/plugin uninstall skillops@web-lifter-plugins
+/plugin uninstall plan-completion-audit@web-lifter-plugins
+/plugin marketplace update web-lifter-plugins
+/plugin install skill-ops@web-lifter-plugins
+/plugin install utilities@web-lifter-plugins
 ```
 
 ## [2.5.0] - 2026-05-20
@@ -477,7 +477,7 @@ Users with the old plugin names installed need to re-install under the new names
 ## [2.4.0] - 2026-05-20
 
 ### Added
-- **First fleet-wide LLM-as-judge run** — every skill in the marketplace evaluated end-to-end against its `evals/suite.yaml`. One Agent per skill (general-purpose, fresh context) performed activation classification (5 cases) plus a functional judge against the skill's example artefact. Aggregate report at `.anthril/audits/2026-05-20/judge/fleet-judge.md` and JSON sidecar `fleet-judge.json`. Per-skill raw verdicts at `.anthril/audits/2026-05-20/judge/results/<skill>.json`.
+- **First fleet-wide LLM-as-judge run** — every skill in the marketplace evaluated end-to-end against its `evals/suite.yaml`. One Agent per skill (general-purpose, fresh context) performed activation classification (5 cases) plus a functional judge against the skill's example artefact. Aggregate report at `.project/audits/2026-05-20/judge/fleet-judge.md` and JSON sidecar `fleet-judge.json`. Per-skill raw verdicts at `.project/audits/2026-05-20/judge/results/<skill>.json`.
 - `skill-eval-bootstrap/scripts/tune-criteria.mjs` — programmatic criteria tuner; derives skill-specific judge criteria from each SKILL.md's description, Output Format block, and templates/. Run across all 67 suites — 65 changed, 2 had no functional case.
 - `skill-eval-harness/templates/activation-prompt-template.md` — canonical activation classifier prompt. Used by Phase 2 in `--mode=full` (default); `check-activation.sh` keyword-overlap proxy stays as `--mode=fast` fallback.
 - `skill-eval-harness/scripts/build-judge-prompt.mjs` — renders a per-skill judge prompt bundling activation + functional judge into one Agent task.
@@ -511,7 +511,7 @@ Initial judge run produced 2 false-negative fails (`application-audit`, `plan-or
 - Refined `skill-evaluator`'s C45 detector to exempt skills launched via `agent:` / `context: fork` frontmatter, which legitimately need `Agent` in `allowed-tools` even when the body does not reference it by name.
 
 ### Added
-- `.anthril/audits/2026-05-20/summary.md` — first sweep using the upgraded 10-dimension rubric. Zero anti-pattern findings remain across the marketplace.
+- `.project/audits/2026-05-20/summary.md` — first sweep using the upgraded 10-dimension rubric. Zero anti-pattern findings remain across the marketplace.
 
 ## [2.1.0] - 2026-05-20
 
@@ -538,7 +538,7 @@ Initial judge run produced 2 false-negative fails (`application-audit`, `plan-or
 - `lifestyle/` placeholder category for future personal-productivity plugins.
 
 ### Migration
-Users with previously installed plugins should run `/plugin marketplace update anthril` followed by `/plugin update` to pick up the new `source` paths.
+Users with previously installed plugins should run `/plugin marketplace update web-lifter` followed by `/plugin update` to pick up the new `source` paths.
 
 ## [1.6.0] - 2026-04-25
 
@@ -565,7 +565,7 @@ Users with previously installed plugins should run `/plugin marketplace update a
 - `.virustotal/<name>.json` — machine-readable scan sidecars
 
 ### Changed
-- `plugins/skill-creator/` → `plugins/skillops/`; slash command `/skill-creator` preserved (the `skill-creator` skill retained its name); marketplace entry and install command updated to `skillops@anthril-claude-plugins`
+- `plugins/skill-creator/` → `plugins/skillops/`; slash command `/skill-creator` preserved (the `skill-creator` skill retained its name); marketplace entry and install command updated to `skillops@web-lifter-plugins`
 - Extended `plugins/skillops/hooks/scripts/post-edit-skill.sh` to delegate YAML parse validation to `skill-evaluator/scripts/parse-frontmatter.sh` and suggest `/skill-evaluator` for full audits
 
 ## [1.4.0] - 2026-04-21
@@ -609,7 +609,7 @@ Users with previously installed plugins should run `/plugin marketplace update a
 - **software-development** plugin v1.0.0 — `dead-code-audit` (9 languages: JS/TS, Python, Go, Rust, Java, PHP, Ruby, C#) and `write-path-mapping` (UI → DB with framework and database introspection)
 
 ### Changed
-- Rebranded marketplace from previous namespace to `Anthril` across all plugins, manifests, hooks, and documentation
+- Rebranded marketplace from previous namespace to `Web Lifter` across all plugins, manifests, hooks, and documentation
 - Removed redundant metadata from `plugin.json` files (version moved to single source of truth per plugin)
 - Updated `.mcp.json` and marketplace schema to the current plugin-marketplace specification
 

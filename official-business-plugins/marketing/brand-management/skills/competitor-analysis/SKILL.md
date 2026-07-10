@@ -12,11 +12,11 @@ agent: Explore
 
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/marketing/.branding/reports/`.
-> Run `mkdir -p .anthril/marketing/.branding/reports` before the first `Write` call.
-> Primary artefact: `.anthril/marketing/.branding/reports/competitor-analysis.md`.
+> All file outputs from this skill MUST be written under `.project/marketing/.branding/reports/`.
+> Run `mkdir -p .project/marketing/.branding/reports` before the first `Write` call.
+> Primary artefact: `.project/marketing/.branding/reports/competitor-analysis.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

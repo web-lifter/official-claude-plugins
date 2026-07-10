@@ -43,7 +43,7 @@ import httpx
 from selectolax.parser import HTMLParser
 
 
-_USER_AGENT = "seo-toolkit-crawler/1.0 (+https://github.com/anthril/official-claude-plugins)"
+_USER_AGENT = "seo-toolkit-crawler/1.0 (+https://github.com/johnoconnor0/official-claude-plugins)"
 _CONCURRENCY = 5
 
 

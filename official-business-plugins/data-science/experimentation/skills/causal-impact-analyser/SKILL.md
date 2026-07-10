@@ -9,11 +9,11 @@ effort: max
 # Causal Impact Analyser
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.data-science/reports/`.
-> Run `mkdir -p .anthril/.data-science/reports` before the first `Write` call.
-> Primary artefact: `.anthril/.data-science/reports/causal-impact-analysis.md`.
+> All file outputs from this skill MUST be written under `.project/.data-science/reports/`.
+> Run `mkdir -p .project/.data-science/reports` before the first `Write` call.
+> Primary artefact: `.project/.data-science/reports/causal-impact-analysis.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -109,9 +109,9 @@ Invoke `stats-reviewer` agent.
 
 ### Phase 7: Output
 
-Save as `.anthril/.data-science/reports/causal-impact-analysis.md` .
+Save as `.project/.data-science/reports/causal-impact-analysis.md` .
 
-Create the output folder first: `mkdir -p .anthril/.data-science/reports`.
+Create the output folder first: `mkdir -p .project/.data-science/reports`.
 
 ---
 

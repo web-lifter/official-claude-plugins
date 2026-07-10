@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Anthril — Business Economics Plugin Welcome Hook
+# Web Lifter — Business Economics Plugin Welcome Hook
 
 PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
 SKILLS_DIR="$PLUGIN_ROOT/skills"
@@ -33,7 +33,7 @@ if [ -d "$SKILLS_DIR" ]; then
   done
 fi
 
-MESSAGE="Anthril — Business Economics plugin loaded. ${SKILL_COUNT} skills available:${SKILL_LIST}"
+MESSAGE="Web Lifter — Business Economics plugin loaded. ${SKILL_COUNT} skills available:${SKILL_LIST}"
 
 if [ -n "$WARNINGS" ]; then
   MESSAGE="${MESSAGE}\n\nQuality warnings:${WARNINGS}"

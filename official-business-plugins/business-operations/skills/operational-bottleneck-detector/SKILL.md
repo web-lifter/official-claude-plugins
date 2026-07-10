@@ -11,11 +11,11 @@ agent: Explore
 # Operational Bottleneck Detector
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/audits/`.
-> Run `mkdir -p .anthril/audits` before the first `Write` call.
-> Primary artefact: `.anthril/audits/bottleneck-analysis.md`.
+> All file outputs from this skill MUST be written under `.project/audits/`.
+> Run `mkdir -p .project/audits` before the first `Write` call.
+> Primary artefact: `.project/audits/bottleneck-analysis.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -239,9 +239,9 @@ Use the template at `templates/output-template.md`. The document includes:
 6. **Remediation Queue** — prioritised fixes with effort/impact
 7. **Constraint Cascade Warning** — next bottleneck to watch after primary is fixed
 
-Save as `.anthril/audits/bottleneck-analysis.md` .
+Save as `.project/audits/bottleneck-analysis.md` .
 
-Create the output folder first: `mkdir -p .anthril/audits`.
+Create the output folder first: `mkdir -p .project/audits`.
 
 ---
 

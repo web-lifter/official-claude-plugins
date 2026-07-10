@@ -6,24 +6,24 @@ description: "Eval suite for the cost-benefit-analysis-framework skill"
 # PostHog evaluation IDs — linked automatically by the observability plugin.
 # These evaluations run against $ai_generation events in PostHog project 435243.
 posthog_eval_ids:
-  - anthril-au-english
-  - anthril-helpfulness
-  - anthril-completeness
-  - anthril-first-attempt-success
-  - anthril-task-intent-match
-  - anthril-instruction-compliance
-  - anthril-concision
-  - anthril-no-hallucination
-  - anthril-data-grounding
-  - anthril-assumption-handling
-  - anthril-no-placeholder-content
-  - anthril-structure
-  - anthril-template-compliance
-  - anthril-output-contract-compliance
-  - anthril-tool-use-correctness
-  - anthril-error-handling-quality
-  - anthril-action-safety
-  - anthril-iteration-usefulness
+  - web-lifter-au-english
+  - web-lifter-helpfulness
+  - web-lifter-completeness
+  - web-lifter-first-attempt-success
+  - web-lifter-task-intent-match
+  - web-lifter-instruction-compliance
+  - web-lifter-concision
+  - web-lifter-no-hallucination
+  - web-lifter-data-grounding
+  - web-lifter-assumption-handling
+  - web-lifter-no-placeholder-content
+  - web-lifter-structure
+  - web-lifter-template-compliance
+  - web-lifter-output-contract-compliance
+  - web-lifter-tool-use-correctness
+  - web-lifter-error-handling-quality
+  - web-lifter-action-safety
+  - web-lifter-iteration-usefulness
 
 test_cases:
   - id: activate-positive-canonical
@@ -74,9 +74,9 @@ test_cases:
     user_input: "Compare three options for replacing our finance ERP — build in-house ($310k year-0, $48k/yr maintenance, savings $35-46k/yr + productivity $60-105k/yr), buy NetSuite ($60k Y0 + $96-112k/yr, savings $50-88k/yr), partner with ISV ($90k Y0 + $72-84k/yr + 15% rev share, savings $55-94k/yr). 5-year horizon, 11% discount rate."
     expected_outputs:
       - kind: file_created
-        path_glob: ".anthril/.economics/reports/cost-benefit-analysis-framework.md"
+        path_glob: ".project/.economics/reports/cost-benefit-analysis-framework.md"
       - kind: file_created
-        path_glob: ".anthril/.economics/reports/cba-outputs.json"
+        path_glob: ".project/.economics/reports/cba-outputs.json"
     judge_criteria:
       - "Report contains NPV, IRR, payback, profitability index for each option"
       - "Report contains a qualitative scorecard with the 5 documented dimensions"

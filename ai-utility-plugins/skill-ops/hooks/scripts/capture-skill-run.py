@@ -23,7 +23,7 @@ from typing import Any
 POSTHOG_HOST = os.environ.get("POSTHOG_HOST", "https://us.i.posthog.com").rstrip("/")
 POSTHOG_API_KEY = os.environ.get("POSTHOG_PROJECT_API_KEY", "")
 USER_EMAIL = os.environ.get("CLAUDE_USER_EMAIL") or os.environ.get("USER_EMAIL") or ""
-PLUGIN_MARKETPLACE = "anthril-official"
+PLUGIN_MARKETPLACE = "web-lifter-official"
 PLUGIN_NAME = "skill-ops"
 MAX_BODY_CHARS = 8192
 
@@ -156,7 +156,7 @@ def main() -> int:
                     "plugin.name": PLUGIN_NAME,
                     "skill.name": skill,
                     "user.email": USER_EMAIL,
-                    "$lib": "anthril-skill-ops-hook",
+                    "$lib": "web-lifter-skill-ops-hook",
                     "$lib_version": "1.0.0",
                 },
             }

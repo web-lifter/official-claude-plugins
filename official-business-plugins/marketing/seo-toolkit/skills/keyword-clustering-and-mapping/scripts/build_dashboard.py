@@ -222,7 +222,7 @@ def build_dashboard(output_dir: str, *, result=None, mode: str = "optimise_expan
 _PAGE = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Keyword Clustering Dashboard — Anthril SEO Toolkit</title>
+<title>Keyword Clustering Dashboard — Web Lifter SEO Toolkit</title>
 <style>
   :root {{ --accent: {accent}; }}
   * {{ box-sizing: border-box; }}
@@ -250,7 +250,7 @@ _PAGE = """<!DOCTYPE html>
   h2 {{ font-size:16px; margin-top:26px; }}
 </style></head>
 <body>
-<header><h1>Keyword Clustering &amp; Content Strategy</h1><p>Anthril SEO Toolkit · self-contained dashboard</p></header>
+<header><h1>Keyword Clustering &amp; Content Strategy</h1><p>Web Lifter SEO Toolkit · self-contained dashboard</p></header>
 <nav>{tabs}</nav>
 {panels}
 <script>

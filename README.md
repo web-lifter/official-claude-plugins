@@ -1,4 +1,4 @@
-# Anthril Official Claude Plugins
+# Web Lifter Official Claude Plugins
 
 A curated library of Claude Code plugins, organised into three customer-facing roots and packaged as a Claude Code marketplace.
 
@@ -10,9 +10,9 @@ The marketplace catalogue ([`.claude-plugin/marketplace.json`](.claude-plugin/ma
 - [`official-business-plugins/`](official-business-plugins/) — 22 plugins
 - [`official-lifestyle-plugins/`](official-lifestyle-plugins/) — 4 plugins
 
-The `anthril-os/` and `internal-utilities/` trees in this repo are **not** part of the marketplace.
+Engineering lifecycle tooling lives in the separate [John OS marketplace](https://github.com/johnoconnor0/johns-os); both marketplaces write to the shared `.project/` workspace (see [`OUTPUT-CONVENTIONS.md`](OUTPUT-CONVENTIONS.md)).
 
-Maintained by [@Anthril](https://github.com/anthril).
+Maintained by [Web Lifter](https://github.com/johnoconnor0).
 
 ## Quick Start
 
@@ -20,15 +20,15 @@ Maintained by [@Anthril](https://github.com/anthril).
 
 ```bash
 # Add the marketplace
-/plugin marketplace add anthril/official-claude-plugins
+/plugin marketplace add johnoconnor0/official-claude-plugins
 
 # Install a plugin (examples)
-/plugin install software-development@anthril-official-claude-plugins
-/plugin install devops@anthril-official-claude-plugins
-/plugin install seo-toolkit@anthril-official-claude-plugins
-/plugin install venture-os@anthril-official-claude-plugins
-/plugin install brand-manager@anthril-official-claude-plugins
-/plugin install personal-finance@anthril-official-claude-plugins
+/plugin install software-development@web-lifter-plugins
+/plugin install devops@web-lifter-plugins
+/plugin install seo-toolkit@web-lifter-plugins
+/plugin install venture-core@web-lifter-plugins
+/plugin install brand-manager@web-lifter-plugins
+/plugin install personal-finance@web-lifter-plugins
 ```
 
 A full list of installable plugin names lives in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
@@ -51,8 +51,8 @@ claude --plugin-dir ./official-business-plugins/engineering/software-development
 Claude Code does **not** auto-refresh marketplaces — it reads from a local cache (`~/.claude/plugins/marketplaces/<name>/`) re-fetched on demand. To pick up a new release:
 
 ```bash
-/plugin marketplace update anthril-official-claude-plugins
-/plugin update software-development@anthril-official-claude-plugins
+/plugin marketplace update web-lifter-plugins
+/plugin update software-development@web-lifter-plugins
 ```
 
 See [`CHANGELOG.md`](CHANGELOG.md) for what changed in each release.
@@ -64,16 +64,11 @@ See [`CHANGELOG.md`](CHANGELOG.md) for what changed in each release.
 ```
 official-claude-plugins/
 ├── .claude-plugin/
-│   └── marketplace.json           # Catalogue — 51 plugins
+│   └── marketplace.json           # Catalogue — 29 plugins
 ├── ai-utility-plugins/            # Cross-cutting AI / Claude Code helpers
 │   ├── resource-manager/          # Monitor & reclaim Claude Code resources
 │   ├── skill-ops/                 # skill-creator (scaffold new skills)
 │   └── plan-review/               # plan-completion-audit + audit-resolver
-├── anthril-os/
-│   ├── engineering-os/            # 20 role-based engineering plugins + SAAP
-│   │   ├── eng-core/ eng-product/ eng-architecture/ ...
-│   │   └── software-assurance-audit-program/   # Cross-stack security/QA audit
-│   └── venture-os/                # Venture discovery operating system
 ├── official-business-plugins/
 │   ├── data-science/              # data-analysis, experimentation
 │   ├── economics/                 # business-economics, strategic-economics
@@ -87,16 +82,16 @@ official-claude-plugins/
 │   ├── home-life-logistics/       # Trip + household + life-admin + gifting
 │   ├── personal-finance/          # AU budget / debt / FIRE / projections
 │   └── personal-productivity/     # Habits, reset, deep-focus, energy mapping
-├── internal-utilities/            # NOT in marketplace — internal tooling only
+├── internal-utilities/            # NOT in marketplace — internal tooling (gitignored)
 │   ├── observability/             # PostHog prompt mgmt + transcripts (internal)
 │   └── skill-ops/                 # evaluator + autonomous-iteration-loop
 ├── tests/                         # Python smoke tests for embedded scripts
 ├── scripts/                       # check-versions, check-validate, virustotal
 ├── .virustotal/                   # Per-plugin VirusTotal scan sidecars
-├── .anthril/                      # Audit reports, output-map, judge fleet
+├── .project/                      # Audit reports, output-map, judge fleet
 ├── CHANGELOG.md
 ├── SECURITY.md                    # VirusTotal policy + scan results
-├── OUTPUT-CONVENTIONS.md          # `.anthril/<type>/` output scheme
+├── OUTPUT-CONVENTIONS.md          # `.project/<type>/` output scheme
 ├── LICENSE                        # MIT
 └── README.md                      # this file
 ```
@@ -128,40 +123,9 @@ Click a plugin name to open its directory; the README inside each plugin lists e
 | `skill-ops-claude` | [ai-utility-plugins/skill-ops](ai-utility-plugins/skill-ops/) | `skill-creator` — scaffold new skills with frontmatter, templates, examples, supporting files |
 | `plan-review` | [ai-utility-plugins/plan-review](ai-utility-plugins/plan-review/) | `plan-completion-audit` + `audit-resolver` — full-stack plan-vs-implementation audit, then close the loop with `/utilities:audit-resolve` |
 
-### Anthril OS — engineering operating system (`anthril-os/engineering-os/`) — *not in marketplace*
+### John OS — engineering lifecycle marketplace — *separate repo*
 
-20 role-based plugins live on disk under `anthril-os/engineering-os/` plus the cross-stack `software-assurance-audit-program`. They are **not** part of the public marketplace catalogue but can be loaded directly with `claude --plugin-dir ./anthril-os/engineering-os/<plugin>`.
-
-<details>
-<summary>Engineering OS plugin list (click to expand)</summary>
-
-| Plugin | Focus |
-|---|---|
-| [`eng-core`](anthril-os/engineering-os/eng-core/) | Shared context, profiling, service catalog, ADRs, glossary, handoffs |
-| [`eng-product`](anthril-os/engineering-os/eng-product/) | Product strategy, discovery, PRDs/TPRDs, prioritisation, metrics |
-| [`eng-architecture`](anthril-os/engineering-os/eng-architecture/) | Enterprise, solution, software, cloud, data, API, NFR architecture |
-| [`eng-app`](anthril-os/engineering-os/eng-app/) | Application code — plan, implement, refactor, debug, review |
-| [`eng-platform`](anthril-os/engineering-os/eng-platform/) | Internal developer platform, golden paths, service templates |
-| [`eng-devops`](anthril-os/engineering-os/eng-devops/) | CI/CD, builds, releases, deployments, flags, versioning |
-| [`eng-sre`](anthril-os/engineering-os/eng-sre/) | Reliability, SLOs, observability, alerting, incidents, DR |
-| [`eng-database`](anthril-os/engineering-os/eng-database/) | Schema design, modelling, queries, indexing, migrations, retention |
-| [`eng-quality`](anthril-os/engineering-os/eng-quality/) | QA strategy, automation, E2E, perf, accessibility, UAT |
-| [`eng-security`](anthril-os/engineering-os/eng-security/) | AppSec, cloud security, IAM, IR, threat modelling, supply chain |
-| [`eng-tpm`](anthril-os/engineering-os/eng-tpm/) | Cross-team planning, delivery, dependencies, launch readiness |
-| [`eng-docs`](anthril-os/engineering-os/eng-docs/) | Technical docs, API docs, runbooks, tutorials, release notes |
-| [`eng-design`](anthril-os/engineering-os/eng-design/) | UX research, IA, service design, design systems, prototyping |
-| [`eng-data`](anthril-os/engineering-os/eng-data/) | Data platforms, pipelines, warehouses, analytics, lineage |
-| [`eng-ai`](anthril-os/engineering-os/eng-ai/) | AI features, ML system design, MLOps, LLM apps, RAG, evals |
-| [`eng-it`](anthril-os/engineering-os/eng-it/) | Internal IT, identity, device mgmt, SaaS governance, service desk |
-| [`eng-grc`](anthril-os/engineering-os/eng-grc/) | Risk, privacy, controls, policies, vendor risk, compliance |
-| [`eng-customer`](anthril-os/engineering-os/eng-customer/) | Solutions engineering, implementation, support, TAM |
-| [`eng-business`](anthril-os/engineering-os/eng-business/) | FinOps, cloud economics, budgeting, procurement, vendor mgmt |
-| [`eng-executive`](anthril-os/engineering-os/eng-executive/) | Technology strategy, portfolio, maturity, board briefings, KPIs |
-| [`software-assurance-audit-program`](anthril-os/engineering-os/software-assurance-audit-program/) | Profile-first cross-stack audit — security, performance, reliability, privacy, compliance (SOC 2 / ISO 27001 / PCI), accessibility, AI/ML |
-
-</details>
-
-`anthril-os/venture-os/` also lives in this repo for direct-path installation, but is not in the marketplace catalogue.
+Structured engineering-lifecycle tooling (discovery → requirements → architecture → implementation → release, with review agents and an artifact ledger) lives in the separate [John OS marketplace](https://github.com/johnoconnor0/johns-os) (`/plugin marketplace add johnoconnor0/johns-os`). Its plugins write to `.project/.engineering/` and `.project/business-development/`, sharing the same `.project/` workspace root this marketplace outputs to — see [`OUTPUT-CONVENTIONS.md`](OUTPUT-CONVENTIONS.md) for the namespace contract.
 
 ### Data science (`official-business-plugins/data-science/`)
 
@@ -191,7 +155,7 @@ Click a plugin name to open its directory; the README inside each plugin lists e
 
 | Plugin | Source | Summary |
 |---|---|---|
-| `business-operations` | [official-business-plugins/general/business-operations](official-business-plugins/general/business-operations/) | 5 SMB ops skills — revenue channel mapping, KPI frameworks, stakeholder briefs, bottleneck detection, pricing strategy |
+| `business-operations` | [official-business-plugins/business-operations](official-business-plugins/business-operations/) | 5 SMB ops skills — revenue channel mapping, KPI frameworks, stakeholder briefs, bottleneck detection, pricing strategy |
 
 ### Marketing (`official-business-plugins/marketing/`)
 

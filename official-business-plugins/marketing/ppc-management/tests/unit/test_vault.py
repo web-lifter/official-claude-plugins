@@ -48,7 +48,7 @@ class TestPPCVault:
         # fresh instance, same passphrase
         vault2 = PPCVault(tmp_vault_path, passphrase)
         loaded = vault2.load()
-        assert loaded["google"]["accounts"]["default"]["email"] == "john@anthril.com"
+        assert loaded["google"]["accounts"]["default"]["email"] == "john@weblifter.com.au"
         assert loaded["google_ads"]["accounts"]["acme"]["customer_id"] == "1234567890"
 
     def test_wrong_passphrase_raises(self, tmp_vault_path, passphrase, sample_vault_data):

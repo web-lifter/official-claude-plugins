@@ -1,4 +1,4 @@
-# PPC Manager — Anthril Plugin
+# PPC Manager — Web Lifter Plugin
 
 End-to-end PPC management across Google Ads, Meta Ads, GA4, and Google Tag Manager — inside Claude Code. 23 skills, 4 bundled MCP servers, OAuth-authenticated read + write, encrypted credential vault.
 
@@ -13,7 +13,7 @@ End-to-end PPC management across Google Ads, Meta Ads, GA4, and Google Tag Manag
 | **Meta / Facebook Ads** | `meta-pixel-setup`, `meta-capi-setup`, `meta-events-mapping`, `meta-audience-builder`, `meta-creative-brief`, `meta-ads-copy` |
 | **Cross-platform** | `keyword-research`, `campaign-audit`, `utm-builder`, `landing-page-copy`, `youtube-campaign` |
 
-All skills follow the Anthril convention: Australian English, markdown-first output, 200–500 line `SKILL.md` files, realistic examples, Apache 2.0 licensed per skill.
+All skills follow the Web Lifter convention: Australian English, markdown-first output, 200–500 line `SKILL.md` files, realistic examples, Apache 2.0 licensed per skill.
 
 ## Prerequisites
 
@@ -27,14 +27,14 @@ All skills follow the Anthril convention: Australian English, markdown-first out
 
 ## Installation
 
-### From the Anthril marketplace
+### From the Web Lifter marketplace
 
 ```bash
 # Add the marketplace if you haven't already
-/plugin marketplace add anthril/official-claude-plugins
+/plugin marketplace add johnoconnor0/official-claude-plugins
 
 # Install the plugin
-/plugin install ppc-manager@anthril-claude-plugins
+/plugin install ppc-manager@web-lifter-plugins
 ```
 
 ### From a local checkout
@@ -126,4 +126,4 @@ See `docs/credentials.md` troubleshooting section. Quick pointers:
 
 ## Author
 
-Anthril — [john@anthril.com](mailto:john@anthril.com) · [github.com/anthril](https://github.com/anthril)
+Web Lifter — [john@weblifter.com.au](mailto:john@weblifter.com.au) · [github.com/johnoconnor0](https://github.com/johnoconnor0)

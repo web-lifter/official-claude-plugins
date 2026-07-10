@@ -8,11 +8,11 @@ effort: high
 
 # Unit Economics Calculator
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.economics/reports/`.
-> Run `mkdir -p .anthril/.economics/reports` before the first `Write` call.
-> Primary artefact: `.anthril/.economics/reports/unit-economics.md`.
+> All file outputs from this skill MUST be written under `.project/.economics/reports/`.
+> Run `mkdir -p .project/.economics/reports` before the first `Write` call.
+> Primary artefact: `.project/.economics/reports/unit-economics.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

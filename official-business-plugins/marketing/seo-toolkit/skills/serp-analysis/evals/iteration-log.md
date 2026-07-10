@@ -73,7 +73,7 @@
 - SKILL.md:17 — Added cross-reference block pointing to `reference.md` (taxonomy, AI Overview signals, intent matrix) and `examples/example-output.md`.
 - SKILL.md:168 — Rewrote the Featured-Snippet Step bullet to remove the soft modal "Could this page capture it?" — replaced with an imperative "assess capture viability"; resolves C39.
 - SKILL.md:170 — Added an inline pointer to `reference.md` § AI Overview Signals.
-- SKILL.md:183 — Added an explicit `Write` step persisting the report to `.anthril/marketing/.seo/serp-analysis/<slug>-<YYYY-MM-DD>.md` — resolves the Iter-1 finding that `Write` was granted but unused (D10.5/C45).
+- SKILL.md:183 — Added an explicit `Write` step persisting the report to `.project/marketing/.seo/serp-analysis/<slug>-<YYYY-MM-DD>.md` — resolves the Iter-1 finding that `Write` was granted but unused (D10.5/C45).
 
 Note: `reference.md:99` "as of May 2026" was already neutralised to "(Current)" in Iter 2; verified no remaining time-bound headings.
 

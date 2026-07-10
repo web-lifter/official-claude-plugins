@@ -9,11 +9,11 @@ effort: high
 # Pricing Architecture Designer
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.economics/plans/`.
-> Run `mkdir -p .anthril/.economics/plans` before the first `Write` call.
-> Primary artefact: `.anthril/.economics/plans/pricing-architecture.md`.
+> All file outputs from this skill MUST be written under `.project/.economics/plans/`.
+> Run `mkdir -p .project/.economics/plans` before the first `Write` call.
+> Primary artefact: `.project/.economics/plans/pricing-architecture.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -101,9 +101,9 @@ If pricing is changing:
 
 ### Phase 6: Output
 
-Save as `.anthril/.economics/plans/pricing-architecture.md` .
+Save as `.project/.economics/plans/pricing-architecture.md` .
 
-Create the output folder first: `mkdir -p .anthril/.economics/plans`.
+Create the output folder first: `mkdir -p .project/.economics/plans`.
 
 ---
 

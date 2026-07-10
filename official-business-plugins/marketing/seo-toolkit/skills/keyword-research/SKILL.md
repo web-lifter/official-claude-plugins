@@ -9,11 +9,11 @@ effort: medium
 # Keyword Research
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.marketing-os/seo/data/`.
-> Run `mkdir -p .anthril/.marketing-os/seo/data` before the first `Write` call.
-> Primary artefact: `.anthril/.marketing-os/seo/data/keyword-research.csv`.
+> All file outputs from this skill MUST be written under `.project/.marketing-os/seo/data/`.
+> Run `mkdir -p .project/.marketing-os/seo/data` before the first `Write` call.
+> Primary artefact: `.project/.marketing-os/seo/data/keyword-research.csv`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -132,7 +132,7 @@ Annotated list: keyword, volume, difficulty, difficulty_band, intent, sub_intent
 Save results and present a human-readable summary.
 
 1. Save the full annotated list as a CSV to:
-   `.anthril/.marketing-os/seo/keywords/<slug>-research.csv`
+   `.project/.marketing-os/seo/keywords/<slug>-research.csv`
    Columns: `keyword,volume,difficulty,difficulty_band,intent,sub_intent,parent_topic,source,mixed_intent`
 
 2. Produce a markdown report containing:
@@ -168,7 +168,7 @@ Read `reference.md` before Phase 2 (source orchestration) and Phase 4 (intent + 
 | Tool | Purpose |
 |------|---------|
 | `Read` | Ingest seed-term files, prior keyword lists, locale config; read `reference.md` |
-| `Write` | Emit the keyword CSV to `.anthril/.marketing-os/seo/keywords/<slug>-research.csv` and the markdown report |
+| `Write` | Emit the keyword CSV to `.project/.marketing-os/seo/keywords/<slug>-research.csv` and the markdown report |
 
 API calls to SerpAPI and DataForSEO use HTTP clients invoked at runtime — no `Bash` or `Agent` tool is required. The skill works purely from text inputs plus the two documented APIs.
 

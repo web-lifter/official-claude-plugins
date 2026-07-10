@@ -12,11 +12,11 @@ ultrathink
 
 # Campaign Audit
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/marketing/.ppc/audits/`.
-> Run `mkdir -p .anthril/marketing/.ppc/audits` before the first `Write` call.
-> Primary artefact: `.anthril/marketing/.ppc/audits/campaign-audit.md`.
+> All file outputs from this skill MUST be written under `.project/marketing/.ppc/audits/`.
+> Run `mkdir -p .project/marketing/.ppc/audits` before the first `Write` call.
+> Primary artefact: `.project/marketing/.ppc/audits/campaign-audit.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

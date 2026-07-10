@@ -4,11 +4,11 @@
   "description": "5 lifestyle skills for meal planning, training programs, sleep optimisation, supplement stacks, and daily wellness habits — evidence-rated and AU-context aware",
   "author": {
     "name": "John O'Connor",
-    "email": "john@anthril.com",
+    "email": "john@weblifter.com.au",
     "url": "https://github.com/johnoconnor0"
   },
-  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-lifestyle-plugins/health-wellness",
-  "repository": "https://github.com/anthril/official-claude-plugins",
+  "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-lifestyle-plugins/health-wellness",
+  "repository": "https://github.com/johnoconnor0/official-claude-plugins",
   "license": "MIT",
   "keywords": [
     "lifestyle",

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Anthril — Data Analysis Plugin: Suggest Related Skills
+# Web Lifter — Data Analysis Plugin: Suggest Related Skills
 
 # Try to detect which skill was used from the transcript
 TRANSCRIPT="${CLAUDE_TRANSCRIPT:-}"

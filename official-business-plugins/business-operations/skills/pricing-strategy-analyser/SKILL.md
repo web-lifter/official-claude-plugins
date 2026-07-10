@@ -9,11 +9,11 @@ effort: high
 # Pricing Strategy Analyser
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/reports/`.
-> Run `mkdir -p .anthril/reports` before the first `Write` call.
-> Primary artefact: `.anthril/reports/pricing-strategy.md`.
+> All file outputs from this skill MUST be written under `.project/reports/`.
+> Run `mkdir -p .project/reports` before the first `Write` call.
+> Primary artefact: `.project/reports/pricing-strategy.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -219,9 +219,9 @@ Use the template at `templates/output-template.md`. The document includes:
 5. **Risks and Mitigations** — top 3 pricing risks
 6. **Next Steps** — numbered with dates and owners
 
-Save as `.anthril/reports/pricing-strategy.md` .
+Save as `.project/reports/pricing-strategy.md` .
 
-Create the output folder first: `mkdir -p .anthril/reports`.
+Create the output folder first: `mkdir -p .project/reports`.
 
 ---
 

@@ -1,4 +1,4 @@
-# Brand Manager — Anthril Plugin
+# Brand Manager — Web Lifter Plugin
 
 A complete brand creation toolkit for Claude Code. Nine interview-driven skills that take a business from idea to a finished, design-handoff-ready brand system: foundational identity, audience and competitor mapping, visual standards, design tokens, website copy, and legal artefacts.
 
@@ -123,4 +123,4 @@ MIT — see `.claude-plugin/plugin.json`. Per-skill LICENSE.txt files are Apache
 
 ## Author
 
-[Anthril](https://github.com/anthril) — `john@anthril.com`
+[Web Lifter](https://github.com/johnoconnor0) — `john@weblifter.com.au`

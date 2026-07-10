@@ -1,14 +1,14 @@
 {
   "name": "business-operations",
   "version": "1.0.1",
-  "description": "5 skills for SMB operations — revenue channel mapping, KPI frameworks, stakeholder briefs, bottleneck detection, and pricing strategy",
+  "description": "5 skills for SMB operations â€” revenue channel mapping, KPI frameworks, stakeholder briefs, bottleneck detection, and pricing strategy",
   "author": {
     "name": "John O'Connor",
-    "email": "john@anthril.com",
+    "email": "john@weblifter.com.au",
     "url": "https://github.com/johnoconnor0"
   },
-  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/general/business-operations",
-  "repository": "https://github.com/anthril/official-claude-plugins",
+  "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/business-operations",
+  "repository": "https://github.com/johnoconnor0/official-claude-plugins",
   "license": "MIT",
   "keywords": [
     "smb",

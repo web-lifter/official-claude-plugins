@@ -10,11 +10,11 @@ effort: max
 
 # Data Pipeline Architecture Prompt
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.data-science/scaffolds/`.
-> Run `mkdir -p .anthril/.data-science/scaffolds` before the first `Write` call.
-> Primary artefact: `.anthril/.data-science/scaffolds/data-pipeline-architecture.md`.
+> All file outputs from this skill MUST be written under `.project/.data-science/scaffolds/`.
+> Run `mkdir -p .project/.data-science/scaffolds` before the first `Write` call.
+> Primary artefact: `.project/.data-science/scaffolds/data-pipeline-architecture.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

@@ -8,11 +8,11 @@ effort: high
 
 # Cost-Benefit Analysis Framework
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.economics/reports/`.
-> Run `mkdir -p .anthril/.economics/reports` before the first `Write` call.
-> Primary artefact: `.anthril/.economics/reports/cost-benefit-analysis-framework.md`.
+> All file outputs from this skill MUST be written under `.project/.economics/reports/`.
+> Run `mkdir -p .project/.economics/reports` before the first `Write` call.
+> Primary artefact: `.project/.economics/reports/cost-benefit-analysis-framework.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -110,7 +110,7 @@ Produce a complete, traceable list of cash flows per option per period, plus an 
    - **Strategic optionality** — Future moves this option unlocks. Flag for Phase 4.
    - **Intangible benefits** — Brand uplift, talent attraction, capability building. Flag, do not quantify.
 
-3. **Build the per-period cash-flow timeline** for each option as a JSON file at `.anthril/.economics/reports/cba-inputs.json`. The calculator consumes this. Format:
+3. **Build the per-period cash-flow timeline** for each option as a JSON file at `.project/.economics/reports/cba-inputs.json`. The calculator consumes this. Format:
 
    ```json
    {
@@ -151,8 +151,8 @@ Compute the standard CBA metrics per option and produce the comparison scorecard
 1. **Run the calculator:**
    ```bash
    python "$CLAUDE_PLUGIN_ROOT/skills/cost-benefit-analysis-framework/scripts/cba-calculator.py" \
-       --input .anthril/.economics/reports/cba-inputs.json \
-       --output .anthril/.economics/reports/cba-outputs.json
+       --input .project/.economics/reports/cba-inputs.json \
+       --output .project/.economics/reports/cba-outputs.json
    ```
 
    The script emits per option:
@@ -274,7 +274,7 @@ Produce a defensible, conditional recommendation with named decision-review trig
 
 ## Output Specification
 
-The skill writes a single primary artefact at `.anthril/.economics/reports/cost-benefit-analysis-framework.md` following the structure in `templates/output-template.md`:
+The skill writes a single primary artefact at `.project/.economics/reports/cost-benefit-analysis-framework.md` following the structure in `templates/output-template.md`:
 
 1. Decision context (1 paragraph)
 2. Options summary table

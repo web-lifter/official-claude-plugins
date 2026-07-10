@@ -183,7 +183,7 @@ async function sha256(value) {
 }
 
 // usage
-sha256('john@anthril.com').then(hashed => {
+sha256('john@weblifter.com.au').then(hashed => {
   trackEvent('login', { user_data: { email_hash: hashed, method: 'password' } });
 });
 ```

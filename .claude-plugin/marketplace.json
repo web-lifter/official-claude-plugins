@@ -1,11 +1,11 @@
 {
   "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
-  "name": "anthril-claude-plugins",
-  "description": "Official Anthril plugin marketplace — ai-utility-plugins, official-business-plugins (data-science, economics, engineering, general, marketing, startups), and official-lifestyle-plugins. anthril-os/ (engineering-os + venture-os) and internal-utilities/ are excluded by design — install via direct-path reference.",
+  "name": "web-lifter-plugins",
+  "description": "Official Web Lifter plugin marketplace — ai-utility-plugins, official-business-plugins (data-science, economics, engineering, general, marketing, startups), and official-lifestyle-plugins. Engineering lifecycle tooling lives in the separate John OS marketplace (github.com/johnoconnor0/johns-os); both write to the shared .project/ workspace.",
   "owner": {
     "name": "John O'Connor",
-    "email": "john@anthril.com",
-    "url": "https://github.com/anthril"
+    "email": "john@weblifter.com.au",
+    "url": "https://github.com/johnoconnor0"
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
       "description": "Plan-vs-implementation auditing — run a full-stack plan-completion-audit and then close the loop with audit-resolver. Includes /utilities:audit-resolve command.",
       "source": "./ai-utility-plugins/plan-review",
       "category": "utilities",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/ai-utility-plugins/plan-review",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/ai-utility-plugins/plan-review",
       "keywords": [
         "plan-audit",
         "plan-completion",
@@ -28,7 +28,7 @@
       "description": "Monitor and reclaim machine resources used by Claude Desktop, Claude Code sessions, and their MCP servers — orphan-killer Stop hook, on-demand audit skills, and a localhost process dashboard.",
       "source": "./ai-utility-plugins/resource-manager",
       "category": "utilities",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/ai-utility-plugins/resource-manager",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/ai-utility-plugins/resource-manager",
       "keywords": [
         "utilities",
         "resource",
@@ -41,7 +41,7 @@
       "description": "Scaffold new Claude Code skills — generates SKILL.md, frontmatter, templates, examples, and supporting files via the skill-creator skill.",
       "source": "./ai-utility-plugins/skill-ops",
       "category": "utilities",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/ai-utility-plugins/skill-ops",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/ai-utility-plugins/skill-ops",
       "keywords": [
         "utilities",
         "skill",
@@ -54,7 +54,7 @@
       "description": "5 skills for data profiling, quality auditing, pipeline design, cohort analysis, and anomaly detection",
       "source": "./official-business-plugins/data-science/data-analysis",
       "category": "data-science",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/data-science/data-analysis",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/data-science/data-analysis",
       "keywords": [
         "data-science",
         "data",
@@ -67,7 +67,7 @@
       "description": "4 data-science skills for A/B test design, experiment readouts, time-series forecasting, and causal-impact analysis — turn hypothesis questions into rigorous test plans and readouts",
       "source": "./official-business-plugins/data-science/experimentation",
       "category": "data-science",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/data-science/experimentation",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/data-science/experimentation",
       "keywords": [
         "data-science",
         "experimentation",
@@ -82,7 +82,7 @@
       "description": "6 skills for unit economics, market sizing (TAM/SAM/SOM), pricing architecture, cost structure, break-even scenario modelling, and cost-benefit analysis (multi-option decision support)",
       "source": "./official-business-plugins/economics/business-economics",
       "category": "economics",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/economics/business-economics",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/economics/business-economics",
       "keywords": [
         "economics",
         "business"
@@ -94,7 +94,7 @@
       "description": "3 skills for competitive-dynamics analysis, elasticity estimation, and moat-strength audit — strategic economics for product and venture decisions",
       "source": "./official-business-plugins/economics/strategic-economics",
       "category": "economics",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/economics/strategic-economics",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/economics/strategic-economics",
       "keywords": [
         "economics",
         "strategy",
@@ -111,7 +111,7 @@
       "description": "Postgres schema design + audit for Supabase or any Postgres 13+ database. 7 skills covering schema design, RLS, migrations, indexes, ERDs, bootstrap, and audit. Connects via Supabase MCP when available; falls back to locally-configured psql.",
       "source": "./official-business-plugins/engineering/database-design",
       "category": "engineering",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/engineering/database-design",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/engineering/database-design",
       "keywords": [
         "engineering",
         "database",
@@ -124,7 +124,7 @@
       "description": "9 DevOps and SRE skills that audit, remediate, and test — plain-language needs assessment, CI/CD pipelines, Terraform/OpenTofu IaC, Docker containers, Kubernetes manifests, observability, release readiness, DevSecOps supply chain, and SRE reliability. Supports three operating modes: static-file audit (default, no tools required), live-access audit (uses kubectl, terraform, aws, gcloud, docker when available), and apply mode (opt-in --apply flag, per-change confirmation). Runtime testing — load tests, chaos experiments, and synthetic alert firing — is supported where each skill can run it safely with blast-radius guardrails. Every finding is evidence-backed with file:line references.",
       "source": "./official-business-plugins/engineering/devops",
       "category": "engineering",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/engineering/devops",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/engineering/devops",
       "keywords": [
         "engineering",
         "devops"
@@ -136,7 +136,7 @@
       "description": "Audit npm package publishing quality and CLI terminal UX — publishing, security, types, and build checks plus help-text, error-message, and output-formatting review",
       "source": "./official-business-plugins/engineering/package-manager",
       "category": "engineering",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/engineering/package-manager",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/engineering/package-manager",
       "keywords": [
         "engineering",
         "package",
@@ -149,7 +149,7 @@
       "description": "audit/orchestration skills for software teams — stack-agnostic codebase profiler (architecture topology, dependency graph, security surface, quality metrics), dead code detection across 9 languages, end-to-end write path mapping, parallel multi-agent plan orchestration for Plan Mode. The Next.js/Supabase application audit has been replaced by the cross-stack software-assurance-audit-program plugin.",
       "source": "./official-business-plugins/engineering/software-development",
       "category": "engineering",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/engineering/software-development",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/engineering/software-development",
       "keywords": [
         "engineering",
         "software",
@@ -162,7 +162,7 @@
       "description": "Five repo-ops helper skills for engineering teams — changelog-generator, pr-description-writer, env-var-auditor, doc-link-validator, repo-snapshot.",
       "source": "./official-business-plugins/engineering/programming-utilities",
       "category": "engineering",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/engineering/programming-utilities",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/engineering/programming-utilities",
       "keywords": [
         "engineering",
         "repo-ops",
@@ -176,9 +176,9 @@
       "name": "business-operations",
       "version": "1.0.1",
       "description": "5 skills for SMB operations — revenue channel mapping, KPI frameworks, stakeholder briefs, bottleneck detection, and pricing strategy",
-      "source": "./official-business-plugins/general/business-operations",
+      "source": "./official-business-plugins/business-operations",
       "category": "general",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/general/business-operations",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/business-operations",
       "keywords": [
         "smb",
         "operations",
@@ -196,7 +196,7 @@
       "description": "9 skills for end-to-end brand creation — identity, guidelines, audience, competitors, logo briefs, colour, design tokens, legal disclaimers, and website copy",
       "source": "./official-business-plugins/marketing/brand-management",
       "category": "marketing",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/marketing/brand-management",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/marketing/brand-management",
       "keywords": [
         "smb",
         "brand",
@@ -209,7 +209,7 @@
       "description": "23 skills for end-to-end PPC — Google Ads, Meta Ads, GA4, and GTM — with OAuth-authenticated read/write across all four platforms via bundled Python MCP servers",
       "source": "./official-business-plugins/marketing/ppc-management",
       "category": "marketing",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/marketing/ppc-management",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/marketing/ppc-management",
       "keywords": [
         "marketing",
         "ppc",
@@ -222,7 +222,7 @@
       "description": "19 skills for end-to-end SEO — keyword research + list dev + clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder). Credentials via a single plaintext credentials.json — no vault or OAuth.",
       "source": "./official-business-plugins/marketing/seo-toolkit",
       "category": "marketing",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/marketing/seo-toolkit",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/marketing/seo-toolkit",
       "keywords": [
         "seo",
         "serp",
@@ -246,7 +246,7 @@
       "description": "Strategyzer business model canvas workflows — initial BMC build, front- vs back-stage split, hypothesis-driven updates, VPC linkage, revenue/cost back-of-envelope sketch.",
       "source": "./official-business-plugins/startups/business-model-canvas",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/business-model-canvas",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/business-model-canvas",
       "keywords": [
         "startups",
         "business-model",
@@ -260,7 +260,7 @@
       "description": "Competitor and market-analysis workflows — UVP statement, competitor discovery across five sources, competitor table, SWOT with the strengths-vs-opportunities distinction enforced, shadow BMC, and synthesis of competitive insights.",
       "source": "./official-business-plugins/startups/competitor-analysis",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/competitor-analysis",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/competitor-analysis",
       "keywords": [
         "startups",
         "competitor-analysis",
@@ -274,7 +274,7 @@
       "description": "Customer discovery workflows — segment definition, customer-profile build (jobs/pains/gains), early-adopter targeting, interview guide and log, cross-interview analysis, and the four-question readiness gate that blocks transition to MVP planning until validated.",
       "source": "./official-business-plugins/startups/customer-discovery",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/customer-discovery",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/customer-discovery",
       "keywords": [
         "startups",
         "customer-discovery",
@@ -288,7 +288,7 @@
       "description": "MVP planning and engineering bridge — MVP scope/type/metrics, tech-stack recommender, architecture and ADR writer, API design, Supabase schema design with RLS, migration plan, auth model, Cloudflare and Vercel deploy plans, analytics and funnel instrumentation, feasibility analysis, build plan, and pitch builder. Connector-aware via Supabase, Cloudflare and Vercel.",
       "source": "./official-business-plugins/startups/mvp-planning",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/mvp-planning",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/mvp-planning",
       "keywords": [
         "startups",
         "mvp",
@@ -304,7 +304,7 @@
       "description": "Prototype workflows from idea to clickable artefact — divergent ideation, convergence to 1–3 finalists, paper prototype script, Figma-MCP-aware digital handoff, structured feedback collection, and prototype-vs-MVP classification gate.",
       "source": "./official-business-plugins/startups/prototyping",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/prototyping",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/prototyping",
       "keywords": [
         "startups",
         "prototyping",
@@ -318,7 +318,7 @@
       "description": "Customer relationships and channel strategy — get/keep/grow design, direct vs indirect channel selection, product-channel fit check, quantitative funnel model, and churn projection using (1 − r)^n.",
       "source": "./official-business-plugins/startups/relationships-channels",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/relationships-channels",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/relationships-channels",
       "keywords": [
         "startups",
         "channels",
@@ -333,7 +333,7 @@
       "description": "Strategyzer value-proposition canvas workflows — value map, fit check between customer profile and value map, six ways to innovate, VPC versioning as customer feedback refines the proposition.",
       "source": "./official-business-plugins/startups/value-proposition-canvas",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/value-proposition-canvas",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/value-proposition-canvas",
       "keywords": [
         "startups",
         "value-proposition",
@@ -344,10 +344,10 @@
     {
       "name": "venture-core",
       "version": "0.1.0",
-      "description": "The chassis for venture workflows — workspace scaffolding, status reporting, phase routing, vision sketch, hypothesis register, pivot/refine log, and handoff brief. Sits on top of the @anthril/claude-memex venture profile.",
+      "description": "The chassis for venture workflows — workspace scaffolding, status reporting, phase routing, vision sketch, hypothesis register, pivot/refine log, and handoff brief. Sits on top of the @web-lifter/claude-memex venture profile.",
       "source": "./official-business-plugins/startups/venture-core",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/venture-core",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/venture-core",
       "keywords": [
         "startups",
         "venture",
@@ -360,7 +360,7 @@
       "description": "Test-driven validation of startup hypotheses — falsifiability check (blocking guard-rail), 5-part test cards, 4-part learning cards, experiment design and prioritisation (risk × impact × ease), and run tracking. Renamed from `experimentation` to disambiguate from the data-science experimentation plugin.",
       "source": "./official-business-plugins/startups/venture-experimentation",
       "category": "startups",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-business-plugins/startups/venture-experimentation",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-business-plugins/startups/venture-experimentation",
       "keywords": [
         "startups",
         "experimentation",
@@ -374,7 +374,7 @@
       "description": "5 lifestyle skills for meal planning, training programs, sleep optimisation, supplement stacks, and daily wellness habits — evidence-rated and AU-context aware",
       "source": "./official-lifestyle-plugins/health-wellness",
       "category": "lifestyle",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-lifestyle-plugins/health-wellness",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-lifestyle-plugins/health-wellness",
       "keywords": [
         "lifestyle",
         "health",
@@ -391,7 +391,7 @@
       "description": "4 lifestyle skills for trip planning, household maintenance, life-admin, and thoughtful gifting — AU-context checklists that turn logistics into routine",
       "source": "./official-lifestyle-plugins/home-life-logistics",
       "category": "lifestyle",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-lifestyle-plugins/home-life-logistics",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-lifestyle-plugins/home-life-logistics",
       "keywords": [
         "lifestyle",
         "travel",
@@ -407,7 +407,7 @@
       "description": "5 lifestyle skills for AU personal budgeting, debt payoff, savings rate, retirement projection, and emergency runbooks — AU tax/super defaults, scenario-driven",
       "source": "./official-lifestyle-plugins/personal-finance",
       "category": "lifestyle",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-finance",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-finance",
       "keywords": [
         "lifestyle",
         "personal-finance",
@@ -425,7 +425,7 @@
       "description": "4 lifestyle skills for habits, weekly resets, deep-focus days, and energy mapping — design daily and weekly systems that compound",
       "source": "./official-lifestyle-plugins/personal-productivity",
       "category": "lifestyle",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-productivity",
+      "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-productivity",
       "keywords": [
         "lifestyle",
         "productivity",

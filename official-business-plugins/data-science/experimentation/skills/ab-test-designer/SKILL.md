@@ -9,11 +9,11 @@ effort: high
 # A/B Test Designer
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.data-science/plans/`.
-> Run `mkdir -p .anthril/.data-science/plans` before the first `Write` call.
-> Primary artefact: `.anthril/.data-science/plans/ab-test-design.md`.
+> All file outputs from this skill MUST be written under `.project/.data-science/plans/`.
+> Run `mkdir -p .project/.data-science/plans` before the first `Write` call.
+> Primary artefact: `.project/.data-science/plans/ab-test-design.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -104,9 +104,9 @@ Append to output.
 
 ### Phase 6: Output
 
-Save as `.anthril/.data-science/plans/ab-test-design.md` .
+Save as `.project/.data-science/plans/ab-test-design.md` .
 
-Create the output folder first: `mkdir -p .anthril/.data-science/plans`.
+Create the output folder first: `mkdir -p .project/.data-science/plans`.
 
 ---
 

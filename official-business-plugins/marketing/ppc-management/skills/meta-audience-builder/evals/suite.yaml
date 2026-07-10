@@ -7,24 +7,24 @@ description: "Baseline eval suite generated for meta-audience-builder"
 # PostHog evaluation IDs — linked automatically by the observability plugin.
 # These evaluations run against $ai_generation events in PostHog project 435243.
 posthog_eval_ids:
-  - anthril-au-english
-  - anthril-helpfulness
-  - anthril-completeness
-  - anthril-first-attempt-success
-  - anthril-task-intent-match
-  - anthril-instruction-compliance
-  - anthril-concision
-  - anthril-no-hallucination
-  - anthril-data-grounding
-  - anthril-assumption-handling
-  - anthril-no-placeholder-content
-  - anthril-structure
-  - anthril-template-compliance
-  - anthril-output-contract-compliance
-  - anthril-tool-use-correctness
-  - anthril-error-handling-quality
-  - anthril-action-safety
-  - anthril-iteration-usefulness
+  - web-lifter-au-english
+  - web-lifter-helpfulness
+  - web-lifter-completeness
+  - web-lifter-first-attempt-success
+  - web-lifter-task-intent-match
+  - web-lifter-instruction-compliance
+  - web-lifter-concision
+  - web-lifter-no-hallucination
+  - web-lifter-data-grounding
+  - web-lifter-assumption-handling
+  - web-lifter-no-placeholder-content
+  - web-lifter-structure
+  - web-lifter-template-compliance
+  - web-lifter-output-contract-compliance
+  - web-lifter-tool-use-correctness
+  - web-lifter-error-handling-quality
+  - web-lifter-action-safety
+  - web-lifter-iteration-usefulness
 
 test_cases:
   - id: activate-positive-canonical

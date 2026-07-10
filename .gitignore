@@ -1,7 +1,7 @@
-# Anthril OS lives in its own repo (https://github.com/anthril/anthril-os).
+# Web Lifter OS lives in its own repo (https://github.com/johnoconnor0/johns-os).
 # The local clone may sit at this path for development convenience, but
 # nothing inside it should be committed to official-claude-plugins.
-anthril-os/
+johns-os/
 
 # Local Claude Code overrides — never commit personal settings.
 .claude/settings.local.json
@@ -59,8 +59,8 @@ skill-evaluation-*.json
 # Local dry-run outputs from tune-criteria.mjs and similar scripts.
 tune-result.json
 
-# Local VirusTotal cache. Canonical raw JSON now lives under .anthril/virustotal/
-# (gitignored — see .anthril rule below). The consolidated report VIRUSTOTAL.md
+# Local VirusTotal cache. Canonical raw JSON now lives under .project/virustotal/
+# (gitignored — see .project rule below). The consolidated report VIRUSTOTAL.md
 # at the repo root IS tracked.
 .vt-cache/
 .virustotal/
@@ -87,15 +87,15 @@ scripts/patch-posthog-evals.py
 
 
 
-# Internal Anthril observability plugin — not for end users
+# Internal Web Lifter observability plugin — not for end users
 internal-utilities/observability/
 
 # Cached copies of external Claude Code documentation pages fetched at runtime.
 # Always available fresh from code.claude.com — tracking them bloats the repo.
-.anthril/.docs/
+.project/.docs/
 internal-utilities
 
-# Engineering OS workspace — anthril-os/engineering-os/eng-* plugins write
+# Engineering OS workspace — johns-os/engineering-os/eng-* plugins write
 # initiative artefacts (profiles, service catalog, decisions, handoffs, work)
 # under .eng-os/ at the consumer's repo root. May contain sensitive org/system
 # data. Never committed; downstream consumers should also gitignore this.
@@ -106,7 +106,7 @@ official-business-plugins/startups
 ai-utility-plugins/resource-manager
 
 
-.anthril
+.project
 
 # venture-os workspaces — created by the SessionStart hook. Named workspaces
 # (.venture-os-<name>/) are registered in the plugin's variables.json and may

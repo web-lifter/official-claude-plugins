@@ -8,11 +8,11 @@ effort: high
 
 # Entity Disambiguation Prompt
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.marketing-os/seo/reports/`.
-> Run `mkdir -p .anthril/.marketing-os/seo/reports` before the first `Write` call.
-> Primary artefact: `.anthril/.marketing-os/seo/reports/entity-disambiguation.md`.
+> All file outputs from this skill MUST be written under `.project/.marketing-os/seo/reports/`.
+> Run `mkdir -p .project/.marketing-os/seo/reports` before the first `Write` call.
+> Primary artefact: `.project/.marketing-os/seo/reports/entity-disambiguation.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

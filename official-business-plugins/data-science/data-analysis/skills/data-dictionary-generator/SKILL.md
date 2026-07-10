@@ -11,11 +11,11 @@ paths: "**/*.sql, **/migrations/**, **/schema.*"
 
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.data-science/reports/`.
-> Run `mkdir -p .anthril/.data-science/reports` before the first `Write` call.
-> Primary artefact: `.anthril/.data-science/reports/data-dictionary.md`.
+> All file outputs from this skill MUST be written under `.project/.data-science/reports/`.
+> Run `mkdir -p .project/.data-science/reports` before the first `Write` call.
+> Primary artefact: `.project/.data-science/reports/data-dictionary.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

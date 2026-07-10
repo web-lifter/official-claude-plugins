@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Anthril — Utilities Plugin Welcome Hook (SessionStart)
+# Web Lifter — Utilities Plugin Welcome Hook (SessionStart)
 
 read -r -d '' MESSAGE <<'EOF'
-Anthril — Utilities plugin loaded.
+Web Lifter — Utilities plugin loaded.
 
 Skills:
   - /plan-completion-audit   Audit a plan file vs implementation.

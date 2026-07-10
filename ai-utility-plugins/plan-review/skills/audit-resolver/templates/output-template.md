@@ -55,7 +55,7 @@ Severity filter applied: `{{severity_filter}}`. Phase filter: `{{phase_filter}}`
 | ID | Severity | Reason | Action required to resume |
 |----|----------|--------|---------------------------|
 | F00A | SUGGESTION | User chose defer | Re-invoke `/plan-review:audit-resolve --severity=suggestion` when ready |
-| F00B | WARNING | Sub-skill `<plugin:skill>` not installed | `/plugin install <plugin>@anthril-claude-plugins` then re-run |
+| F00B | WARNING | Sub-skill `<plugin:skill>` not installed | `/plugin install <plugin>@web-lifter-plugins` then re-run |
 
 ---
 

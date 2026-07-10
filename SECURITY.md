@@ -4,7 +4,7 @@
 
 Every plugin in this marketplace is packaged as a gzipped tarball and submitted to [VirusTotal](https://www.virustotal.com) for multi-engine antivirus scanning. Scans run automatically on:
 
-- **Push to `main`** that touches anything under one of the plugin trees (`official-business-plugins/`, `official-lifestyle-plugins/`, `ai-utility-plugins/`, `anthril-os/`) — changed plugins only via path-scoped triggers
+- **Push to `main`** that touches anything under one of the plugin trees (`official-business-plugins/`, `official-lifestyle-plugins/`, `ai-utility-plugins/`, `johns-os/`) — changed plugins only via path-scoped triggers
 - **Weekly cron** — Monday at 14:00 UTC (full marketplace rescan)
 - **Manual dispatch** via the Actions tab
 
@@ -19,7 +19,7 @@ Every plugin in this marketplace is packaged as a gzipped tarball and submitted 
 | Artefact | Location | Audience |
 |---|---|---|
 | Consolidated marketplace report | [`VIRUSTOTAL.md`](VIRUSTOTAL.md) (repo root) | Humans |
-| Raw normalised JSON (per plugin) | `.anthril/virustotal/<name>.json` (gitignored — regenerated each run) | Tooling, CI consumers, shields.io endpoints |
+| Raw normalised JSON (per plugin) | `.project/virustotal/<name>.json` (gitignored — regenerated each run) | Tooling, CI consumers, shields.io endpoints |
 | Marketplace-wide summary table | below this section | Humans |
 
 ### Privacy note
@@ -28,7 +28,7 @@ Files uploaded via the VirusTotal public API are shared with VT's AV-vendor part
 
 ## Reporting a Vulnerability
 
-If you discover a security issue in any plugin or in the marketplace tooling, please email **john@anthril.com** rather than opening a public issue. We will acknowledge receipt within 72 hours.
+If you discover a security issue in any plugin or in the marketplace tooling, please email **john@weblifter.com.au** rather than opening a public issue. We will acknowledge receipt within 72 hours.
 
 For dependency vulnerabilities surfaced by VirusTotal scans (non-zero detections in the table below), review the linked VT report first — false positives are common for gzipped shell-heavy archives. Confirmed true positives are treated as P0 and the affected plugin is delisted from `marketplace.json` pending remediation.
 

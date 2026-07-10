@@ -9,11 +9,11 @@ effort: high
 # Experiment Readout Builder
 ultrathink
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.data-science/reports/`.
-> Run `mkdir -p .anthril/.data-science/reports` before the first `Write` call.
-> Primary artefact: `.anthril/.data-science/reports/experiment-readout.md`.
+> All file outputs from this skill MUST be written under `.project/.data-science/reports/`.
+> Run `mkdir -p .project/.data-science/reports` before the first `Write` call.
+> Primary artefact: `.project/.data-science/reports/experiment-readout.md`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
@@ -120,9 +120,9 @@ Recommend 1–3 follow-up tests based on what was learned.
 7. Stats Reviewer notes
 8. Follow-up experiments
 
-Save as `.anthril/.data-science/reports/experiment-readout.md` .
+Save as `.project/.data-science/reports/experiment-readout.md` .
 
-Create the output folder first: `mkdir -p .anthril/.data-science/reports`.
+Create the output folder first: `mkdir -p .project/.data-science/reports`.
 
 ---
 

@@ -24,4 +24,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unit tests for vault, ppc_auth, masking_logger, token_validator, oauth scripts, and google_helpers.
 - Lint tests for skill structure, manifests, and Australian English conventions.
 - Integration tests for vault lifecycle (encrypt/decrypt round-trip, passphrase rotation, multi-account upsert).
-- Marketplace registration in `anthril-claude-plugins`.
+- Marketplace registration in `web-lifter-plugins`.

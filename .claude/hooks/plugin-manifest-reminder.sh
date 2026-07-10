@@ -12,7 +12,7 @@
 #
 # Chains with changelog-reminder.sh + version-bump-reminder.sh.
 #
-# (The anthril-os repo carries its own copy of this hook; it is a separate
+# (The johns-os repo carries its own copy of this hook; it is a separate
 # standalone repo, not a submodule here.)
 #
 # Implemented without jq so it runs on bare Git Bash on Windows.

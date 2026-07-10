@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Anthril — Business Economics Plugin: Suggest Related Skills
+# Web Lifter — Business Economics Plugin: Suggest Related Skills
 
 TRANSCRIPT="${CLAUDE_TRANSCRIPT:-}"
 DETECTED_SKILL=""

@@ -58,7 +58,7 @@ Used by `scripts/verify-stack.sh` to pick the right verifier between batches.
 | `requirements.txt` only | Python (older) | `python -m pytest` if `tests/` exists |
 | `Cargo.toml` | Rust | `cargo check && cargo test` |
 | `go.mod` | Go | `go vet ./... && go test ./...` |
-| `scripts/check-versions.mjs` | Anthril plugin marketplace | `node scripts/check-versions.mjs` + `python tests/scripts/test_smoke.py` if `tests/` exists |
+| `scripts/check-versions.mjs` | Web Lifter plugin marketplace | `node scripts/check-versions.mjs` + `python tests/scripts/test_smoke.py` if `tests/` exists |
 | `supabase/migrations/` + `supabase` CLI on PATH | Supabase project | `supabase db lint` (if available) |
 | Multiple (monorepo) | Mixed | Run each detected verifier; aggregate pass/fail |
 | None detected | Unknown | Manual review only — mark fixes "applied unverified" |
@@ -123,7 +123,7 @@ Used when a finding maps to a sub-skill and `Agent` invocation is needed.
 
 ## Resumability
 
-The ledger at `.anthril/audits/<date>/audit-resolver-ledger.md` **is the resume state**. On re-invocation against the same original audit report:
+The ledger at `.project/audits/<date>/audit-resolver-ledger.md` **is the resume state**. On re-invocation against the same original audit report:
 
 1. Read the existing ledger
 2. Skip any finding ID already listed in the Execution Log with outcome "✓ closed"

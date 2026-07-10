@@ -8,11 +8,11 @@ effort: high
 
 # Keyword Research
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/marketing/.ppc/data/`.
-> Run `mkdir -p .anthril/marketing/.ppc/data` before the first `Write` call.
-> Primary artefact: `.anthril/marketing/.ppc/data/ppc-keywords.csv`.
+> All file outputs from this skill MUST be written under `.project/marketing/.ppc/data/`.
+> Run `mkdir -p .project/marketing/.ppc/data` before the first `Write` call.
+> Primary artefact: `.project/marketing/.ppc/data/ppc-keywords.csv`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 

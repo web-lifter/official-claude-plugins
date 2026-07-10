@@ -1,4 +1,4 @@
-# Anthril Claude Plugins — Development Standards
+# Web Lifter Claude Plugins — Development Standards
 
 ## Conventions
 
@@ -124,12 +124,12 @@ Authoritative reference: [Claude Code Plugins reference](https://code.claude.com
   "version": "1.0.0",
   "description": "Short description of what the plugin provides",
   "author": {
-    "name": "Anthril",
-    "email": "john@anthril.com",
-    "url": "https://github.com/anthril"
+    "name": "Web Lifter",
+    "email": "john@weblifter.com.au",
+    "url": "https://github.com/johnoconnor0"
   },
-  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/<category>/plugin-name",
-  "repository": "https://github.com/anthril/official-claude-plugins",
+  "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/<category>/plugin-name",
+  "repository": "https://github.com/johnoconnor0/official-claude-plugins",
   "license": "MIT",
   "keywords": ["relevant", "keywords"],
   "skills": "./skills/"
@@ -155,7 +155,7 @@ When adding a new plugin, add an entry to `.claude-plugin/marketplace.json`:
   "description": "Short description",
   "source": "./<category>/plugin-name",
   "category": "category-name",
-  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/<category>/plugin-name"
+  "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/<category>/plugin-name"
 }
 ```
 

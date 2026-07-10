@@ -37,7 +37,7 @@ def sample_vault_data():
             "accounts": {
                 "default": {
                     "label": "default",
-                    "email": "john@anthril.com",
+                    "email": "john@weblifter.com.au",
                     "client_id": "123.apps.googleusercontent.com",
                     "refresh_token": "1//0g-test-refresh",
                     "access_token": "ya29.test-access",

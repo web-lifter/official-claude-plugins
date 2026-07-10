@@ -60,12 +60,12 @@ The master CSV produced by `keyword-list-developer` is passed to the package via
 
 ```bash
 keyword-cluster run \
-  --keywords .anthril/.marketing-os/seo/keywords/<slug>-master.csv \
+  --keywords .project/.marketing-os/seo/keywords/<slug>-master.csv \
   --pages <pages.csv> \
   --topics <topics.csv> \
   --method <kmeans|agglomerative|hdbscan|graph> \
   --clusters <N> \
-  --output .anthril/.marketing-os/seo/clusters/<slug>/
+  --output .project/.marketing-os/seo/clusters/<slug>/
 ```
 
 The `--pages` CSV has columns: `url,title,h1,meta_description,word_count`.

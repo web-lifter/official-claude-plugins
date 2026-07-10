@@ -8,11 +8,11 @@ effort: low
 
 # Redirect Map Builder
 
-<!-- anthril-output-directive -->
+<!-- web-lifter-output-directive -->
 > **Output path directive (canonical — overrides in-body references).**
-> All file outputs from this skill MUST be written under `.anthril/.marketing-os/seo/data/redirect-map-builder/`.
-> Run `mkdir -p .anthril/.marketing-os/seo/data/redirect-map-builder` before the first `Write` call.
-> Primary artefact: `.anthril/.marketing-os/seo/data/redirect-map-builder/<artefact>`.
+> All file outputs from this skill MUST be written under `.project/.marketing-os/seo/data/redirect-map-builder/`.
+> Run `mkdir -p .project/.marketing-os/seo/data/redirect-map-builder` before the first `Write` call.
+> Primary artefact: `.project/.marketing-os/seo/data/redirect-map-builder/<artefact>`.
 > Do NOT write to the project root or to bare filenames at cwd.
 > Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
 
