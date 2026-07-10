@@ -123,4 +123,4 @@ MIT — see `.claude-plugin/plugin.json`. Per-skill LICENSE.txt files are Apache
 
 ## Author
 
-[Web Lifter](https://github.com/johnoconnor0) — `john@weblifter.com.au`
+[Web Lifter](https://github.com/web-lifter) — `john@weblifter.com.au`

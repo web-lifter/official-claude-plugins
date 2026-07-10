@@ -31,7 +31,7 @@ All skills follow the Web Lifter convention: Australian English, markdown-first 
 
 ```bash
 # Add the marketplace if you haven't already
-/plugin marketplace add johnoconnor0/official-claude-plugins
+/plugin marketplace add web-lifter/official-claude-plugins
 
 # Install the plugin
 /plugin install ppc-manager@web-lifter-plugins
@@ -126,4 +126,4 @@ See `docs/credentials.md` troubleshooting section. Quick pointers:
 
 ## Author
 
-Web Lifter — [john@weblifter.com.au](mailto:john@weblifter.com.au) · [github.com/johnoconnor0](https://github.com/johnoconnor0)
+Web Lifter — [john@weblifter.com.au](mailto:john@weblifter.com.au) · [github.com/web-lifter](https://github.com/web-lifter)

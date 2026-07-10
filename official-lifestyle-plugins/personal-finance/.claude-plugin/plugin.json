@@ -5,10 +5,10 @@
   "author": {
     "name": "John O'Connor",
     "email": "john@weblifter.com.au",
-    "url": "https://github.com/johnoconnor0"
+    "url": "https://github.com/web-lifter"
   },
-  "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-finance",
-  "repository": "https://github.com/johnoconnor0/official-claude-plugins",
+  "homepage": "https://github.com/web-lifter/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-finance",
+  "repository": "https://github.com/web-lifter/official-claude-plugins",
   "license": "MIT",
   "keywords": [
     "lifestyle",

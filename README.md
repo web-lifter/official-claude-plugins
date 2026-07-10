@@ -12,7 +12,7 @@ The marketplace catalogue ([`.claude-plugin/marketplace.json`](.claude-plugin/ma
 
 Engineering lifecycle tooling lives in the separate [John OS marketplace](https://github.com/johnoconnor0/johns-os); both marketplaces write to the shared `.project/` workspace (see [`OUTPUT-CONVENTIONS.md`](OUTPUT-CONVENTIONS.md)).
 
-Maintained by [Web Lifter](https://github.com/johnoconnor0).
+Maintained by [Web Lifter](https://github.com/web-lifter).
 
 ## Quick Start
 
@@ -20,7 +20,7 @@ Maintained by [Web Lifter](https://github.com/johnoconnor0).
 
 ```bash
 # Add the marketplace
-/plugin marketplace add johnoconnor0/official-claude-plugins
+/plugin marketplace add web-lifter/official-claude-plugins
 
 # Install a plugin (examples)
 /plugin install software-development@web-lifter-plugins

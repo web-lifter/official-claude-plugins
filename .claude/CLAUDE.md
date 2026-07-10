@@ -126,10 +126,10 @@ Authoritative reference: [Claude Code Plugins reference](https://code.claude.com
   "author": {
     "name": "Web Lifter",
     "email": "john@weblifter.com.au",
-    "url": "https://github.com/johnoconnor0"
+    "url": "https://github.com/web-lifter"
   },
-  "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/<category>/plugin-name",
-  "repository": "https://github.com/johnoconnor0/official-claude-plugins",
+  "homepage": "https://github.com/web-lifter/official-claude-plugins/tree/main/<category>/plugin-name",
+  "repository": "https://github.com/web-lifter/official-claude-plugins",
   "license": "MIT",
   "keywords": ["relevant", "keywords"],
   "skills": "./skills/"
@@ -155,7 +155,7 @@ When adding a new plugin, add an entry to `.claude-plugin/marketplace.json`:
   "description": "Short description",
   "source": "./<category>/plugin-name",
   "category": "category-name",
-  "homepage": "https://github.com/johnoconnor0/official-claude-plugins/tree/main/<category>/plugin-name"
+  "homepage": "https://github.com/web-lifter/official-claude-plugins/tree/main/<category>/plugin-name"
 }
 ```
 
