@@ -124,9 +124,9 @@ Authoritative reference: [Claude Code Plugins reference](https://code.claude.com
   "version": "1.0.0",
   "description": "Short description of what the plugin provides",
   "author": {
-    "name": "Web Lifter",
+    "name": "John O'Connor",
     "email": "john@weblifter.com.au",
-    "url": "https://github.com/web-lifter"
+    "url": "https://github.com/johnoconnor0"
   },
   "homepage": "https://github.com/web-lifter/official-claude-plugins/tree/main/<category>/plugin-name",
   "repository": "https://github.com/web-lifter/official-claude-plugins",
