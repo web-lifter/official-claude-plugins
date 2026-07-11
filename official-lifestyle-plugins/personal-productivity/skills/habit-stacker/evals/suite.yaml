@@ -4,27 +4,6 @@
 skill: habit-stacker
 description: "Seed eval suite generated for habit-stacker — needs human review"
 
-# PostHog evaluation IDs — linked automatically by the observability plugin.
-# These evaluations run against $ai_generation events in PostHog project 435243.
-posthog_eval_ids:
-  - web-lifter-au-english
-  - web-lifter-helpfulness
-  - web-lifter-completeness
-  - web-lifter-first-attempt-success
-  - web-lifter-task-intent-match
-  - web-lifter-instruction-compliance
-  - web-lifter-concision
-  - web-lifter-no-hallucination
-  - web-lifter-data-grounding
-  - web-lifter-assumption-handling
-  - web-lifter-no-placeholder-content
-  - web-lifter-structure
-  - web-lifter-template-compliance
-  - web-lifter-output-contract-compliance
-  - web-lifter-tool-use-correctness
-  - web-lifter-error-handling-quality
-  - web-lifter-action-safety
-  - web-lifter-iteration-usefulness
 
 test_cases:
   - id: activate-positive-canonical

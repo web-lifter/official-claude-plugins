@@ -83,7 +83,6 @@ official-claude-plugins/
 │   ├── personal-finance/          # AU budget / debt / FIRE / projections
 │   └── personal-productivity/     # Habits, reset, deep-focus, energy mapping
 ├── internal-utilities/            # NOT in marketplace — internal tooling (gitignored)
-│   ├── observability/             # PostHog prompt mgmt + transcripts (internal)
 │   └── skill-ops/                 # evaluator + autonomous-iteration-loop
 ├── tests/                         # Python smoke tests for embedded scripts
 ├── scripts/                       # check-versions, check-validate, virustotal
@@ -194,7 +193,6 @@ Nine Strategyzer / Lean Startup plugins designed to compose with `venture-core`:
 
 | Plugin | Source | Note |
 |---|---|---|
-| `observability` | [internal-utilities/observability](internal-utilities/observability/) | PostHog prompt mgmt, transcript capture, eval runs via hooks — not for end users |
 | `skill-ops` | [internal-utilities/skill-ops](internal-utilities/skill-ops/) | Skill / agent / hook / script evaluators + regression harness + autonomous-iteration-loop — internal |
 
 ---
