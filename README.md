@@ -30,7 +30,19 @@ git clone https://github.com/web-lifter/official-claude-plugins
 /plugin install personal-finance@official-lifestyle-plugins
 ```
 
-> This repo is a **monorepo with no root marketplace** — the two manifests live one level down. Add each folder as its own marketplace (as above). For a remote checkout limited to one marketplace, `claude plugin marketplace add` supports `--sparse` for monorepo subdirectories.
+> This repo is a **monorepo with no root marketplace** — the two manifests live one level down, so `/plugin marketplace add web-lifter/official-claude-plugins` (repo-root form) does **not** resolve. `/plugin marketplace add` accepts a GitHub repo, a git URL, or a local path, but not a remote subdirectory — so either clone and add by local path (above), or register a marketplace **without cloning** by adding an `extraKnownMarketplaces` entry to your Claude settings with a git `source` and `sparsePaths` scoped to the folder:
+>
+> ```jsonc
+> "extraKnownMarketplaces": {
+>   "official-business-plugins": {
+>     "source": {
+>       "source": "git",
+>       "url": "https://github.com/web-lifter/official-claude-plugins.git",
+>       "sparsePaths": ["official-business-plugins/.claude-plugin"]
+>     }
+>   }
+> }
+> ```
 
 ### Test Locally
 
