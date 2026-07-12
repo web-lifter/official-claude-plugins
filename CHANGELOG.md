@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — split into two marketplaces + business plugins consolidated to 5 (2026-07-12)
+
+Major restructure of the repository into **two independent marketplaces**, each with its own `.claude-plugin/marketplace.json`; the single root marketplace manifest was removed.
+
+- **Two marketplaces** — `official-business-plugins/.claude-plugin/marketplace.json` (5 plugins) and `official-lifestyle-plugins/.claude-plugin/marketplace.json` (4 plugins). Add each folder independently (`/plugin marketplace add ./official-business-plugins`). The old root-repo `/plugin marketplace add web-lifter/official-claude-plugins` no longer resolves.
+- **Business plugins flattened to 5** — every business skill now lives under one of five flat plugins:
+  - `data-science` **2.0.0** — merges the former `data-analysis` (5) + `experimentation` (4) → 9 skills.
+  - `economics` **2.0.0** — merges `business-economics` (6) + `strategic-economics` (3) → 9 skills.
+  - `marketing` **2.0.0** — merges `brand-manager` (9) + `seo-toolkit` (19) → 28 skills. The plugin was renamed `seo-toolkit` → `marketing`; the SEO credential data dir follows the new name (`~/.claude/plugins/data/marketing/`), and all `/seo-toolkit:` command references became `/marketing:`.
+  - `startups` **1.0.0** — merges the 9 Strategyzer/Lean-Startup sub-plugins → 70 skills + 9 orchestrator agents.
+  - `business-operations` **1.0.1** — unchanged.
+- **Removed** — the `engineering` plugin family (`database-design`, `devops`, `package-manager`, `software-development`, `programming-utilities`) was deleted and scrubbed from git history. The `ppc-management` plugin and the `ai-utility-plugins/` group (`skill-ops` relocated out of this repo; `plan-review` and `resource-manager` removed) are gone from the catalogue.
+- **VirusTotal removed** — deleted `.github/workflows/virustotal-audit.yml`, `scripts/virustotal-audit.mjs`, `VIRUSTOTAL.md`, the `.virustotal/` sidecars and the `SECURITY.md` scan tables/policy. `SECURITY.md` now carries only the vulnerability-reporting policy.
+- **Tooling** — `scripts/check-versions.mjs`, `check-validate.mjs`, and `check-version-bumps.mjs` now discover and check every folder-level `marketplace.json`; `validate-marketplace.yml` validates all discovered manifests.
+
+**User action:** re-add the marketplaces by folder path (see README Quick Start).
+
 ### Changed — `seo-toolkit` 2.1.2: output root moved to `.project/.marketing-os/seo/` (2026-06-20)
 
 `seo-toolkit` 2.1.1 → 2.1.2. All 19 skills now write their artefacts under `.project/.marketing-os/seo/` instead of `.project/marketing/.seo/`, aligning the toolkit with the shared `.project/.marketing-os/` marketing workspace namespace. Existing sub-folders are preserved under the new root (`audits/`, `reports/`, `data/`, `scaffolds/`, `plans/`, `briefs/`, `clusters/`, `keywords/`, `serp-analysis/`, `cwv/`). The change touches every SKILL.md output directive and in-body path, plus the supporting `reference.md`, templates, the `content-strategist` agent, and example outputs; cross-skill handoffs (keyword-list-developer → keyword-clustering-and-mapping → content-brief-generator / content-gap-analysis / internal-linking-planner) were updated in lockstep so they still resolve. Credentials, the clustering venv, and caches remain in `${CLAUDE_PLUGIN_DATA}`.

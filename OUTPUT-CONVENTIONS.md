@@ -88,8 +88,8 @@ do happen to invoke them inside Claude Code. Do NOT retrofit them.
 - The John OS `engineering-lifecycle` plugin
   (https://github.com/johnoconnor0/johns-os) — namespaced workspace under
   `.project/.engineering/` with a machine-readable ledger.
-- `ai-utility-plugins/plan-review/skills/audit-resolver` — ledger pattern using
-  `.project/audits/<date>/`.
+- `official-business-plugins/marketing` — per-family output root pattern under
+  `.project/.marketing-os/`.
 
 New skills SHOULD model their output layout on whichever of these is closer
 to their shape.

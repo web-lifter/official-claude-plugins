@@ -1,8 +1,11 @@
-"""Smoke tests for plugin-level scripts shipped in v2.8.x + v2.9.0.
+"""Smoke tests for plugin-level Python scripts.
 
-Covers:
-- 6 Python scripts (macro-calc, retirement-projection, debt-payoff-calc, power-calc, cvp-calc, link-check)
-- 2 Bash scripts (audit-resolver/parse-audit-report.sh, audit-resolver/verify-stack.sh)
+Covers 5 scripts across the business + lifestyle marketplaces:
+- macro-calc            (official-lifestyle-plugins/health-wellness)
+- retirement-projection (official-lifestyle-plugins/personal-finance)
+- debt-payoff-calc      (official-lifestyle-plugins/personal-finance)
+- power-calc            (official-business-plugins/data-science)
+- cvp-calc              (official-business-plugins/economics)
 
 Each test invokes the script with a small valid input and asserts:
 - Exit code 0 (or expected non-zero for error cases)
@@ -20,8 +23,6 @@ Pure stdlib — no third-party deps.
 """
 from __future__ import annotations
 
-import csv
-import io
 import os
 import subprocess
 import sys
@@ -140,9 +141,9 @@ class TestDebtPayoffCalc(unittest.TestCase):
 
 
 class TestPowerCalc(unittest.TestCase):
-    """official-business-plugins/data-science/experimentation/scripts/power-calc.py"""
+    """official-business-plugins/data-science/scripts/power-calc.py"""
 
-    SCRIPT = "official-business-plugins/data-science/experimentation/scripts/power-calc.py"
+    SCRIPT = "official-business-plugins/data-science/scripts/power-calc.py"
 
     def test_standard_ab_test(self):
         r = run(self.SCRIPT, "--baseline", "0.05", "--mde", "0.005",
@@ -154,7 +155,7 @@ class TestPowerCalc(unittest.TestCase):
     def test_smaller_mde_needs_more_sample(self):
         r1 = run(self.SCRIPT, "--baseline", "0.10", "--mde", "0.01", "--two_sided")
         r2 = run(self.SCRIPT, "--baseline", "0.10", "--mde", "0.005", "--two_sided")
-        # Extract numbers
+
         def n_from(out):
             for line in out.splitlines():
                 if "Total sample:" in line:
@@ -166,9 +167,9 @@ class TestPowerCalc(unittest.TestCase):
 
 
 class TestCvpCalc(unittest.TestCase):
-    """official-business-plugins/economics/business-economics/scripts/cvp-calc.py"""
+    """official-business-plugins/economics/scripts/cvp-calc.py"""
 
-    SCRIPT = "official-business-plugins/economics/business-economics/scripts/cvp-calc.py"
+    SCRIPT = "official-business-plugins/economics/scripts/cvp-calc.py"
 
     def test_basic_break_even(self):
         r = run(self.SCRIPT, "--fixed", "100000", "--variable_per_unit", "20",
@@ -183,135 +184,6 @@ class TestCvpCalc(unittest.TestCase):
         # cm_per_unit = 50 - 60 = -10; should print error and exit non-zero
         self.assertNotEqual(r.returncode, 0)
         self.assertIn("ERROR", r.stderr)
-
-
-class TestLinkCheck(unittest.TestCase):
-    """official-business-plugins/engineering/utilities/scripts/link-check.py — offline-only test (no network)"""
-
-    SCRIPT = "official-business-plugins/engineering/utilities/scripts/link-check.py"
-
-    def test_internal_links(self):
-        # Create a small docs tree with one good + one bad internal link
-        with tempfile.TemporaryDirectory() as d:
-            root = Path(d)
-            (root / "index.md").write_text(
-                "Good link: [exists](other.md)\n"
-                "Bad link: [missing](does-not-exist.md)\n",
-                encoding="utf-8",
-            )
-            (root / "other.md").write_text("# Other\n", encoding="utf-8")
-            csv_path = root / "results.csv"
-            r = run(self.SCRIPT, str(root), "--workers", "2",
-                    "--csv", str(csv_path))
-            # Script exits non-zero if any broken link found (expected here)
-            self.assertIn(r.returncode, (0, 1))
-            self.assertTrue(csv_path.exists())
-            content = csv_path.read_text(encoding="utf-8")
-            self.assertIn("does-not-exist.md", content)
-            self.assertIn("other.md", content)
-
-
-def _bash_available() -> bool:
-    """Detect whether bash is directly invocable from this Python subprocess."""
-    try:
-        r = subprocess.run(["bash", "-c", "echo ok"], capture_output=True,
-                           text=True, check=False, timeout=5)
-        return r.returncode == 0 and "ok" in r.stdout
-    except (FileNotFoundError, OSError, subprocess.TimeoutExpired):
-        return False
-
-
-BASH_OK = _bash_available()
-
-
-@unittest.skipUnless(BASH_OK, "bash not invocable from subprocess on this host")
-class TestParseAuditReport(unittest.TestCase):
-    """ai-utility-plugins/plan-review/skills/audit-resolver/scripts/parse-audit-report.sh"""
-
-    SCRIPT = "ai-utility-plugins/plan-review/skills/audit-resolver/scripts/parse-audit-report.sh"
-
-    def _run_with_report(self, content: str) -> subprocess.CompletedProcess:
-        with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8") as f:
-            f.write(content)
-            path = f.name
-        try:
-            return subprocess.run(
-                ["bash", str(REPO_ROOT / self.SCRIPT), path],
-                capture_output=True, text=True, check=False, timeout=15,
-            )
-        finally:
-            os.unlink(path)
-
-    def test_table_format_findings(self):
-        report = """# Audit
-## Phase 2: Type Safety
-| ID | Severity | File:Line | Description |
-|----|----------|-----------|-------------|
-| 1 | CRITICAL | `src/foo.ts:42` | missing return type |
-| 2 | WARNING | `src/bar.ts:9` | unused import |
-"""
-        r = self._run_with_report(report)
-        self.assertEqual(r.returncode, 0, r.stderr)
-        # TSV output: 2 findings
-        lines = [l for l in r.stdout.splitlines() if l.strip()]
-        self.assertGreaterEqual(len(lines), 2)
-        self.assertIn("CRITICAL", r.stdout)
-        self.assertIn("WARNING", r.stdout)
-
-    def test_bullet_format_findings(self):
-        report = """# Audit
-## Phase 8: Cleanup
-- **W1:** `lifestyle/skills/x/SKILL.md:74` — dangling reference
-- **C2:** `engineering/db/migration.sql:12` — missing index
-"""
-        r = self._run_with_report(report)
-        self.assertEqual(r.returncode, 0)
-        self.assertIn("WARNING", r.stdout)
-        self.assertIn("CRITICAL", r.stdout)
-
-    def test_empty_report_warns(self):
-        report = "# Just a heading\n\nNo findings here.\n"
-        r = self._run_with_report(report)
-        # Script still exits 0 but emits WARNING on stderr
-        self.assertEqual(r.returncode, 0)
-        self.assertIn("WARNING", r.stderr)
-
-    def test_missing_file_errors(self):
-        r = subprocess.run(
-            ["bash", str(REPO_ROOT / self.SCRIPT), "/does/not/exist.md"],
-            capture_output=True, text=True, check=False, timeout=10,
-        )
-        self.assertNotEqual(r.returncode, 0)
-        self.assertIn("not found", r.stderr.lower())
-
-
-@unittest.skipUnless(BASH_OK, "bash not invocable from subprocess on this host")
-class TestVerifyStack(unittest.TestCase):
-    """ai-utility-plugins/plan-review/skills/audit-resolver/scripts/verify-stack.sh"""
-
-    SCRIPT = "ai-utility-plugins/plan-review/skills/audit-resolver/scripts/verify-stack.sh"
-
-    def test_detects_marketplace_stack_dry_run(self):
-        # Run --dry-run from this repo root; should detect check-versions + smoke tests
-        r = subprocess.run(
-            ["bash", str(REPO_ROOT / self.SCRIPT), "--dry-run"],
-            capture_output=True, text=True, check=False, timeout=15,
-            cwd=str(REPO_ROOT),
-        )
-        self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertIn("check-versions.mjs", r.stdout)
-        self.assertIn("dry-run", r.stdout.lower())
-
-    def test_empty_dir_reports_no_verifiers(self):
-        with tempfile.TemporaryDirectory() as d:
-            r = subprocess.run(
-                ["bash", str(REPO_ROOT / self.SCRIPT), "--dry-run"],
-                capture_output=True, text=True, check=False, timeout=10,
-                cwd=d,
-            )
-            # Empty dir: script exits 0 and emits "no verifiers detected" on stderr
-            self.assertEqual(r.returncode, 0)
-            self.assertIn("no verifiers detected", r.stderr)
 
 
 if __name__ == "__main__":

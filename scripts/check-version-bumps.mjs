@@ -5,6 +5,11 @@
  * Fails when a plugin's tracked files changed in a commit range but the
  * plugin's `version` (in its own `.claude-plugin/plugin.json`) was NOT bumped.
  *
+ * The repo ships TWO marketplaces — `official-business-plugins/` and
+ * `official-lifestyle-plugins/`. Every `<dir>/.claude-plugin/marketplace.json`
+ * under the repo root is discovered and its plugins are checked. Plugin `source`
+ * paths are resolved relative to the marketplace folder that lists them.
+ *
  * Why this exists
  * ---------------
  * Claude Code installs each plugin into a *version-keyed* cache directory
@@ -27,14 +32,12 @@
  *   baseRef  = $BASE_REF || origin/main
  *   headRef  = $HEAD_REF || HEAD
  *
- * In GitHub Actions the workflow passes the PR base/head explicitly.
- *
  * Exit codes:
  *   0 — every changed plugin had its version bumped (or was newly added)
  *   1 — a changed plugin shipped under an unchanged version, or a git error
  */
 
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
@@ -68,29 +71,44 @@ let diffBase = baseRef;
 try {
   diffBase = git(["merge-base", baseRef, headRef]).trim() || baseRef;
 } catch {
-  // No common ancestor reachable (shallow clone, unrelated histories) — fall
-  // back to the raw baseRef and let the diff below surface any git error.
   diffBase = baseRef;
 }
 
-// ---- Load the authoritative plugin list from marketplace.json ----------------
-const marketplacePath = join(repoRoot, ".claude-plugin", "marketplace.json");
-let marketplace;
-try {
-  marketplace = JSON.parse(await readFile(marketplacePath, "utf8"));
-} catch (err) {
-  console.error(red(`✗ Failed to read ${marketplacePath}: ${err.message}`));
+// ---- Load the authoritative plugin list from every marketplace ---------------
+/** Discover every `<dir>/.claude-plugin/marketplace.json` under the repo root. */
+async function findMarketplaces() {
+  const found = [];
+  const entries = await readdir(repoRoot, { withFileTypes: true });
+  for (const e of entries) {
+    if (!e.isDirectory() || e.name.startsWith(".")) continue;
+    const path = join(repoRoot, e.name, ".claude-plugin", "marketplace.json");
+    try {
+      const data = JSON.parse(await readFile(path, "utf8"));
+      found.push({ relDir: e.name, data });
+    } catch {
+      // Not a marketplace root — skip.
+    }
+  }
+  return found.sort((a, b) => (a.data.name ?? "").localeCompare(b.data.name ?? ""));
+}
+
+const marketplaces = await findMarketplaces();
+if (marketplaces.length === 0) {
+  console.error(red("✗ No */.claude-plugin/marketplace.json found under the repo root"));
   process.exit(1);
 }
 
-const pluginRoot = marketplace.metadata?.pluginRoot ?? ".";
-const relativePlugins = (marketplace.plugins ?? [])
-  .filter((p) => typeof p.source === "string")
-  .map((p) => ({
-    name: p.name,
-    // Normalise "./foo/bar" → "foo/bar" with forward slashes for git matching.
-    dir: join(pluginRoot, p.source).split("\\").join("/").replace(/^\.\//, ""),
-  }));
+const relativePlugins = [];
+for (const mp of marketplaces) {
+  for (const p of mp.data.plugins ?? []) {
+    if (typeof p.source !== "string") continue;
+    relativePlugins.push({
+      name: p.name,
+      // Normalise "<marketplace>/./foo" → "marketplace/foo" with forward slashes.
+      dir: join(mp.relDir, p.source).split("\\").join("/").replace(/^\.\//, ""),
+    });
+  }
+}
 
 // ---- Compute the set of changed files in the range ---------------------------
 let changedFiles;
@@ -100,13 +118,9 @@ try {
     .map((l) => l.trim())
     .filter(Boolean);
 } catch (err) {
+  console.error(red(`✗ git diff ${diffBase}..${headRef} failed: ${err.message.trim()}`));
   console.error(
-    red(`✗ git diff ${diffBase}..${headRef} failed: ${err.message.trim()}`),
-  );
-  console.error(
-    yellow(
-      "  Hint: CI must check out full history (actions/checkout fetch-depth: 0).",
-    ),
+    yellow("  Hint: CI must check out full history (actions/checkout fetch-depth: 0)."),
   );
   process.exit(1);
 }
@@ -161,7 +175,7 @@ for (const { name, dir } of relativePlugins) {
   }
 }
 
-console.log(bold(`\nVersion-bump check — ${marketplace.name}`));
+console.log(bold(`\nVersion-bump check — ${marketplaces.map((m) => m.data.name).join(" + ")}`));
 console.log(`  base ${diffBase.slice(0, 12)}  →  head ${headRef}\n`);
 
 for (const r of results) {

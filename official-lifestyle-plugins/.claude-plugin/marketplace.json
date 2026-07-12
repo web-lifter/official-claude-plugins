@@ -1,0 +1,80 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "official-lifestyle-plugins",
+  "description": "Official Web Lifter lifestyle plugin marketplace — health & wellness, home & life logistics, personal finance, and personal productivity. Australian-context, evidence-rated, scenario-driven. Writes to the shared .project/ workspace (see OUTPUT-CONVENTIONS.md).",
+  "owner": {
+    "name": "John O'Connor",
+    "email": "john@weblifter.com.au",
+    "url": "https://github.com/web-lifter"
+  },
+  "plugins": [
+    {
+      "name": "health-wellness",
+      "version": "1.0.2",
+      "description": "5 lifestyle skills for meal planning, training programs, sleep optimisation, supplement stacks, and daily wellness habits — evidence-rated and AU-context aware",
+      "source": "./health-wellness",
+      "category": "lifestyle",
+      "homepage": "https://github.com/web-lifter/official-claude-plugins/tree/main/official-lifestyle-plugins/health-wellness",
+      "keywords": [
+        "lifestyle",
+        "health",
+        "nutrition",
+        "fitness",
+        "sleep",
+        "supplements",
+        "wellness"
+      ]
+    },
+    {
+      "name": "home-life-logistics",
+      "version": "1.0.2",
+      "description": "4 lifestyle skills for trip planning, household maintenance, life-admin, and thoughtful gifting — AU-context checklists that turn logistics into routine",
+      "source": "./home-life-logistics",
+      "category": "lifestyle",
+      "homepage": "https://github.com/web-lifter/official-claude-plugins/tree/main/official-lifestyle-plugins/home-life-logistics",
+      "keywords": [
+        "lifestyle",
+        "travel",
+        "household",
+        "life-admin",
+        "planning",
+        "gifts"
+      ]
+    },
+    {
+      "name": "personal-finance",
+      "version": "1.0.2",
+      "description": "5 lifestyle skills for AU personal budgeting, debt payoff, savings rate, retirement projection, and emergency runbooks — AU tax/super defaults, scenario-driven",
+      "source": "./personal-finance",
+      "category": "lifestyle",
+      "homepage": "https://github.com/web-lifter/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-finance",
+      "keywords": [
+        "lifestyle",
+        "personal-finance",
+        "budget",
+        "debt",
+        "savings",
+        "retirement",
+        "FIRE",
+        "AU"
+      ]
+    },
+    {
+      "name": "personal-productivity",
+      "version": "1.0.2",
+      "description": "4 lifestyle skills for habits, weekly resets, deep-focus days, and energy mapping — design daily and weekly systems that compound",
+      "source": "./personal-productivity",
+      "category": "lifestyle",
+      "homepage": "https://github.com/web-lifter/official-claude-plugins/tree/main/official-lifestyle-plugins/personal-productivity",
+      "keywords": [
+        "lifestyle",
+        "productivity",
+        "habits",
+        "routines",
+        "focus",
+        "weekly-review",
+        "energy"
+      ]
+    }
+  ]
+}

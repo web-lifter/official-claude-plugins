@@ -59,15 +59,7 @@ skill-evaluation-*.json
 # Local dry-run outputs from tune-criteria.mjs and similar scripts.
 tune-result.json
 
-# Local VirusTotal cache. Canonical raw JSON now lives under .project/virustotal/
-# (gitignored — see .project rule below). The consolidated report VIRUSTOTAL.md
-# at the repo root IS tracked.
-.vt-cache/
-.virustotal/
-
-# Lock files for ad-hoc local installs (PPC manager's pip lockfile lives
-# under official-business-plugins/marketing/ppc-management/ and IS tracked;
-# root-level transient ones are not).
+# Lock files for ad-hoc local installs; root-level transient ones are not tracked.
 /package-lock.json
 /yarn.lock
 /pnpm-lock.yaml
@@ -102,9 +94,7 @@ internal-utilities
 .eng-os/
 
 ## Plugins
-official-business-plugins/startups
 ai-utility-plugins/resource-manager
-
 
 .project
 

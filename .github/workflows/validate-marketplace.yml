@@ -37,8 +37,21 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Check marketplace.json is valid JSON
-        run: node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/marketplace.json','utf8'))"
+      - name: Check every marketplace.json is valid JSON
+        run: |
+          set -euo pipefail
+          found=0
+          while IFS= read -r -d '' f; do
+            echo "parsing $f"
+            node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))"
+            found=$((found + 1))
+          done < <(find . -type d -name node_modules -prune -o \
+                     -type f -path '*/.claude-plugin/marketplace.json' -print0)
+          echo "validated $found marketplace.json file(s)"
+          if [ "$found" -eq 0 ]; then
+            echo "::error::no marketplace.json files found — directory layout changed?"
+            exit 1
+          fi
 
       - name: Check every plugin.json is valid JSON
         run: |
